@@ -2,6 +2,7 @@
 #define BASE_H
 
 #include <string>
+#include "btle/btle_global.h"
 
 namespace btle {
     /**
@@ -11,6 +12,7 @@ namespace btle {
     {
     public:
         base();
+        base(const std::string& value);
         base(const std::string& value,
              const std::string& description);
         base(const base& other);

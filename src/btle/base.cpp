@@ -6,6 +6,12 @@ btle::base::base()
 {
 }
 
+btle::base::base(const std::string& value)
+: _value(value),
+  _description()
+{
+}
+
 btle::base::base(
     const std::string& value,
     const std::string& description)

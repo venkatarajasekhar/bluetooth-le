@@ -1,0 +1,41 @@
+#ifndef HRSERVICE_H
+#define HRSERVICE_H
+
+#include "btle/gatt_services/gattservicebase.h"
+
+namespace btle {
+    namespace gatt_services {
+
+        struct hrfields
+        {
+            uint8_t hr_format_bit_:1;
+            uint8_t sensor_contact_bit_:2;
+            uint8_t energy_expended_bit_:1;
+            uint8_t rr_interval_bit_:1;
+            uint8_t reserved_:3;
+        };
+
+        #define HEART_RATE_SERVICE          0x180D
+        #define HEART_RATE_MEASUREMENT      0x2A37
+        #define HEART_RATE_CONTROL_POINT    0x2A39
+
+        class hrservice: public gattservicebase{
+        public:
+            hrservice();
+
+        public: // api
+
+            int hr_value() const;
+
+        public:
+
+            void process_service_data(const uuid& chr, const uint8_t* data, size_t size);
+
+        private:
+
+            int hr_value_;
+        };
+    }
+}
+#endif // HRSERVICE_H
+
