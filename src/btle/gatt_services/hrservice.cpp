@@ -1,14 +1,19 @@
 
 #include "btle/gatt_services/hrservice.h"
+#include "btle/gatt_services/gattserviceregisterer.h"
 
 #include <stdio.h>
 
 using namespace btle::gatt_services;
 
+namespace {
+    gattserviceregisterer<hrservice> registration;
+}
+
 hrservice::hrservice()
 {
     mandatory_notifications_.push_back(uuid(HEART_RATE_MEASUREMENT));
-    service_ = uuid(HEART_RATE_SERVICE);
+    service_ = (HEART_RATE_SERVICE);
 }
 
 int hrservice::hr_value() const

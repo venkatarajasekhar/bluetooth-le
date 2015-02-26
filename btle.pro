@@ -21,7 +21,8 @@ SOURCES += \
     src/btle/advertisementdata.cpp \
     src/btle/device.cpp \
     src/btle/gatt_services/gattservicebase.cpp \
-    src/btle/gatt_services/hrservice.cpp
+    src/btle/gatt_services/hrservice.cpp \
+    src/btle/gatt_services/gattservicefactory.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \
@@ -33,7 +34,10 @@ HEADERS += inc/btle/btle.h\
     inc/btle/advertisementdata.h \
     inc/btle/device.h \
     inc/btle/gatt_services/gattservicebase.h \
-    inc/btle/gatt_services/hrservice.h
+    inc/btle/gatt_services/hrservice.h \
+    inc/btle/gatt_services/gattservicefactory.h \
+    inc/btle/gatt_services/gattserviceregisterer.h \
+    inc/btle/gatt_services/gattserviceregisterer.hpp
 
 unix {
     target.path = /usr/lib
