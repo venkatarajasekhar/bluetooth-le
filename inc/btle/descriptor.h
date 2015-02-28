@@ -12,11 +12,23 @@ namespace btle {
     #define CHARACTERISTIC_FORMAT                0x2904
     #define CHARACTERISTIC_AGGREGATE_FORMAT      0x2905
 
-    class descriptor
+    class descriptor: public base
     {
     public:
         descriptor();
-        ~descriptor();
+        descriptor(uint16_t type);
+        descriptor(uint16_t type,
+                   uint16_t handle);
+        descriptor(const descriptor& other);
+
+    public: // api
+
+        uint16_t type() const;
+        uint16_t handle() const;
+
+    private:
+        uint16_t type_;
+        uint16_t handle_;
     };
 }
 

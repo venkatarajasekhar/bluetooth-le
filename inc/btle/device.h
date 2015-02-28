@@ -3,6 +3,7 @@
 
 #include "btle/base.h"
 #include "btle/advertisementdata.h"
+#include "btle/gattdatabase.h"
 
 #include <map>
 
@@ -11,10 +12,10 @@ namespace btle {
     enum connection_state{
         DEVICE_DISCONNECTED,
         DEVICE_DISCONNECTING,
-        DEVICE_DISCONNECTION_HALT,
+        DEVICE_DISCONNECTION_PARK,
         DEVICE_CONNECTING,
-        DEVICE_CONNECETED,
-        DEVICE_CONNECTION_HALT
+        DEVICE_CONNECTED,
+        DEVICE_CONNECTION_PARK
     };
 
     class device: public base
@@ -25,6 +26,8 @@ namespace btle {
 
         const std::string& name();
         const advertisementdata* advertisement_data_for_key(btle::advertisement_type key) const;
+        gattdatabase& db();
+        connection_state state() const;
 
     private:
 
@@ -34,6 +37,8 @@ namespace btle {
          */
         std::map<btle::advertisement_type,btle::advertisementdata> advertisement_data_;
         std::string name_;
+        gattdatabase db_;
+        connection_state state_;
     };
 }
 

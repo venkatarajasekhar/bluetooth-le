@@ -20,11 +20,6 @@ namespace btle {
 
     public:
 
-        /**
-         * @brief operator == , needed for lib internal template class usage
-         * @param other
-         * @return
-         */
         virtual bool operator == (const base& other);
         virtual std::string to_string() const;
         virtual int to_int(int base = 10);
@@ -33,10 +28,11 @@ namespace btle {
 
         const std::string& string_value() const;
         const std::string& description() const;
+        void set_string_value(const std::string& value);
 
     protected:
-        std::string _value;
-        std::string _description;
+        std::string value_;
+        std::string description_;
     };
 }
 

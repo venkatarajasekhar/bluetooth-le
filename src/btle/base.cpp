@@ -1,57 +1,65 @@
 #include "base.h"
 
-btle::base::base()
-: _value(),
-  _description()
+using namespace btle;
+
+base::base()
+: value_(),
+  description_()
 {
 }
 
-btle::base::base(const std::string& value)
-: _value(value),
-  _description()
+base::base(const std::string& value)
+: value_(value),
+  description_()
 {
 }
 
-btle::base::base(
+base::base(
     const std::string& value,
     const std::string& description)
-: _value(value),
-  _description(description)
+: value_(value),
+  description_(description)
 {
 }
 
-btle::base::base(const base& other)
-: _value(other._value),
-  _description(other._description)
+base::base(const base& other)
+: value_(other.value_),
+  description_(other.description_)
 {
 }
 
-btle::base::~base()
+base::~base()
 {
 }
 
-bool btle::base::operator == (const btle::base& other)
+bool base::operator == (const base& other)
 {
-    return _value.compare(other._value) != std::string::npos;
+    return value_.compare(other.value_) != std::string::npos;
 }
 
-std::string btle::base::to_string() const
+std::string base::to_string() const
 {
-    return _value;
+    return value_;
 }
 
-int btle::base::to_int(int base)
+int base::to_int(int base)
 {
     return 0;
 }
 
-const std::string& btle::base::string_value() const
+const std::string& base::string_value() const
 {
-    return _value;
+    return value_;
 }
 
-const std::string& btle::base::description() const
+const std::string& base::description() const
 {
-    return _description;
+    return description_;
 }
+
+void base::set_string_value(const std::string& value)
+{
+    value_ = value;
+}
+
 

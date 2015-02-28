@@ -3,54 +3,56 @@
 #include <sstream>
 #include <iomanip>
 
-btle::bda::bda()
+using namespace btle;
+
+bda::bda()
 : base(),
-  _type(ADDR_PUBLIC)
+  type_(ADDR_PUBLIC)
 {
 }
 
-btle::bda::~bda()
+bda::~bda()
 {
 }
 
-btle::bda::bda(const std::string& bda_str)
+bda::bda(const std::string& bda_str)
 : base(bda_str,"")
 {
 }
 
-btle::bda::bda(const std::string& bda_str, addr_type type)
+bda::bda(const std::string& bda_str, addr_type type)
 : base(bda_str,""),
-  _type(type)
+  type_(type)
 {
 }
 
-btle::bda::bda(const char bda_strc[kNativeAddrMaxLen] , addr_type type)
-: base(std::string(bda_strc,btle::kNativeAddrMaxLen),""),
-  _type(type)
+bda::bda(const char bda_strc[BDA_BIN_LENGTH] , addr_type type)
+: base(std::string(bda_strc,BDA_BIN_LENGTH),""),
+  type_(type)
 {
 }
 
-btle::bda::bda(const btle::bda& other)
+bda::bda(const bda& other)
 : base(other.string_value(),""),
-  _type(other.type())
+  type_(other.type())
 {
 }
 
-btle::addr_type btle::bda::type() const
+addr_type bda::type() const
 {
-    return _type;
+    return type_;
 }
 
-std::string btle::bda::to_string() const
+std::string bda::to_string() const
 {
-    if( _value.size() == kNativeAddrMaxLen )
+    if( value_.size() == BDA_BIN_LENGTH )
     {
         std::stringstream ss_hex;
-        for( int i=0; i < kNativeAddrMaxLen; ++i )
+        for( int i=0; i < BDA_BIN_LENGTH; ++i )
         {
-            ss_hex << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (unsigned int)(unsigned char)_value[i] << (i < 5 ? ":" : "");
+            ss_hex << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (unsigned int)(unsigned char)value_[i] << (i < 5 ? ":" : "");
         }
         return ss_hex.str();
     }
-    else return _value;
+    else return value_;
 }

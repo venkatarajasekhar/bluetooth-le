@@ -19,8 +19,8 @@ advertisementdata::advertisementdata( const advertisementdata& other )
 
 advertisementdata& advertisementdata::operator = (const advertisementdata& other)
 {
-    _value = other.string_value();
-    _description = other.description();
+    value_ = other.string_value();
+    description_ = other.description();
     return *this;
 }
 

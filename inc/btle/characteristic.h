@@ -28,25 +28,38 @@ namespace btle {
     {
     public:
         characteristic();
-        characteristic(const std::string& data);
+        characteristic(const std::string& data,
+                       const btle::uuid& uid);
+        characteristic(const btle::uuid& uid);
+        characteristic(const btle::uuid& uid,
+                       uint8_t properties);
+        characteristic(const btle::uuid& uid,
+                       uint8_t properties,
+                       uint16_t attribute_handle,
+                       uint16_t characteristic_properties);
         characteristic(const characteristic& other);
-        ~characteristic();
 
     public:
 
-        unsigned char properties() const;
+        uint8_t properties() const;
+        const btle::uuid& uuid() const;
+
+        // operators
+        characteristic& operator << (const descriptor& desc);
+
+        bool contains_descriptor_type(uint16_t type) const;
 
     private:
 
-        uuid _uuid;
-        int _attribute_handle;
-        int _characteristic_value_handle;
-        unsigned char _characteristic_properties_;
+        btle::uuid    uuid_;
+        uint16_t attribute_handle_;
+        uint16_t characteristic_value_handle_;
+        uint8_t characteristic_properties_;
         /**
          * @brief instance_id_, unique instance id NOTE non supported by all plugins
          */
         int instance_id_;
-        std::vector<descriptor> _descriptors;
+        std::vector<descriptor> descriptors_;
 
     };
 }

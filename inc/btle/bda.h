@@ -17,7 +17,7 @@ namespace btle {
         ADDR_PRIVATE_NONRESOLVE             = 0x02,  // Non-Resolvable Private Address
         ADDR_PRIVATE_RESOLVE                = 0x03   // Resolvable Private Address
     };
-    const int kNativeAddrMaxLen(6);
+    #define BDA_BIN_LENGTH 6
 
     class bda: public base
     {
@@ -25,7 +25,7 @@ namespace btle {
         bda();
         bda(const std::string& bda_str);
         bda(const std::string& bda_str, addr_type type);
-        bda(const char bda_strc[kNativeAddrMaxLen] , addr_type type);
+        bda(const char bda_strc[BDA_BIN_LENGTH] , addr_type type);
         bda(const bda& other);
         ~bda();
 
@@ -38,7 +38,7 @@ namespace btle {
         std::string to_string() const;
 
     private:
-        addr_type _type;
+        addr_type type_;
     };
 }
 #endif // BDA_H

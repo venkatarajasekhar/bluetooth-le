@@ -24,4 +24,12 @@ const advertisementdata* device::advertisement_data_for_key(btle::advertisement_
     else return NULL;
 }
 
+gattdatabase& device::db()
+{
+    return db_;
+}
 
+connection_state device::state() const
+{
+    return state_;
+}

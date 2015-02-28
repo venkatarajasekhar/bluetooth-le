@@ -10,7 +10,7 @@ TARGET = btle
 TEMPLATE = lib
 
 DEFINES += BTLE_LIBRARY
-INCLUDEPATH += inc inc/btle
+INCLUDEPATH += inc inc/btle internal internal/btle internal/btle/central
 
 SOURCES += \
     src/btle/base.cpp \
@@ -22,7 +22,10 @@ SOURCES += \
     src/btle/device.cpp \
     src/btle/gatt_services/gattservicebase.cpp \
     src/btle/gatt_services/hrservice.cpp \
-    src/btle/gatt_services/gattservicefactory.cpp
+    src/btle/gatt_services/gattservicefactory.cpp \
+    src/btle/gattdatabase.cpp \
+    src/btle/service.cpp \
+    src/btle/central/connectionhandler.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \
@@ -37,7 +40,11 @@ HEADERS += inc/btle/btle.h\
     inc/btle/gatt_services/hrservice.h \
     inc/btle/gatt_services/gattservicefactory.h \
     inc/btle/gatt_services/gattserviceregisterer.h \
-    inc/btle/gatt_services/gattserviceregisterer.hpp
+    inc/btle/gatt_services/gattserviceregisterer.hpp \
+    inc/btle/gattdatabase.h \
+    inc/btle/service.h \
+    internal/btle/central/connectionhandler.h \
+    internal/btle/central/centralplugininterface.h
 
 unix {
     target.path = /usr/lib
