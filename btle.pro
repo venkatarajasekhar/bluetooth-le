@@ -25,7 +25,8 @@ SOURCES += \
     src/btle/gatt_services/gattservicefactory.cpp \
     src/btle/gattdatabase.cpp \
     src/btle/service.cpp \
-    src/btle/central/connectionhandler.cpp
+    src/btle/central/connectionhandler.cpp \
+    src/btle/gatt_services/rscservice.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \
@@ -44,7 +45,8 @@ HEADERS += inc/btle/btle.h\
     inc/btle/gattdatabase.h \
     inc/btle/service.h \
     internal/btle/central/connectionhandler.h \
-    internal/btle/central/centralplugininterface.h
+    internal/btle/central/centralplugininterface.h \
+    inc/btle/gatt_services/rscservice.h
 
 unix {
     target.path = /usr/lib
