@@ -8,6 +8,8 @@ namespace btle {
 
             virtual int start() = 0;
             virtual void stop() = 0;
+            virtual void start_scan() = 0;
+            virtual void stop_scan() = 0;
 
         };
     }
