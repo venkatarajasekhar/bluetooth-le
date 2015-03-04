@@ -13,6 +13,11 @@ namespace btle {
 
         gattdatabase& operator << (const service& srv);
 
+    public:
+
+        const characteristic* fetch_characteristic(const uuid& uid);
+        const characteristic* fetch_characteristic(const uuid_pair& pair);
+
     private:
 
         std::vector<service> services_;

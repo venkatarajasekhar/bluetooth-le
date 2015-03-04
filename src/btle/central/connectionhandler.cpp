@@ -5,9 +5,8 @@
 using namespace btle::central;
 
 namespace{
-    #define KEntry    -1
-    #define KExit     -2
-    #define KNoAction -3
+    #define Entry    -1
+    #define Exit     -2
 
     enum handler_action
     {
@@ -60,7 +59,7 @@ void connectionhandler::free( device& dev, int action )
 {
     switch( action )
     {
-        case KEntry:
+        case Entry:
         {
 
             break;
@@ -111,7 +110,7 @@ void connectionhandler::free( device& dev, int action )
 
             break;
         }
-        case KExit:
+        case Exit:
         {
             // do nothing
             break;
@@ -128,7 +127,7 @@ void connectionhandler::connecting( device& dev, int action )
 {
     switch( action )
     {
-        case KEntry:
+        case Entry:
         {
             current_device_ = &dev;
             break;
@@ -190,7 +189,7 @@ void connectionhandler::connecting( device& dev, int action )
 
             break;
         }
-        case KExit:
+        case Exit:
         {
             //stop_timer();
             break;
@@ -207,7 +206,7 @@ void connectionhandler::disconnecting(device& dev, int action )
 {
     switch( action )
     {
-        case KEntry:
+        case Entry:
         {
             current_device_ = &dev;
             break;
@@ -260,7 +259,7 @@ void connectionhandler::disconnecting(device& dev, int action )
             assert( current_device_ != NULL );
             break;
         }
-        case KExit:
+        case Exit:
         {
             break;
         }
@@ -274,7 +273,7 @@ void connectionhandler::disconnecting(device& dev, int action )
 
 void connectionhandler::change_state(kConnectionHndlrState state, device& dev)
 {
-    (this->*current_state_)(dev,KExit);
+    (this->*current_state_)(dev,Exit);
     current_state_ = state;
-    (this->*current_state_)(dev,KEntry);
+    (this->*current_state_)(dev,Entry);
 }

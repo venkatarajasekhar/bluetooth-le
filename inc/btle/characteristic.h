@@ -62,6 +62,9 @@ namespace btle {
         std::vector<descriptor> descriptors_;
 
     };
+
+    typedef std::vector<characteristic>::const_iterator chr_iterator_const;
+    typedef std::vector<characteristic> chr_list;
 }
 
 #endif // CHARACTERISTIC_H

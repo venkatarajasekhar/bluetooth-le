@@ -19,7 +19,7 @@ namespace btle {
             void deplete(std::vector<gattservicebase*>& services);
 
         private:
-            typedef gattservicebase* (*service_constructor);
+            typedef gattservicebase* (*service_constructor)();
             typedef std::set<service_constructor> constructors;
 
         private:

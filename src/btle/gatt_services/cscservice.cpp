@@ -1,11 +1,16 @@
 
 #include "btle/gatt_services/cscservice.h"
+#include "btle/gatt_services/gattserviceregisterer.h"
 
 #include <stdio.h>
 #include <string>
 #include <time.h>
 
 using namespace btle::gatt_services;
+
+namespace {
+    gattserviceregisterer<cscservice> registration;
+}
 
 cscservice::cscservice()
 : wheel_size_(2000),

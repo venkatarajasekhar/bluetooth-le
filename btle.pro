@@ -29,7 +29,9 @@ SOURCES += \
     src/btle/gatt_services/rscservice.cpp \
     src/btle/gatt_services/cscservice.cpp \
     src/btle/central/centralpluginfactory.cpp \
-    src/btle/central/collector.cpp
+    src/btle/central/collector.cpp \
+    src/btle/exceptions/attribute_not_found.cpp \
+    src/btle/exceptions/attribute_not_readable.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \
@@ -52,7 +54,9 @@ HEADERS += inc/btle/btle.h\
     inc/btle/gatt_services/rscservice.h \
     inc/btle/gatt_services/cscservice.h \
     inc/btle/central/collector.h \
-    internal/btle/central/centralpluginfactory.h
+    internal/btle/central/centralpluginfactory.h \
+    inc/btle/exceptions/attribute_not_found.h \
+    inc/btle/exceptions/attribute_not_readable.h
 
 unix {
     target.path = /usr/lib

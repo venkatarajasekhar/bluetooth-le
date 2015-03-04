@@ -10,15 +10,23 @@ namespace btle {
         service();
         service(const uuid& uid);
 
+    public:
+
         service& operator << (const characteristic& chr);
         service& operator << (const std::vector<characteristic>& chrs);
         bool operator == (const uuid& uid) const;
+        const std::vector<characteristic>& characteristics() const;
+        std::vector<characteristic>& characteristics();
+        const btle::uuid& uuid() const;
 
     private:
 
-        uuid uuid_;
+        btle::uuid uuid_;
         std::vector<characteristic> characteristics_;
     };
+
+    typedef std::vector<service>::const_iterator service_iterator_const;
+    typedef std::vector<service> service_list;
 }
 
 #endif // SERVICE_H

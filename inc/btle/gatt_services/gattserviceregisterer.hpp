@@ -16,7 +16,7 @@ template<typename T>
 gattserviceregisterer<T>::gattserviceregisterer()
 {
     gattservicefactory& instance = gattservicefactory::instance();
-    //instance.insert(constructor);
+    instance.insert(constructor);
 }
 
 template<typename T>

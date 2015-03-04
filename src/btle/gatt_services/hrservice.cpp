@@ -27,7 +27,7 @@ void hrservice::process_service_data(const uuid &chr, const uint8_t* data, size_
     {
         case HEART_RATE_MEASUREMENT:
         {
-            btle::gatt_services::hrfields flags_={0};
+            hrfields flags_={0};
             memcpy(&flags_,data,sizeof(flags_));
 
             int offset(sizeof(flags_));

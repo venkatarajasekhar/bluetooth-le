@@ -1,8 +1,14 @@
 
 #include "btle/gatt_services/rscservice.h"
+#include "btle/gatt_services/gattserviceregisterer.h"
+
 #include <stdio.h>
 
 using namespace btle::gatt_services;
+
+namespace {
+    gattserviceregisterer<rscservice> registration;
+}
 
 rscservice::rscservice()
 {

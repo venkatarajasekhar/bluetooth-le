@@ -8,7 +8,7 @@ service::service()
 {
 }
 
-service::service(const uuid& uid)
+service::service(const btle::uuid& uid)
 : base(),
   uuid_(uid)
 {
@@ -26,9 +26,24 @@ service& service::operator << (const std::vector<characteristic>& chrs)
     return *this;
 }
 
-bool service::operator == (const uuid& uid) const
+bool service::operator == (const btle::uuid& uid) const
 {
     return uuid_ == uid;
+}
+
+const std::vector<characteristic>& service::characteristics() const
+{
+    return characteristics_;
+}
+
+std::vector<characteristic>& service::characteristics()
+{
+    return characteristics_;
+}
+
+const btle::uuid& service::uuid() const
+{
+    return uuid_;
 }
 
 
