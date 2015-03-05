@@ -31,7 +31,10 @@ SOURCES += \
     src/btle/central/centralpluginfactory.cpp \
     src/btle/central/collector.cpp \
     src/btle/exceptions/attribute_not_found.cpp \
-    src/btle/exceptions/attribute_not_readable.cpp
+    src/btle/exceptions/attribute_not_readable.cpp \
+    src/btle/exceptions/attribute_not_writable.cpp \
+    src/btle/exceptions/device_not_connected.cpp \
+    src/btle/exceptions/link_not_active.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \
@@ -56,7 +59,12 @@ HEADERS += inc/btle/btle.h\
     inc/btle/central/collector.h \
     internal/btle/central/centralpluginfactory.h \
     inc/btle/exceptions/attribute_not_found.h \
-    inc/btle/exceptions/attribute_not_readable.h
+    inc/btle/exceptions/attribute_not_readable.h \
+    inc/btle/exceptions/attribute_not_writable.h \
+    inc/btle/exceptions/device_not_connected.h \
+    inc/btle/exceptions/link_not_active.h \
+    inc/btle/list_ext.h \
+    inc/btle/list_ext.hpp
 
 unix {
     target.path = /usr/lib

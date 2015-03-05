@@ -23,17 +23,18 @@ namespace btle {
         public:
             hrservice();
 
-        public: // api
-
-            int hr_value() const;
-
         public:
 
             void process_service_data(const uuid& chr, const uint8_t* data, size_t size);
 
+        public: // api
+
+            int hr_value() const;
+
         private:
 
             int hr_value_;
+            hrfields flags_;
         };
     }
 }

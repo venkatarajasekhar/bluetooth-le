@@ -3,6 +3,7 @@
 #include "btle/gatt_services/gattserviceregisterer.h"
 
 #include <stdio.h>
+#include <cstring>
 
 using namespace btle::gatt_services;
 
@@ -27,7 +28,7 @@ void hrservice::process_service_data(const uuid &chr, const uint8_t* data, size_
     {
         case HEART_RATE_MEASUREMENT:
         {
-            hrfields flags_={0};
+            memset(&flags_,0,sizeof(flags_));
             memcpy(&flags_,data,sizeof(flags_));
 
             int offset(sizeof(flags_));
