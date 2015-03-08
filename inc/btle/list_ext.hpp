@@ -43,7 +43,7 @@ std::deque<T>& list_ext<T>::operator()()
 }
 
 template <typename T>
-void list_ext<T>::set_compare(kCustomCompare comp)
+void list_ext<T>::set_compare(kComparator comp)
 {
     comp_ = comp;
 }

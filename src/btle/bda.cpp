@@ -56,3 +56,9 @@ std::string bda::to_string() const
     }
     else return value_;
 }
+
+bool bda::operator == (const bda& other) const
+{
+    return value_.compare(other.string_value()) != std::string::npos;//base::operator == (other);
+}
+

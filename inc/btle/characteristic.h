@@ -14,14 +14,14 @@ namespace btle {
      * bluetooth spec for more details
      */
     enum characteristic_properties{
-         GATT_Broadcast                        = 0x01,
-         GATT_Read                             = 0x02,
-         GATT_Write_Without_Resp               = 0x04,
-         GATT_Write                            = 0x08,
-         GATT_Notify                           = 0x10,
-         GATT_Indicate                         = 0x20,
-         GATT_Authenticated_Signed_Writes      = 0x40,
-         GATT_Extented_Properties              = 0x80
+         GATT_BROADCAST                        = 0x01,
+         GATT_READ                             = 0x02,
+         GATT_WRITE_WITHOUT_RESP               = 0x04,
+         GATT_WRITE                            = 0x08,
+         GATT_NOTIFY                           = 0x10,
+         GATT_INDICATE                         = 0x20,
+         GATT_AUTHENTICATED_SIGNED_WRITE       = 0x40,
+         GATT_EXTENDED_PROPERTIES              = 0x80
     };
 
     class characteristic: public base
@@ -46,6 +46,7 @@ namespace btle {
 
         // operators
         characteristic& operator << (const descriptor& desc);
+        bool operator == (const characteristic& other) const;
 
         bool contains_descriptor_type(uint16_t type) const;
 
@@ -63,6 +64,7 @@ namespace btle {
 
     };
 
+    typedef std::vector<characteristic>::iterator chr_iterator;
     typedef std::vector<characteristic>::const_iterator chr_iterator_const;
     typedef std::vector<characteristic> chr_list;
 }

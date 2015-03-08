@@ -29,7 +29,28 @@ gattdatabase& device::db()
     return db_;
 }
 
+const gattdatabase& device::db() const
+{
+    return db_;
+}
+
 connection_state device::state() const
 {
     return state_;
 }
+
+const bda& device::addr() const
+{
+    return bda_;
+}
+
+bool device::operator == (const device& other) const
+{
+    return bda_ == other.addr();
+}
+
+void device::set_state(connection_state state)
+{
+
+}
+

@@ -2,6 +2,7 @@
 #include "btle/central/collector.h"
 #include "btle/exceptions/attribute_not_found.h"
 #include "btle/exceptions/attribute_not_readable.h"
+#include "btle/exceptions/device_not_connected.h"
 
 using namespace btle::central;
 
@@ -15,7 +16,7 @@ void collector::set_scan_filter(const std::vector<uuid>& filter)
 
 }
 
-void collector::set_scan_filter(const uuid& uid)
+void collector::set_scan_filter(const std::vector<bda>& bdas)
 {
 
 }
@@ -52,16 +53,20 @@ void collector::disconnect_device(const bda& addr)
 
 void collector::read_characteristic_value(device& dev, const uuid& uid)
 {
-    if( const characteristic* chr = dev.db().fetch_characteristic(uid) )
+    if( dev.state() != btle::DEVICE_CONNECTED )
     {
-        if( chr->properties() & btle::GATT_Read )
+        if( const characteristic* chr = dev.db().fetch_characteristic(uid) )
         {
-            // TODO
-            return;
+            if( chr->properties() & btle::GATT_READ )
+            {
+                // TODO
+                return;
+            }
+            throw btle::exceptions::attribute_not_readable("this attribute cannot be read");
         }
-        throw btle::exceptions::attribute_not_readable("this attribute cannot be read");
+        throw btle::exceptions::attribute_not_found("device does not contain this uuid");
     }
-    throw btle::exceptions::attribute_not_found("device does not contain this uuid");
+    throw btle::exceptions::device_not_connected("device not connected");
 }
 
 void collector::read_characteristic_value(device& dev, const uuid_pair& pair)

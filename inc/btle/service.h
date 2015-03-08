@@ -25,6 +25,7 @@ namespace btle {
         std::vector<characteristic> characteristics_;
     };
 
+    typedef std::vector<service>::iterator service_iterator;
     typedef std::vector<service>::const_iterator service_iterator_const;
     typedef std::vector<service> service_list;
 }

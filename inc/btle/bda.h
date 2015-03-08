@@ -1,6 +1,7 @@
 #ifndef BDA_H
 #define BDA_H
 
+#include <vector>
 #include <stdint.h>
 #include "btle/base.h"
 
@@ -37,8 +38,13 @@ namespace btle {
 
         std::string to_string() const;
 
+        // operators
+        bool operator == (const bda& other) const;
+
     private:
         addr_type type_;
     };
+
+    typedef std::vector<bda> bda_list;
 }
 #endif // BDA_H

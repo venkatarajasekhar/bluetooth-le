@@ -8,7 +8,7 @@ namespace btle {
     class list_ext{
         typedef bool (*kComparator)( const T& first, const T& second );
         typedef typename std::deque<T>::iterator list_iterator;
-        typedef typename std::deque<T>::const_iterator list_const_iterator;
+        typedef typename std::deque<T>::const_iterator list_iterator_const;
         static bool default_compare(const T& first, const T& second)
         {
             return first == second;
@@ -16,7 +16,7 @@ namespace btle {
 
         list_ext();
         list_ext& operator << (const T& object);
-        list_ext& operator << (const cslist& other);
+        list_ext& operator << (const list_ext& other);
         const std::deque<T>& operator()() const;
         std::deque<T>& operator()();
         void set_compare(kComparator comp);

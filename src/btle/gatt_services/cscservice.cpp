@@ -2,6 +2,7 @@
 #include "btle/gatt_services/cscservice.h"
 #include "btle/gatt_services/gattserviceregisterer.h"
 
+#include <cstring>
 #include <stdio.h>
 #include <string>
 #include <time.h>
@@ -48,7 +49,7 @@ void cscservice::process_service_data(const uuid &chr, const uint8_t *data, size
         case CSC_MEASUREMENT:
         {
             int offset(1);
-            //memset(&csc_flags_,0,sizeof(csc_flags_));
+            memset(&flags_,0,sizeof(flags_));
             memcpy(&flags_,data,sizeof(flags_));
             if( flags_.wheel_revolutions_present_ )
             {

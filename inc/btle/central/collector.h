@@ -18,7 +18,7 @@ namespace btle {
         public:
 
             void set_scan_filter(const std::vector<uuid>& filter);
-            void set_scan_filter(const uuid& uid);
+            void set_scan_filter(const std::vector<bda>& bdas);
             void start_scan();
             void stop_scan();
 

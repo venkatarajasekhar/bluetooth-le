@@ -65,6 +65,11 @@ characteristic& characteristic::operator << (const descriptor& desc)
     return *this;
 }
 
+bool characteristic::operator == (const characteristic& other) const
+{
+    return uuid_ == other.uuid();
+}
+
 bool characteristic::contains_descriptor_type(uint16_t type) const
 {
     for( std::vector<descriptor>::const_iterator it = descriptors_.begin(); it != descriptors_.end(); ++it )

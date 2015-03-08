@@ -34,7 +34,10 @@ SOURCES += \
     src/btle/exceptions/attribute_not_readable.cpp \
     src/btle/exceptions/attribute_not_writable.cpp \
     src/btle/exceptions/device_not_connected.cpp \
-    src/btle/exceptions/link_not_active.cpp
+    src/btle/exceptions/link_not_active.cpp \
+    src/btle/exceptions/attribute_not_notifyable.cpp \
+    src/btle/rssifilter.cpp \
+    src/btle/version.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \
@@ -64,7 +67,11 @@ HEADERS += inc/btle/btle.h\
     inc/btle/exceptions/device_not_connected.h \
     inc/btle/exceptions/link_not_active.h \
     inc/btle/list_ext.h \
-    inc/btle/list_ext.hpp
+    inc/btle/list_ext.hpp \
+    inc/btle/exceptions/attribute_not_notifyable.h \
+    inc/btle/rssifilter.h \
+    inc/btle/version.h \
+    internal/btle/central/connectionhandlerobserver.h
 
 unix {
     target.path = /usr/lib
