@@ -3,20 +3,28 @@
 #include "btle/exceptions/attribute_not_found.h"
 #include "btle/exceptions/attribute_not_readable.h"
 #include "btle/exceptions/device_not_connected.h"
+#include "btle/gatt_services/gattservicefactory.h"
 
 using namespace btle::central;
 
 collector::collector()
 {
+    gatt_services::gatt_list services;
+    gatt_services::gattservicefactory::instance().populate(services);
+    for( gatt_services::gatt_list::iterator it = services.begin(); it != services.end(); ++it )
+    {
 
+       // notify_uuids_.push_back();
+    }
+    gatt_services::gattservicefactory::instance().deplete(services);
 }
 
-void collector::set_scan_filter(const std::vector<uuid>& filter)
+void collector::set_scan_filter(const uuid_list& filter)
 {
 
 }
 
-void collector::set_scan_filter(const std::vector<bda>& bdas)
+void collector::set_scan_filter(const bda_list &bdas)
 {
 
 }
@@ -62,7 +70,7 @@ void collector::read_characteristic_value(device& dev, const uuid& uid)
                 // TODO
                 return;
             }
-            throw btle::exceptions::attribute_not_readable("this attribute cannot be read");
+            throw btle::exceptions::attribute_not_readable("attribute cannot be read");
         }
         throw btle::exceptions::attribute_not_found("device does not contain this uuid");
     }

@@ -5,6 +5,7 @@
 #include "btle/advertisementdata.h"
 #include "btle/gattdatabase.h"
 #include "btle/bda.h"
+#include "btle/rssifilter.h"
 
 #include <map>
 
@@ -30,9 +31,17 @@ namespace btle {
 
         const std::string& name();
         const advertisementdata* advertisement_data_for_key(btle::advertisement_type key) const;
+        // database
         gattdatabase& db();
         const gattdatabase& db() const;
+        // rssi filter
+        rssifilter& rssi_filter();
+        const rssifilter& rssi_filter() const;
+        // connection state
         connection_state state() const;
+        std::string state_string() const;
+
+        // mac address
         const bda& addr() const;
 
         // operators
@@ -55,6 +64,7 @@ namespace btle {
         gattdatabase db_;
         connection_state state_;
         bda bda_;
+        rssifilter rssifilter_;
     };
 }
 

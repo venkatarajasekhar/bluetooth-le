@@ -8,7 +8,7 @@ namespace{
     #define Entry    -1
     #define Exit     -2
 
-    enum handler_action
+    enum connectionhandler_action
     {
         connect_device_action,
         advertisement_head_received_action,
@@ -72,21 +72,21 @@ void connectionhandler::free( device& dev, int action )
 
             break;
         }
-        case connect_device_action:
-        {
-            if( dev.state() == btle::DEVICE_DISCONNECTED )
-            {
-                change_device_state(dev,btle::DEVICE_CONNECTION_PARK);
-                observer_->scan_devices();
-            }
-            break;
-        }
         case advertisement_head_received_action:
         {
             if( dev.state() == btle::DEVICE_CONNECTION_PARK )
             {
                 // change state to connecting
                 change_state(connecting_,dev);
+            }
+            break;
+        }
+        case connect_device_action:
+        {
+            if( dev.state() == btle::DEVICE_DISCONNECTED )
+            {
+                change_device_state(dev,btle::DEVICE_CONNECTION_PARK);
+                observer_->scan_devices();
             }
             break;
         }
