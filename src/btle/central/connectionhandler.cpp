@@ -69,7 +69,7 @@ void connectionhandler::free( device& dev, int action )
     {
         case Entry:
         {
-
+            // TODO check pending disconnections
             break;
         }
         case advertisement_head_received_action:

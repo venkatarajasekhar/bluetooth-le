@@ -18,6 +18,10 @@ namespace btle {
         ADDR_PRIVATE_NONRESOLVE             = 0x02,  // Non-Resolvable Private Address
         ADDR_PRIVATE_RESOLVE                = 0x03   // Resolvable Private Address
     };
+
+    /**
+     * addr len in native format
+     */
     #define BDA_BIN_LENGTH 6
 
     class bda: public base

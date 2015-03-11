@@ -37,7 +37,11 @@ SOURCES += \
     src/btle/exceptions/link_not_active.cpp \
     src/btle/exceptions/attribute_not_notifyable.cpp \
     src/btle/rssifilter.cpp \
-    src/btle/version.cpp
+    src/btle/version.cpp \
+    src/btle/error.cpp \
+    src/btle/exceptions/service_not_found.cpp \
+    src/btle/exceptions/not_implemented.cpp \
+    src/btle/gatt_services/cyclingpowerservice.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \
@@ -71,7 +75,11 @@ HEADERS += inc/btle/btle.h\
     inc/btle/exceptions/attribute_not_notifyable.h \
     inc/btle/rssifilter.h \
     inc/btle/version.h \
-    internal/btle/central/connectionhandlerobserver.h
+    internal/btle/central/connectionhandlerobserver.h \
+    inc/btle/error.h \
+    inc/btle/exceptions/service_not_found.h \
+    inc/btle/exceptions/not_implemented.h \
+    inc/btle/gatt_services/cyclingpowerservice.h
 
 unix {
     target.path = /usr/lib

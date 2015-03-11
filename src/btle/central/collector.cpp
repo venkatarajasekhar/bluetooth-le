@@ -21,12 +21,12 @@ collector::collector()
 
 void collector::set_scan_filter(const uuid_list& filter)
 {
-
+    filter_ = filter;
 }
 
 void collector::set_scan_filter(const bda_list &bdas)
 {
-
+    bda_filter_ = bdas;
 }
 
 void collector::start_scan()

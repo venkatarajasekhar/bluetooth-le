@@ -40,8 +40,8 @@ namespace btle {
         #define CSC_MIN_SPEED_VALUE 2.5
         #define CSC_MAX_CEVENT_TIME 4
         #define CSC_MAX_EVENT_TIME  64.0
-        #define CSC_SPEED_UNINIT -1
-        #define CSC_CADENCE_UNINT -1
+        #define CSC_SPEED_UNINIT    -1
+        #define CSC_CADENCE_UNINT   -1
 
         class cscservice: public gattservicebase{
         public:
