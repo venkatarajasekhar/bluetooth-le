@@ -30,7 +30,6 @@ namespace btle {
             uint8_t reserved_:5;
         };
 
-        // RSC UUID's
         #define RSC_SERVICE                 0x1814
         #define RSC_MEASUREMENT             0x2A53
         #define RSC_FEATURE                 0x2A54

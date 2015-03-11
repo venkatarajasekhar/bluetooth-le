@@ -29,7 +29,6 @@ namespace btle {
             uint8_t reserved_:6;
         };
 
-        // CSC UUID's
         #define CSC_SERVICE                0x1816
         #define CSC_MEASUREMENT            0x2A5B
         #define CSC_FEATURE                0x2A5C
@@ -37,7 +36,7 @@ namespace btle {
         #define CSC_CONTOROL_POINT         0x2A55
 
         // CSC specific
-        #define CSC_MIN_SPEED_VALUE 2.5
+        #define CSC_MIN_SPEED_VALUE 2.0
         #define CSC_MAX_CEVENT_TIME 4
         #define CSC_MAX_EVENT_TIME  64.0
         #define CSC_SPEED_UNINIT    -1
