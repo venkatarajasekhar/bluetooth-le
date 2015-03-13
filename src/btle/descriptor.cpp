@@ -39,4 +39,14 @@ uint16_t descriptor::handle() const
     return handle_;
 }
 
+bool descriptor::is_notifying() const
+{
+    return is_notifying_;
+}
+
+void descriptor::set_notifying( bool notifying )
+{
+    is_notifying_ = notifying;
+}
+
 

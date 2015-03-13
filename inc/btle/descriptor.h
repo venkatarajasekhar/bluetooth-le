@@ -25,10 +25,13 @@ namespace btle {
 
         uint16_t type() const;
         uint16_t handle() const;
+        bool is_notifying() const;
+        void set_notifying(bool notifying);
 
     private:
         uint16_t type_;
         uint16_t handle_;
+        bool is_notifying_;
     };
 }
 

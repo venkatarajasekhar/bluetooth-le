@@ -11,9 +11,7 @@ namespace btle {
         public:
 
             centralpluginfactory& instance();
-
             void populate(std::vector<centralplugininterface>& plugins);
-
             void deplete(std::vector<centralplugininterface>& plugins);
 
         private:

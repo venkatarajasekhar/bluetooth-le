@@ -31,20 +31,13 @@ namespace btle {
 
         const std::string& name();
         const advertisementdata* advertisement_data_for_key(btle::advertisement_type key) const;
-        // database
         gattdatabase& db();
         const gattdatabase& db() const;
-        // rssi filter
         rssifilter& rssi_filter();
         const rssifilter& rssi_filter() const;
-        // connection state
         connection_state state() const;
         std::string state_string() const;
-
-        // mac address
         const bda& addr() const;
-
-        // operators
         bool operator == (const device& other) const;
 
     public:
@@ -66,6 +59,10 @@ namespace btle {
         bda bda_;
         rssifilter rssifilter_;
     };
+
+    typedef std::vector<device*> device_list;
+    typedef std::vector<device*>::iterator device_iterator;
+    typedef std::vector<device*>::const_iterator device_iterator_const;
 }
 
 #endif // DEVICE_H

@@ -6,7 +6,7 @@ using namespace btle::gatt_services;
 
 cyclingpowerservice::cyclingpowerservice()
 {
-
+    service_ = CYCLING_POWER_SERVICE;
 }
 
 void cyclingpowerservice::process_service_data(const uuid &chr, const uint8_t *data, size_t size)
@@ -86,4 +86,84 @@ void cyclingpowerservice::process_service_data(const uuid &chr, const uint8_t *d
             break;
         }
     }
+}
+
+int16_t cyclingpowerservice::instantaneous_power() const
+{
+    return inst_power_;
+}
+
+const powerflags& cyclingpowerservice::flags() const
+{
+    return flags_;
+}
+
+double cyclingpowerservice::pedal_power_balance() const
+{
+    return pedal_power_balance_;
+}
+
+double cyclingpowerservice::accumulated_torque() const
+{
+    return accumulated_torque_;
+}
+
+int16_t cyclingpowerservice::maximum_force() const
+{
+    return maximum_force_;
+}
+
+int16_t cyclingpowerservice::minimum_force() const
+{
+    return minimum_force_;
+}
+
+double cyclingpowerservice::maximum_torque() const
+{
+    return maximum_torque_;
+}
+
+double cyclingpowerservice::minimum_torque() const
+{
+    return minimum_torque_;
+}
+
+uint16_t cyclingpowerservice::maximum_angle() const
+{
+    return maximum_torque_;
+}
+
+uint16_t cyclingpowerservice::minimum_angle() const
+{
+    return minimum_angle_;
+}
+
+uint16_t cyclingpowerservice::top_dead_spot_angle() const
+{
+    return top_dead_spot_angle_;
+}
+
+uint16_t cyclingpowerservice::bottom_dead_spot_angle() const
+{
+    return bottom_dead_spot_angle_;
+}
+
+uint16_t cyclingpowerservice::accumulated_energy() const
+{
+    return accumulated_energy_;
+}
+
+uint16_t cyclingpowerservice::first_cranck_measurement_angle() const
+{
+    return first_cranck_measurement_angle_;
+}
+
+std::vector<int16_t> cyclingpowerservice::inst_force_magnitude_array() const
+{
+    return inst_force_magnitude_array_;
+}
+
+std::vector<double> cyclingpowerservice::inst_torque_magnitude_array() const
+{
+    return inst_torque_magnitude_array_;
 }

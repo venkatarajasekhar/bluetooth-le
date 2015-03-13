@@ -66,6 +66,25 @@ namespace btle {
 
             void process_service_data(const uuid& chr, const uint8_t* data, size_t size);
 
+        public: // api
+
+            int16_t instantaneous_power() const;
+            const powerflags &flags() const;
+            double pedal_power_balance() const;
+            double accumulated_torque() const;
+            int16_t maximum_force() const;
+            int16_t minimum_force() const;
+            double maximum_torque() const;
+            double minimum_torque() const;
+            uint16_t maximum_angle() const;
+            uint16_t minimum_angle() const;
+            uint16_t top_dead_spot_angle() const;
+            uint16_t bottom_dead_spot_angle() const;
+            uint16_t accumulated_energy() const;
+            uint16_t first_cranck_measurement_angle() const;
+            std::vector<int16_t> inst_force_magnitude_array() const;
+            std::vector<double> inst_torque_magnitude_array() const;
+
         private:
 
             uint16_t offset_compensation_indicator_;
@@ -85,7 +104,6 @@ namespace btle {
             uint16_t accumulated_energy_;
             uint8_t response_value_;
             uint16_t first_cranck_measurement_angle_;
-            double power_balance_;
             std::vector<int16_t> inst_force_magnitude_array_;
             std::vector<double> inst_torque_magnitude_array_;
         };

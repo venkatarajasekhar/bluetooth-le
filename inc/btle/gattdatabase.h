@@ -13,10 +13,13 @@ namespace btle {
 
         gattdatabase& operator << (const service& srv);
 
-    public:
+    public: // api
 
-        const characteristic* fetch_characteristic(const uuid& uid);
-        const characteristic* fetch_characteristic(const uuid_pair& pair);
+        const characteristic* fetch_characteristic(const uuid& uid) const;
+        const characteristic* fetch_characteristic(const uuid_pair& pair) const;
+
+        const service* fetch_service(const uuid& uid) const;
+        const service* fetch_service_by_chr_uuid(const uuid& uid) const;
 
     private:
 

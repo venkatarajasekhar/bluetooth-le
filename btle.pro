@@ -79,7 +79,9 @@ HEADERS += inc/btle/btle.h\
     inc/btle/error.h \
     inc/btle/exceptions/service_not_found.h \
     inc/btle/exceptions/not_implemented.h \
-    inc/btle/gatt_services/cyclingpowerservice.h
+    inc/btle/gatt_services/cyclingpowerservice.h \
+    inc/btle/verify.h \
+    internal/btle/central/centralpluginobserver.h
 
 unix {
     target.path = /usr/lib
