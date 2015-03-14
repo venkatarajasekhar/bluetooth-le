@@ -3,10 +3,11 @@
 
 #include <stdexcept>
 #include <string>
+#include "btle_global.h"
 
 namespace btle {
     namespace exceptions {
-        class device_not_connected: public std::runtime_error{
+        class BTLE_API device_not_connected: public std::runtime_error{
         public:
             explicit device_not_connected(const std::string& what);
             device_not_connected();

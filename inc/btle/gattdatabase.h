@@ -5,7 +5,7 @@
 #include "btle/service.h"
 
 namespace btle {
-    class gattdatabase: public base {
+    class BTLE_API gattdatabase: public base {
     public:
         gattdatabase();
 

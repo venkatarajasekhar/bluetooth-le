@@ -3,10 +3,11 @@
 
 #include <stdexcept>
 #include <string>
+#include "btle_global.h"
 
 namespace btle {
     namespace exceptions {
-        class attribute_not_found: public std::runtime_error{
+        class BTLE_API attribute_not_found: public std::runtime_error{
         public:
             explicit attribute_not_found(const std::string& what);
             attribute_not_found();

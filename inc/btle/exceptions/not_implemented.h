@@ -3,10 +3,11 @@
 
 #include <stdexcept>
 #include <string>
+#include "btle_global.h"
 
 namespace btle {
     namespace exceptions {
-        class not_implemented: public std::runtime_error{
+        class BTLE_API not_implemented: public std::runtime_error{
         public:
             explicit not_implemented(const std::string& what);
             not_implemented();

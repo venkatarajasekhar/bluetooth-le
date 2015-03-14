@@ -21,7 +21,7 @@ namespace btle {
         DEVICE_CONNECTION_PARK
     };
 
-    class device: public base
+    class BTLE_API device: public base
     {
     public:
         device();
@@ -38,6 +38,8 @@ namespace btle {
         connection_state state() const;
         std::string state_string() const;
         const bda& addr() const;
+        bool is_service_advertiset(const uuid& uid) const;
+
         bool operator == (const device& other) const;
 
     public:

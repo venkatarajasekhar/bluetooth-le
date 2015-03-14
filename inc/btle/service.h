@@ -5,7 +5,7 @@
 #include "btle/characteristic.h"
 
 namespace btle {
-    class service: public base{
+    class BTLE_API service: public base{
     public:
         service();
         service(const uuid& uid);

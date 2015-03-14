@@ -4,7 +4,7 @@
 #include "btle/base.h"
 
 namespace btle {
-    class error: public base{
+    class BTLE_API error: public base{
     public:
         error();
         error(const error& other);

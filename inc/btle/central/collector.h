@@ -5,6 +5,7 @@
 #include "btle/device.h"
 #include "btle/bda.h"
 #include "btle/central/centralplugininterface.h"
+#include "btle/central/centralpluginobserver.h"
 #include "btle/central/connectionhandler.h"
 
 namespace btle {
@@ -12,7 +13,7 @@ namespace btle {
         /**
          * @brief The collector class, main interface class for lib central usage
          */
-        class collector{
+        class BTLE_API collector: public centralpluginobserver{
         public:
 
             collector();
@@ -39,6 +40,10 @@ namespace btle {
             void write_characteristic_value(device& dev, const uuid_pair& pair, const std::string& data, bool write_with_out_resp = false);
             void set_characteristic_notify(device& dev, const uuid& uid, bool notify);
             void set_characteristic_notify(device& dev, const uuid_pair& pair, bool notify);
+
+        private: // from observer
+
+            void device_discovered(device& dev);
 
         private:
 

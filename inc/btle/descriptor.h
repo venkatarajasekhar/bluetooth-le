@@ -12,7 +12,7 @@ namespace btle {
     #define CHARACTERISTIC_FORMAT                0x2904
     #define CHARACTERISTIC_AGGREGATE_FORMAT      0x2905
 
-    class descriptor: public base
+    class BTLE_API descriptor: public base
     {
     public:
         descriptor();

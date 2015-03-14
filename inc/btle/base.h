@@ -8,7 +8,7 @@ namespace btle {
     /**
      * @brief The base class, common base class for most btle lib classes
      */
-    class base
+    class BTLE_API base
     {
     public:
         base();

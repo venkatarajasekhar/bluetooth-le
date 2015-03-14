@@ -10,7 +10,7 @@ namespace btle {
     #define UUID_128_BIN_LENGTH 16
     #define UUID_16_BIN_LENGTH  2
 
-    class uuid: public base
+    class BTLE_API uuid: public base
     {
     public:
         uuid();
@@ -41,6 +41,8 @@ namespace btle {
 
     typedef std::pair<uuid,uuid> uuid_pair;
     typedef std::vector<uuid> uuid_list;
+    typedef std::vector<uuid>::iterator uuid_iterator;
+    typedef std::vector<uuid>::const_iterator uuid_iterator_const;
 }
 
 #endif // UUID_H

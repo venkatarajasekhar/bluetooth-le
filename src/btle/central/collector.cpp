@@ -18,8 +18,11 @@ collector::collector()
     gatt_services::gattservicefactory::instance().populate(services);
     for( gatt_services::gatt_list::iterator it = services.begin(); it != services.end(); ++it )
     {
-
-       // notify_uuids_.push_back();
+        for( uuid_iterator_const it_uuid = (*it)->mandatory_notifications().begin();
+             it_uuid != (*it)->mandatory_notifications().end(); ++it_uuid )
+        {
+            notify_uuids_.push_back(*it_uuid);
+        }
     }
     gatt_services::gattservicefactory::instance().deplete(services);
 }
@@ -263,11 +266,33 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
 
 }
 
-/**
- * @brief collector::fetch_device
- * @param addr
- * @return
- */
+void collector::device_discovered(device& dev)
+{
+    // check first bda list
+    if( bda_filter_.size() )
+    {
+        for( bda_iterator_const it = bda_filter_.begin(); it != bda_filter_.end(); ++it )
+        {
+            if( (*it) == dev.addr() )
+            {
+                // propagate callback
+                return;
+            }
+        }
+    }
+    if( filter_.size() )
+    {
+        for( uuid_iterator_const it = filter_.begin(); it != filter_.end(); ++it )
+        {
+            if( dev.is_service_advertiset((*it)) )
+            {
+                // propagate callback
+                return;
+            }
+        }
+    }
+}
+
 btle::device* collector::fetch_device(const bda& addr)
 {
     verify(plugin_)

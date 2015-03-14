@@ -7,7 +7,12 @@
 #include "btle_global.h"
 
 namespace btle {
-    class rssifilter{
+
+    /**
+     * @brief The rssifilter class, general purpose rssi filter, for list view etc.. for sorting device
+     * based on rssi please prefer median or mean median rssi values for stability reasons
+     */
+    class BTLE_API rssifilter{
     public:
         rssifilter();
 

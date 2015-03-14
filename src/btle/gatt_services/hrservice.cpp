@@ -17,9 +17,40 @@ hrservice::hrservice()
     service_ = (HEART_RATE_SERVICE);
 }
 
+/**
+ * @brief hrservice::hr_value, current hr in bpm
+ * @return
+ */
 int hrservice::hr_value() const
 {
     return hr_value_;
+}
+
+/**
+ * @brief hrservice::sensor_contact, contact status true ok false bad
+ * @return
+ */
+bool hrservice::sensor_contact() const
+{
+    return flags_.sensor_contact_bit_ != 0;
+}
+
+/**
+ * @brief hrservice::rr_values, rr values in milliseconds
+ * @return
+ */
+const std::vector<int> hrservice::rr_values() const
+{
+    return rrs_;
+}
+
+/**
+ * @brief hrservice::energy_expeneded
+ * @return
+ */
+int hrservice::energy_expeneded() const
+{
+    return energy_expended_;
 }
 
 void hrservice::process_service_data(const uuid &chr, const uint8_t* data, size_t size)
@@ -37,11 +68,11 @@ void hrservice::process_service_data(const uuid &chr, const uint8_t* data, size_
 
             if ( flags_.energy_expended_bit_ )
             {
-                uint16_t energy_expended_(0);
                 memcpy(&energy_expended_,data+offset,sizeof(energy_expended_));
                 offset += sizeof(energy_expended_);
             }
 
+            rrs_.clear();
             if( flags_.rr_interval_bit_ )
             {
                 while( offset < (int)size )
@@ -50,6 +81,7 @@ void hrservice::process_service_data(const uuid &chr, const uint8_t* data, size_
                     memcpy(&rr_value,data+offset,2);
                     double tmp=((double)rr_value/1024.0)*1000.0;
                     rr_value = (uint16_t)tmp;
+                    rrs_.push_back(rr_value);
                 }
             }
             break;

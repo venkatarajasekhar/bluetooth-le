@@ -3,10 +3,11 @@
 
 #include <stdexcept>
 #include <string>
+#include "btle_global.h"
 
 namespace btle {
     namespace exceptions {
-        class service_not_found: public std::runtime_error{
+        class BTLE_API service_not_found: public std::runtime_error{
         public:
             explicit service_not_found(const std::string& what);
             service_not_found();

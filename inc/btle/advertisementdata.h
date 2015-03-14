@@ -34,7 +34,7 @@ namespace btle{
         GAP_ADTYPE_MANUFACTURER_SPECIFIC        = 0xFF
     };
 
-    class advertisementdata: public base
+    class BTLE_API advertisementdata: public base
     {
     public:
         advertisementdata();

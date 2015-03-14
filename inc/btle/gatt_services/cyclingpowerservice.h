@@ -58,7 +58,7 @@ namespace btle {
             uint8_t reserved_:2;
         };
 
-        class cyclingpowerservice: public gattservicebase{
+        class BTLE_API cyclingpowerservice: public gattservicebase{
         public:
             cyclingpowerservice();
 

@@ -2,9 +2,10 @@
 #define VERSION_H
 
 #include <string>
+#include "btle_global.h"
 
 namespace btle {
-    class version{
+    class BTLE_API version{
     public:
 
         static const std::string& version_string();

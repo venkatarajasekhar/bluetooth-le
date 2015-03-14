@@ -1,12 +1,18 @@
 
 #include "btle/gatt_services/cyclingpowerservice.h"
+#include "btle/gatt_services/gattserviceregisterer.h"
 #include <cstring>
 
 using namespace btle::gatt_services;
 
+namespace {
+    gattserviceregisterer<cyclingpowerservice> registration;
+}
+
 cyclingpowerservice::cyclingpowerservice()
 {
     service_ = CYCLING_POWER_SERVICE;
+    mandatory_notifications_.push_back(CYCLING_POWER_MEASUREMENT);
 }
 
 void cyclingpowerservice::process_service_data(const uuid &chr, const uint8_t *data, size_t size)

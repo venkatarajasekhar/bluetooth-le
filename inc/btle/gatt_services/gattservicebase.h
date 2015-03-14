@@ -6,7 +6,7 @@
 
 namespace btle {
     namespace gatt_services {
-        class gattservicebase: public base{
+        class BTLE_API gattservicebase: public base{
         public:
             gattservicebase();
 

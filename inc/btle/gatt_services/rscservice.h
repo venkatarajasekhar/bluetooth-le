@@ -36,7 +36,7 @@ namespace btle {
         #define RSC_SENSOR_LOCATION         0x2A5D
         #define RSC_CS_CONTROL_POINT        0x2A55
 
-        class rscservice: public gattservicebase{
+        class BTLE_API rscservice: public gattservicebase{
         public:
             rscservice();
 

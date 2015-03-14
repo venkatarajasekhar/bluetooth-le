@@ -31,16 +31,13 @@ rssifilter& rssifilter::operator << (int rssi)
             medians_.push_back(median_);
             if( medians_.size() >= 2 )
             {
+                if( medians_.size() > 3 ) medians_.pop_front();
                 int msize( medians_.size() );
                 mean_median_ = (medians_[msize-1] + medians_[msize-2])/2.0;
             }
             else
             {
                 mean_median_ = median_;
-            }
-            if( medians_.size() >= 3 )
-            {
-                medians_.pop_front();
             }
         }
         else

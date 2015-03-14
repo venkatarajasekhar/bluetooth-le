@@ -24,7 +24,7 @@ namespace btle {
      */
     #define BDA_BIN_LENGTH 6
 
-    class bda: public base
+    class BTLE_API bda: public base
     {
     public:
         bda();
@@ -50,5 +50,7 @@ namespace btle {
     };
 
     typedef std::vector<bda> bda_list;
+    typedef std::vector<bda>::iterator bda_iterator;
+    typedef std::vector<bda>::const_iterator bda_iterator_const;
 }
 #endif // BDA_H

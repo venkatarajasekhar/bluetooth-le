@@ -24,7 +24,7 @@ namespace btle {
          GATT_EXTENDED_PROPERTIES              = 0x80
     };
 
-    class characteristic: public base
+    class BTLE_API characteristic: public base
     {
     public:
         characteristic();

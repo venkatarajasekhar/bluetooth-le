@@ -8,7 +8,7 @@
 
 namespace btle {
     namespace gatt_services {
-        class gattservicefactory{
+        class BTLE_API gattservicefactory{
         public:
 
             static gattservicefactory& instance();

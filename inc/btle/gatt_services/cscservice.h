@@ -42,7 +42,7 @@ namespace btle {
         #define CSC_SPEED_UNINIT    -1
         #define CSC_CADENCE_UNINT   -1
 
-        class cscservice: public gattservicebase{
+        class BTLE_API cscservice: public gattservicebase{
         public:
             cscservice();
 

@@ -19,7 +19,7 @@ namespace btle {
         #define HEART_RATE_MEASUREMENT      0x2A37
         #define HEART_RATE_CONTROL_POINT    0x2A39
 
-        class hrservice: public gattservicebase{
+        class BTLE_API hrservice: public gattservicebase{
         public:
             hrservice();
 
@@ -30,11 +30,16 @@ namespace btle {
         public: // api
 
             int hr_value() const;
+            bool sensor_contact() const;
+            const std::vector<int> rr_values() const;
+            int energy_expeneded() const;
 
         private:
 
             int hr_value_;
             hrfields flags_;
+            std::vector<int> rrs_;
+            uint16_t energy_expended_;
         };
     }
 }
