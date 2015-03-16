@@ -24,7 +24,9 @@ namespace btle {
             uuid service_;
         };
 
-        typedef std::vector<gattservicebase*> gatt_list;
+        typedef std::vector<gattservicebase*> gatt_service_list;
+        typedef std::vector<gattservicebase*>::iterator gatt_service_iterator;
+        typedef std::vector<gattservicebase*>::const_iterator gatt_service_iterator_const;
     }
 }
 

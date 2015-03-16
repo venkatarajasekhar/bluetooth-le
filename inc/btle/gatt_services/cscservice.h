@@ -59,16 +59,16 @@ namespace btle {
 
         public: // API
 
-            const cscfields& csc_flags();
-            double speed();
-            int cadence();
-            double distance();
-            double total_distance();
-            bool is_speed_present();
-            bool is_cadence_present();
-            unsigned int wheel_revolutions();
-            unsigned int cranck_revolutions();
-            csc_cs_operation completed_operation();
+            const cscfields& csc_flags() const;
+            double speed() const;
+            int cadence() const;
+            double distance() const;
+            double total_distance() const;
+            bool is_speed_present() const;
+            bool is_cadence_present() const;
+            unsigned int wheel_revolutions() const;
+            unsigned int cranck_revolutions() const;
+            csc_cs_operation completed_operation() const;
 
         private:
 

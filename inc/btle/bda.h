@@ -11,7 +11,7 @@ namespace btle {
      * @brief The addr_type enum bluetooth address type, check from bluetooth spec for deeper understanding
      * NOTE not all platforms support this!
      */
-    enum addr_type
+    enum address_type
     {
         ADDR_PUBLIC                         = 0x00,  // Public Address
         ADDR_STATIC                         = 0x01,  // Static address
@@ -24,19 +24,25 @@ namespace btle {
      */
     #define BDA_BIN_LENGTH 6
 
+    /**
+     * @brief The bda class, bda is the "unique" identifier of the device,
+     * this is in untouched format e.g in iOS/MAC where you do not get the real
+     * bda, but you get the generated uuid( this is considered bda ). in Android you get
+     * bda in string format e.g 00:11:22:33:44:55 etc...
+     */
     class BTLE_API bda: public base
     {
     public:
         bda();
         bda(const std::string& bda_str);
-        bda(const std::string& bda_str, addr_type type);
-        bda(const char bda_strc[BDA_BIN_LENGTH] , addr_type type);
+        bda(const std::string& bda_str, address_type type);
+        bda(const char bda_strc[BDA_BIN_LENGTH] , address_type type);
         bda(const bda& other);
         ~bda();
 
     public: //
 
-        addr_type type() const;
+        address_type type() const;
 
     public: // override from base
 
@@ -46,7 +52,7 @@ namespace btle {
         bool operator == (const bda& other) const;
 
     private:
-        addr_type type_;
+        address_type type_;
     };
 
     typedef std::vector<bda> bda_list;

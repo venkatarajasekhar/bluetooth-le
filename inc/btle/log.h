@@ -40,7 +40,6 @@ namespace btle {
              ~logfunc();
         private:
         const char* func_name_;
-        const char* component_;
     };
 
 
@@ -50,11 +49,11 @@ namespace btle {
     ___func;
 
     #ifdef _MSC_VER
-    #define _log(...) log::instance().trace("INFO",__FUNCTION__,__VA_ARGS__);
+    #define _log(...) log::instance().trace("LOG",__FUNCTION__,__VA_ARGS__);
     #define _log_warning(...) log::instance().trace("WARNING",__VA_ARGS__);
     #define _log_error(...) log::instance().trace("ERROR",__VA_ARGS__);
     #elif __GNUC__
-    #define _log(...) log::instance().trace("INFO",__FUNCTION__,##__VA_ARGS__);
+    #define _log(...) log::instance().trace("LOG",__FUNCTION__,##__VA_ARGS__);
     #define _log_warning(...) log::instance().trace("WARNING",##__VA_ARGS__);
     #define _log_error(...) log::instance().trace("ERROR",##__VA_ARGS__);
     #endif

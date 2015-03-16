@@ -1,7 +1,9 @@
 
 #include "btle/device.h"
+#include "btle/gatt_services/gattservicefactory.h"
 
 using namespace btle;
+using namespace btle::gatt_services;
 
 namespace{
     const char* state2string(connection_state state)
@@ -18,14 +20,27 @@ namespace{
     }
 }
 
-device::device()
+device::device(const bda &addr)
+: advertisement_data_(),
+  name_(),
+  db_(),
+  state_(DEVICE_DISCONNECTED),
+  bda_(addr),
+  rssifilter_(),
+  gatt_services_()
 {
+    gattservicefactory::instance().populate(gatt_services_);
 }
 
 device::~device()
 {
+    gattservicefactory::instance().deplete(gatt_services_);
 }
 
+/**
+ * @brief device::name, name from advertisement data, if any
+ * @return
+ */
 const std::string& device::name()
 {
     return name_;
@@ -99,6 +114,16 @@ bool device::is_service_advertiset(const uuid& uid) const
 //        else return advertisement_data_[btle::GAP_ADTYPE_128BIT_COMPLETE] == uid;
     }
     return false;
+}
+
+const gatt_services::gattservicebase* device::gatt_service(const uuid& uid) const
+{
+    return NULL;
+}
+
+gatt_services::gattservicebase* device::gatt_service(const uuid& uid)
+{
+    return NULL;
 }
 
 bool device::operator == (const device& other) const

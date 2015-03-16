@@ -63,16 +63,7 @@ void cscservice::process_service_data(const uuid &chr, const uint8_t *data, size
         }
         case CSC_CONTOROL_POINT:
         {
-            pending_operation_ = CSC_CS_NONE;
-            if( *(data + 2) == 0x01 ) // OK
-            {
-                completed_operation_ = (csc_cs_operation)*(data+1);
-            }
-            else // FAIL
-            {
-                // save error code
-                completed_operation_ = CSC_CS_FAILED;
-            }
+            // TODO implement properly
             break;
         }
     default:
@@ -99,35 +90,27 @@ int cscservice::process_speed_measurement(const uint8_t* msg, int offset)
     else
     {
         double event_diff = curr_wheel_event_;
-
         if( prev_wheel_event_ )
         {
             if( prev_wheel_event_ <= curr_wheel_event_ )
                 event_diff = curr_wheel_event_ - prev_wheel_event_;
             else
             {
-                // rollover
                 event_diff = curr_wheel_event_ + ( ((double)0xFFFF/1024.0) - prev_wheel_event_);
             }
         }
-
         unsigned int wheel_rounds = curr_wheel_revs_ - prev_wheel_revs_;
-
         if( curr_wheel_revs_ < prev_wheel_revs_ )
         {
             prev_wheel_revs_ = curr_wheel_revs_;
             wheel_rounds = 0;
         }
-
         if( wheel_rounds > 0 )
         {
             wheel_rounds_ = wheel_rounds;
         }
-
         exer_wheel_revs_ += wheel_rounds;
-
         double speed = 0;
-
         if( (!event_diff || !wheel_rounds) && (abs_time-wheel_event_) < max_wheel_time_ )
         {
             speed = speed_;
@@ -138,14 +121,11 @@ int cscservice::process_speed_measurement(const uint8_t* msg, int offset)
             speed = ((((double)wheel_size_*0.001)*wheel_rounds)/event_diff)*3.6;
             wheel_event_ = abs_time;
         }
-
         speed_ = speed;
         distance_ = ((double)wheel_size_*0.001)*exer_wheel_revs_;
         total_distance_ = ((double)wheel_size_*0.001)*curr_wheel_revs_;
     }
-
     offset += 2;
-
     return offset;
 }
 
@@ -209,47 +189,63 @@ int cscservice::process_cadence_measurement(const uint8_t *msg, int offset)
     return offset;
 }
 
-double cscservice::speed()
+/**
+ * @brief cscservice::speed, in km/h
+ * @return
+ */
+double cscservice::speed() const
 {
     return speed_;
 }
 
-int cscservice::cadence()
+/**
+ * @brief cscservice::cadence, RPM
+ * @return
+ */
+int cscservice::cadence() const
 {
     return cadence_;
 }
 
-double cscservice::distance()
+/**
+ * @brief cscservice::distance, meters, current session/connection distance
+ * @return
+ */
+double cscservice::distance() const
 {
     return distance_;
 }
 
-double cscservice::total_distance()
+/**
+ * @brief cscservice::total_distance, sensors life time distance
+ * @return
+ */
+double cscservice::total_distance() const
 {
     return total_distance_;
 }
 
-bool cscservice::is_speed_present()
+bool cscservice::is_speed_present() const
 {
     return flags_.wheel_revolutions_present_ != 0;
 }
 
-bool cscservice::is_cadence_present()
+bool cscservice::is_cadence_present() const
 {
     return flags_.cranck_revolutions_present_ != 0;
 }
 
-unsigned int cscservice::wheel_revolutions()
+unsigned int cscservice::wheel_revolutions() const
 {
     return curr_wheel_revs_;
 }
 
-unsigned int cscservice::cranck_revolutions()
+unsigned int cscservice::cranck_revolutions() const
 {
     return curr_crank_revs_;
 }
 
-csc_cs_operation cscservice::completed_operation()
+csc_cs_operation cscservice::completed_operation() const
 {
     return completed_operation_;
 }

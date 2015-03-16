@@ -11,12 +11,13 @@
 #include "btle/verify.h"
 
 using namespace btle::central;
+using namespace btle::gatt_services;
 
 collector::collector()
 {
-    gatt_services::gatt_list services;
-    gatt_services::gattservicefactory::instance().populate(services);
-    for( gatt_services::gatt_list::iterator it = services.begin(); it != services.end(); ++it )
+    gatt_service_list services;
+    gattservicefactory::instance().populate(services);
+    for( gatt_service_iterator it = services.begin(); it != services.end(); ++it )
     {
         for( uuid_iterator_const it_uuid = (*it)->mandatory_notifications().begin();
              it_uuid != (*it)->mandatory_notifications().end(); ++it_uuid )
@@ -24,7 +25,7 @@ collector::collector()
             notify_uuids_.push_back(*it_uuid);
         }
     }
-    gatt_services::gattservicefactory::instance().deplete(services);
+    gattservicefactory::instance().deplete(services);
 }
 
 /**
@@ -189,14 +190,11 @@ void collector::write_characteristic_value(device& dev, const uuid& uid, const s
                     return;
                 }
             }
-            else
+            if( chr->properties() & btle::GATT_WRITE_WITHOUT_RESP )
             {
-                if( chr->properties() & btle::GATT_WRITE_WITHOUT_RESP )
-                {
-                    verify( const service* srv = dev.db().fetch_service_by_chr_uuid(uid) );
-                    plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE_WITHOUT_RESP);
-                    return;
-                }
+                verify( const service* srv = dev.db().fetch_service_by_chr_uuid(uid) );
+                plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE_WITHOUT_RESP);
+                return;
             }
             throw btle::exceptions::attribute_not_writable("attribute cannot be written");
         }
@@ -226,14 +224,11 @@ void collector::write_characteristic_value(device& dev, const uuid_pair& pair, c
                     return;
                 }
             }
-            else
+            if( chr->properties() & btle::GATT_WRITE_WITHOUT_RESP )
             {
-                if( chr->properties() & btle::GATT_WRITE_WITHOUT_RESP )
-                {
-                    verify( const service* srv = dev.db().fetch_service(pair.first) );
-                    plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE_WITHOUT_RESP);
-                    return;
-                }
+                verify( const service* srv = dev.db().fetch_service(pair.first) );
+                plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE_WITHOUT_RESP);
+                return;
             }
             throw btle::exceptions::attribute_not_writable("attribute cannot be written");
         }

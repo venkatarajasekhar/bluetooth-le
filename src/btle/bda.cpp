@@ -20,13 +20,13 @@ bda::bda(const std::string& bda_str)
 {
 }
 
-bda::bda(const std::string& bda_str, addr_type type)
+bda::bda(const std::string& bda_str, address_type type)
 : base(bda_str,""),
   type_(type)
 {
 }
 
-bda::bda(const char bda_strc[BDA_BIN_LENGTH] , addr_type type)
+bda::bda(const char bda_strc[BDA_BIN_LENGTH] , address_type type)
 : base(std::string(bda_strc,BDA_BIN_LENGTH),""),
   type_(type)
 {
@@ -38,7 +38,7 @@ bda::bda(const bda& other)
 {
 }
 
-addr_type bda::type() const
+address_type bda::type() const
 {
     return type_;
 }
