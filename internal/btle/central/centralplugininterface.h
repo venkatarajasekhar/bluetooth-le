@@ -62,6 +62,12 @@ namespace btle {
             virtual void cancel_pending_connection(device& dev)=0;
 
             /**
+             * @brief discover_characteristics
+             * @param dev
+             */
+            virtual void discover_characteristics(device& dev, const service& srv)= 0;
+
+            /**
              * @brief read_characteristic_value
              */
             virtual void read_characteristic_value(device& dev,const service& srv, const characteristic& chr) = 0;

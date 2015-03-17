@@ -118,11 +118,25 @@ bool device::is_service_advertiset(const uuid& uid) const
 
 const gatt_services::gattservicebase* device::gatt_service(const uuid& uid) const
 {
+    for( gatt_service_iterator_const it = gatt_services_.begin(); it != gatt_services_.end(); ++it )
+    {
+        if( (*it)->service_uuid() == uid )
+        {
+            return (const gattservicebase*)&(*it);
+        }
+    }
     return NULL;
 }
 
 gatt_services::gattservicebase* device::gatt_service(const uuid& uid)
 {
+    for( gatt_service_iterator it = gatt_services_.begin(); it != gatt_services_.end(); ++it )
+    {
+        if( (*it)->service_uuid() == uid )
+        {
+            return (gattservicebase*)&(*it);
+        }
+    }
     return NULL;
 }
 

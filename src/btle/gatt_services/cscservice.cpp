@@ -153,7 +153,6 @@ int cscservice::process_cadence_measurement(const uint8_t *msg, int offset)
     {
         crank_event_ = abs_time;
         cadence_ = 0;
-        offset += 2;
     }
     else
     {
@@ -182,10 +181,8 @@ int cscservice::process_cadence_measurement(const uint8_t *msg, int offset)
         {
             cadence_ = 0;
         }
-
-        offset += 2;
     }
-
+    offset += 2;
     return offset;
 }
 

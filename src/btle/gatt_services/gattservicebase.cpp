@@ -18,3 +18,7 @@ const btle::uuid_list& gattservicebase::mandatory_notifications() const
     return mandatory_notifications_;
 }
 
+const btle::uuid& gattservicebase::service_uuid() const
+{
+    return service_;
+}

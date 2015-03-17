@@ -288,6 +288,38 @@ void collector::device_discovered(device& dev)
     }
 }
 
+void collector::device_services_discovered(device& dev, const service_list& services, const error& err)
+{
+    if( err.code() == 0 )
+    {
+        for( service_iterator_const it = services.begin(); it != services.end(); ++it )
+        {
+            if( gattservicebase* gatt_srv = dev.gatt_service(it->uuid()) )
+            {
+                // TODO give heads up to client, the device has e.g. Heart Rate Service etc...
+                // something like device_features_updated
+            }
+            plugin_->discover_characteristics(dev,(*it));
+        }
+    }
+    // else inform optional callback to client
+}
+
+void collector::device_characteristics_discovered(device& dev, const service& srv, const chr_list& chrs, const error& err)
+{
+    if( err.code() == 0 )
+    {
+        for( chr_iterator_const it = chrs.begin(); it != chrs.end(); ++it )
+        {
+
+        }
+        if( gattservicebase* gatt_srv = dev.gatt_service(srv.uuid()) )
+        {
+            // TODO
+        }
+    }
+}
+
 btle::device* collector::fetch_device(const bda& addr)
 {
     verify(plugin_)

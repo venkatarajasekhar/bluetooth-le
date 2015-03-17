@@ -16,6 +16,7 @@ namespace btle {
 
             const uuid_list& included_characteristics() const;
             const uuid_list& mandatory_notifications() const;
+            const uuid& service_uuid() const;
 
         protected:
 
