@@ -35,6 +35,8 @@ cscservice::cscservice()
     service_ = CSC_SERVICE;
     mandatory_notifications_.push_back(CSC_MEASUREMENT);
     mandatory_notifications_.push_back(CSC_CONTOROL_POINT);
+    included_characteristics_.push_back(CSC_MEASUREMENT);
+    included_characteristics_.push_back(CSC_CONTOROL_POINT);
     // note wheel size is in millimeters
     max_wheel_time_ = (int)((wheel_size_*0.001*1*3.6)/CSC_MIN_SPEED_VALUE);
     speed_ = CSC_SPEED_UNINIT;

@@ -14,8 +14,11 @@ namespace btle {
 
             virtual void process_service_data(const uuid& chr, const uint8_t* data, size_t size) = 0;
 
+        public:
+
             const uuid_list& included_characteristics() const;
             const uuid_list& mandatory_notifications() const;
+            bool  contains_characteristic_uuid(const uuid& uid) const;
             const uuid& service_uuid() const;
 
         protected:

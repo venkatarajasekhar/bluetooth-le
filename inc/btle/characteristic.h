@@ -43,6 +43,7 @@ namespace btle {
 
         uint8_t properties() const;
         const btle::uuid& uuid() const;
+        uint8_t attribute_handle() const;
 
         // operators
         characteristic& operator << (const descriptor& desc);

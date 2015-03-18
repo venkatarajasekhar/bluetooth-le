@@ -17,6 +17,7 @@ collector::collector()
 {
     gatt_service_list services;
     gattservicefactory::instance().populate(services);
+    // setup automatically all included gatt services notifications
     for( gatt_service_iterator it = services.begin(); it != services.end(); ++it )
     {
         for( uuid_iterator_const it_uuid = (*it)->mandatory_notifications().begin();
@@ -64,6 +65,16 @@ void collector::stop_scan()
 {
     verify(plugin_)
     plugin_->stop_scan();
+}
+
+void collector::set_auto_read_values(const uuid_list& list)
+{
+    read_uuids_ = list;
+}
+
+void collector::set_auto_notify_values(const uuid_list& list)
+{
+    notify_uuids_ = list;
 }
 
 /**
@@ -136,7 +147,8 @@ void collector::read_characteristic_value(device& dev, const uuid& uid)
         {
             if( chr->properties() & btle::GATT_READ )
             {
-                verify( const service* srv = dev.db().fetch_service_by_chr_uuid(uid) );
+                const service* srv = dev.db().fetch_service_by_chr_uuid(uid);
+                verify(srv);
                 plugin_->read_characteristic_value(dev,*srv,*chr);
                 return;
             }
@@ -161,7 +173,8 @@ void collector::read_characteristic_value(device& dev, const uuid_pair& pair)
         {
             if( chr->properties() & btle::GATT_READ )
             {
-                verify( const service* srv = dev.db().fetch_service(pair.first) );
+                const service* srv = dev.db().fetch_service(pair.first);
+                verify( srv );
                 plugin_->read_characteristic_value(dev,*srv,*chr);
                 return;
             }
@@ -188,14 +201,16 @@ void collector::write_characteristic_value(device& dev, const uuid& uid, const s
             {
                 if( chr->properties() & btle::GATT_WRITE )
                 {
-                    verify( const service* srv = dev.db().fetch_service_by_chr_uuid(uid) );
+                    const service* srv = dev.db().fetch_service_by_chr_uuid(uid);
+                    verify( srv != NULL );
                     plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE);
                     return;
                 }
             }
             if( chr->properties() & btle::GATT_WRITE_WITHOUT_RESP )
             {
-                verify( const service* srv = dev.db().fetch_service_by_chr_uuid(uid) );
+                const service* srv = dev.db().fetch_service_by_chr_uuid(uid);
+                verify( srv );
                 plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE_WITHOUT_RESP);
                 return;
             }
@@ -222,14 +237,16 @@ void collector::write_characteristic_value(device& dev, const uuid_pair& pair, c
             {
                 if( chr->properties() & btle::GATT_WRITE )
                 {
-                    verify( const service* srv = dev.db().fetch_service(pair.first) );
+                    const service* srv = dev.db().fetch_service(pair.first);
+                    verify( srv );
                     plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE);
                     return;
                 }
             }
             if( chr->properties() & btle::GATT_WRITE_WITHOUT_RESP )
             {
-                verify( const service* srv = dev.db().fetch_service(pair.first) );
+                const service* srv = dev.db().fetch_service(pair.first);
+                verify( srv );
                 plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE_WITHOUT_RESP);
                 return;
             }
@@ -256,7 +273,8 @@ void collector::set_characteristic_notify(device& dev, const uuid& uid, bool not
         {
             if( chr->properties() & btle::GATT_READ )
             {
-                verify( const service* srv = dev.db().fetch_service_by_chr_uuid(uid) );
+                const service* srv = dev.db().fetch_service_by_chr_uuid(uid);
+                verify( srv );
                 plugin_->set_characteristic_notify(dev,*srv,*chr,notify);
                 return;
             }
@@ -282,7 +300,8 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
         {
             if( chr->properties() & btle::GATT_READ )
             {
-                verify( const service* srv = dev.db().fetch_service(pair.first) );
+                const service* srv = dev.db().fetch_service(pair.first);
+                verify( srv );
                 plugin_->read_characteristic_value(dev,*srv,*chr);
                 return;
             }
@@ -342,35 +361,56 @@ void collector::device_characteristics_discovered(device& dev, const service& sr
 {
     if( err.code() == 0 )
     {
+        // first check auto read
         for( chr_iterator_const it = chrs.begin(); it != chrs.end(); ++it )
         {
-
+            for( uuid_iterator_const it_uuid = read_uuids_.begin(); it_uuid != read_uuids_.end(); ++it_uuid )
+            {
+                if((*it) == (*it_uuid))
+                {
+                    plugin_->read_characteristic_value(dev,srv,(*it));
+                }
+            }
         }
-        if( gattservicebase* gatt_srv = dev.gatt_service(srv.uuid()) )
-        {
-            // TODO
-        }
+        // second check notify list
     }
 }
 
-void collector::device_characteristic_read(device& dev, const uuid_pair& pair, const std::string& data, const error& err)
+void collector::device_characteristic_read(device& dev, const service& srv, const characteristic& chr, const std::string& data, const error& err)
+{
+    if( err.code() == 0 )
+    {
+        if( gattservicebase* gatt_service = dev.gatt_service(srv.uuid()) )
+        {
+            if( gatt_service->contains_characteristic_uuid(chr.uuid()) )
+            {
+                gatt_service->process_service_data(chr.uuid(),(const uint8_t*)data.c_str(),data.size());
+            }
+        }
+    }
+    //
+}
+
+void collector::device_characteristic_written(device& dev, const service& srv, const characteristic& chr, const error& err)
 {
 
 }
 
-void collector::device_characteristic_written(device& dev, const uuid_pair& pair, const error& err)
+void collector::device_characteristic_nofication_state_changed(device& dev, const service& srv, const characteristic& chr, bool notify, const error& err)
 {
 
 }
 
-void collector::device_characteristic_nofication_state_changed(device& dev, const uuid_pair& pair, bool notify, const error& err)
+void collector::device_characteristic_notify_data_updated(device& dev, const service& srv, const characteristic& chr, const std::string& data)
 {
-
-}
-
-void collector::device_characteristic_notify_data_updated(device& dev, const uuid_pair& pair, bool notify, const error& err)
-{
-
+    // notification or indication has been received
+    if( gattservicebase* gatt_service = dev.gatt_service(srv.uuid()) )
+    {
+        if( gatt_service->contains_characteristic_uuid(chr.uuid()) )
+        {
+            gatt_service->process_service_data(chr.uuid(),(const uint8_t*)data.c_str(),data.size());
+        }
+    }
 }
 
 btle::device* collector::fetch_device(const bda& addr)

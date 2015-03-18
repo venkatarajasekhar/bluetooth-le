@@ -7,7 +7,7 @@ namespace btle {
     #ifdef NDEBUG
         #define verify(a) assert(a);
     #else
-        #define verify(a) a;
+        #define verify(a)
     #endif
 }
 

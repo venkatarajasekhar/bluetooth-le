@@ -13,7 +13,8 @@ namespace {
 
 hrservice::hrservice()
 {
-    mandatory_notifications_.push_back(uuid(HEART_RATE_MEASUREMENT));
+    mandatory_notifications_.push_back(HEART_RATE_MEASUREMENT);
+    included_characteristics_.push_back(HEART_RATE_MEASUREMENT);
     service_ = (HEART_RATE_SERVICE);
 }
 

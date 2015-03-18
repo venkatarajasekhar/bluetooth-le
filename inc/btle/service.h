@@ -12,15 +12,19 @@ namespace btle {
         service(const uuid &uid,
                 uint16_t start_handle,
                 uint16_t end_handle);
+        service(const service& other);
 
     public:
 
         service& operator << (const characteristic& chr);
         service& operator << (const std::vector<characteristic>& chrs);
         bool operator == (const btle::uuid& uid) const;
+        bool operator == (const service& other) const;
         const std::vector<characteristic>& characteristics() const;
         std::vector<characteristic>& characteristics();
         const btle::uuid& uuid() const;
+        uint16_t start_handle() const;
+        uint16_t end_handle() const;
 
     private:
 

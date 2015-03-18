@@ -34,6 +34,16 @@ service::service(
 {
 }
 
+service::service(const service& other)
+: base(other),
+  uuid_(other.uuid_),
+  characteristics_(other.characteristics_),
+  start_handle_(other.start_handle_),
+  end_handle_(other.end_handle_)
+
+{
+}
+
 service& service::operator << (const characteristic& chr)
 {
     // TODO check does characteristic allready exist
@@ -52,6 +62,13 @@ bool service::operator == (const btle::uuid& uid) const
     return uuid_ == uid;
 }
 
+bool service::operator == (const service& other) const
+{
+    return uuid_         == other.uuid() &&
+           start_handle_ == other.start_handle() &&
+           end_handle_   == other.end_handle();
+}
+
 const std::vector<characteristic>& service::characteristics() const
 {
     return characteristics_;
@@ -67,4 +84,13 @@ const btle::uuid& service::uuid() const
     return uuid_;
 }
 
+uint16_t service::start_handle() const
+{
+    return start_handle_;
+}
+
+uint16_t service::end_handle() const
+{
+    return end_handle_;
+}
 

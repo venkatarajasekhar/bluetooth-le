@@ -18,12 +18,17 @@ namespace btle {
 
             collector();
 
-        public:
+        public: // scannning
 
             void set_scan_filter(const uuid_list& filter);
             void set_scan_filter(const bda_list& bdas);
             void start_scan();
             void stop_scan();
+
+        public:
+
+            void set_auto_read_values(const uuid_list& list);
+            void set_auto_notify_values(const uuid_list& list);
 
         public: // device connection/disconnection
 
@@ -46,10 +51,10 @@ namespace btle {
             void device_discovered(device& dev);
             void device_services_discovered(device& dev, const service_list& services, const error& err);
             void device_characteristics_discovered(device& dev, const service& srv, const chr_list& chrs, const error& err);
-            void device_characteristic_read(device& dev, const uuid_pair& pair, const std::string& data, const error& err);
-            void device_characteristic_written(device& dev, const uuid_pair& pair, const error& err);
-            void device_characteristic_nofication_state_changed(device& dev, const uuid_pair& pair, bool notify, const error& err);
-            void device_characteristic_notify_data_updated(device& dev, const uuid_pair& pair, bool notify, const error& err);
+            void device_characteristic_read(device& dev, const service& srv, const characteristic& chr, const std::string& data, const error& err);
+            void device_characteristic_written(device& dev, const service& srv, const characteristic& chr, const error& err);
+            void device_characteristic_nofication_state_changed(device& dev, const service& srv, const characteristic& chr, bool notify, const error& err);
+            void device_characteristic_notify_data_updated(device& dev, const service& srv, const characteristic& chr, const std::string &data);
 
         private:
 

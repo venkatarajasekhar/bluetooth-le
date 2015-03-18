@@ -3,7 +3,13 @@
 using namespace btle;
 
 characteristic::characteristic()
-: base()
+: base(),
+  uuid_(),
+  attribute_handle_(0),
+  characteristic_value_handle_(0),
+  characteristic_properties_(0),
+  instance_id_(0),
+  descriptors_()
 {
 }
 
@@ -11,14 +17,24 @@ characteristic::characteristic(
     const std::string& data,
     const btle::uuid& uid)
 : base(data),
-  uuid_(uid)
+  uuid_(uid),
+  attribute_handle_(0),
+  characteristic_value_handle_(0),
+  characteristic_properties_(0),
+  instance_id_(0),
+  descriptors_()
 {
 }
 
 characteristic::characteristic(
     const btle::uuid& uid)
 : base(),
-  uuid_(uid)
+  uuid_(uid),
+  attribute_handle_(0),
+  characteristic_value_handle_(0),
+  characteristic_properties_(0),
+  instance_id_(0),
+  descriptors_()
 {
 }
 
@@ -27,7 +43,11 @@ characteristic::characteristic(
     uint8_t properties)
 : base(),
   uuid_(uid),
-  characteristic_properties_(properties)
+  attribute_handle_(0),
+  characteristic_value_handle_(0),
+  characteristic_properties_(properties),
+  instance_id_(0),
+  descriptors_()
 {
 }
 
@@ -38,13 +58,22 @@ characteristic::characteristic(
     uint16_t characteristic_properties)
 : base(),
   uuid_(uid),
-  characteristic_properties_(properties),
-  attribute_handle_(attribute_handle)
+  attribute_handle_(attribute_handle),
+  characteristic_value_handle_(0),
+  characteristic_properties_(characteristic_properties),
+  instance_id_(0),
+  descriptors_()
 {
 }
 
 characteristic::characteristic(const characteristic& other)
-: base(other)
+: base(other),
+  uuid_(other.uuid_),
+  attribute_handle_(other.attribute_handle_),
+  characteristic_value_handle_(other.characteristic_value_handle_),
+  characteristic_properties_(other.characteristic_properties_),
+  instance_id_(other.instance_id_),
+  descriptors_(other.descriptors_)
 {
 }
 
@@ -58,6 +87,11 @@ const uuid& characteristic::uuid() const
     return uuid_;
 }
 
+uint8_t characteristic::attribute_handle() const
+{
+    return attribute_handle_;
+}
+
 characteristic& characteristic::operator << (const descriptor& desc)
 {
     // TODO add check for allready containing desc!
@@ -67,7 +101,8 @@ characteristic& characteristic::operator << (const descriptor& desc)
 
 bool characteristic::operator == (const characteristic& other) const
 {
-    return uuid_ == other.uuid();
+    return uuid_ == other.uuid() &&
+           attribute_handle_ == other.attribute_handle();
 }
 
 bool characteristic::contains_descriptor_type(uint16_t type) const
