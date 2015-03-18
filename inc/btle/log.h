@@ -2,6 +2,8 @@
 #define LOG_H
 
 #include <string>
+#include <iostream>
+#include <fstream>
 #include "btle_global.h"
 
 namespace btle {
@@ -19,10 +21,9 @@ namespace btle {
     public:
 
         static log& instance();
-        void set_options(int options);
+        void set_options(int options, const std::string *file_path = NULL);
         void install_adapter(kAdapter adapter);
         void trace(const char* tag,const char* method, const char* format, ...);
-
 
     private: // functions
         log();
@@ -31,6 +32,7 @@ namespace btle {
 
         kAdapter adapter_;
         int      options_;
+        std::ofstream ss_out_;
     };
 
     class logfunc

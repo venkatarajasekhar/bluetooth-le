@@ -19,7 +19,7 @@ namespace btle {
     private:
 
         /**
-         * @brief code_, error code if any, NOTE this is platform specific
+         * @brief code_, error code if any, NOTE this is platform/plugin specific
          */
         int code_;
     };

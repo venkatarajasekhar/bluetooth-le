@@ -55,7 +55,7 @@ namespace btle {
         btle::uuid    uuid_;
         uint16_t attribute_handle_;
         uint16_t characteristic_value_handle_;
-        uint8_t characteristic_properties_;
+        uint8_t  characteristic_properties_;
         /**
          * @brief instance_id_, unique instance id NOTE non supported by all plugins
          */

@@ -3,6 +3,7 @@
 #include <cstdarg>
 #include <cstring>
 #include <sstream>
+#include <assert.h>
 
 #include "btle/log.h"
 
@@ -29,21 +30,42 @@ log& log::instance()
     return instance;
 }
 
-void log::set_options(int options)
+void log::set_options(int options, const std::string* file_path)
 {
     options_ |= options;
+    if( options_ & ::LOG_FILE_STREAM )
+    {
+        assert(file_path);
+        ss_out_.open(file_path->c_str());
+    }
+}
+
+/**
+ * @brief log::install_adapter, you may optionally install different adapter
+ *        if std::printf does not satisfy you
+ * @param adapter
+ */
+void log::install_adapter(kAdapter adapter)
+{
+    adapter_ = adapter;
 }
 
 void log::trace(const char* tag,const char* method, const char* format, ...)
 {
-    std::va_list ap;
-    std::stringstream ss;
-    std::string buf(LOG_BUFFER_SIZE, 0);
-    va_start(ap, format);
-    __vsnprintf(buf, format, ap);
-    va_end(ap);
-    ss << '[' << tag << ']' << '[' << method << "] " << buf;
-    (*instance().adapter_)(ss.str());
+    if( options_ & LOG_PRINT || options_ & LOG_FILE_STREAM )
+    {
+        std::va_list ap;
+        std::stringstream ss;
+        std::string buf(LOG_BUFFER_SIZE, 0);
+        va_start(ap, format);
+        __vsnprintf(buf, format, ap);
+        va_end(ap);
+        ss << '[' << tag << ']' << '[' << method << "] " << buf;
+        if( options_ & LOG_PRINT )
+            (*instance().adapter_)(ss.str());
+        if( options_ & LOG_FILE_STREAM && ss_out_.is_open())
+            ss_out_.write(ss.str().c_str(),ss.str().size());
+    }
 }
 
 log::log()

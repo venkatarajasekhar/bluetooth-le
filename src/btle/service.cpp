@@ -4,18 +4,39 @@
 using namespace btle;
 
 service::service()
-: base()
+: base(),
+  uuid_(),
+  characteristics_(),
+  start_handle_(0),
+  end_handle_(0)
+
 {
 }
 
 service::service(const btle::uuid& uid)
 : base(),
-  uuid_(uid)
+  uuid_(uid),
+  characteristics_(),
+  start_handle_(0),
+  end_handle_(0)
+{
+}
+
+service::service(
+    const btle::uuid& uid,
+    uint16_t start_handle,
+    uint16_t end_handle)
+: base(),
+  uuid_(uid),
+  characteristics_(),
+  start_handle_(start_handle),
+  end_handle_(end_handle)
 {
 }
 
 service& service::operator << (const characteristic& chr)
 {
+    // TODO check does characteristic allready exist
     characteristics_.push_back(chr);
     return *this;
 }

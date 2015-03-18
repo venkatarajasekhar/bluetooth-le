@@ -67,7 +67,9 @@ void collector::stop_scan()
 }
 
 /**
- * @brief collector::connect_device
+ * @brief collector::connect_device, for most basic use of the lib you only need
+ *                                   to call this function after start, and wait the device is connected
+ *                                   and start receiving heart rate etc...
  * @param addr
  */
 void collector::connect_device(const bda& addr)
@@ -114,6 +116,7 @@ void collector::disconnect_device(const bda& addr)
     verify(plugin_)
     if( device* dev = fetch_device(addr) )
     {
+        // fail safe check that device exists
         connectionhandler_.disconnect_device(*dev);
     }
 }
@@ -246,7 +249,22 @@ void collector::write_characteristic_value(device& dev, const uuid_pair& pair, c
 void collector::set_characteristic_notify(device& dev, const uuid& uid, bool notify)
 {
     verify(plugin_)
-
+    verify(plugin_)
+    if( dev.state() == btle::DEVICE_CONNECTED )
+    {
+        if( const characteristic* chr = dev.db().fetch_characteristic(uid) )
+        {
+            if( chr->properties() & btle::GATT_READ )
+            {
+                verify( const service* srv = dev.db().fetch_service_by_chr_uuid(uid) );
+                plugin_->set_characteristic_notify(dev,*srv,*chr,notify);
+                return;
+            }
+            throw btle::exceptions::attribute_not_readable("attribute cannot be read");
+        }
+        throw btle::exceptions::attribute_not_found("device does not contain this uuid");
+    }
+    throw btle::exceptions::device_not_connected("device not connected");
 }
 
 /**
@@ -258,7 +276,21 @@ void collector::set_characteristic_notify(device& dev, const uuid& uid, bool not
 void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bool notify)
 {
     verify(plugin_)
-
+    if( dev.state() == btle::DEVICE_CONNECTED )
+    {
+        if( const characteristic* chr = dev.db().fetch_characteristic(pair) )
+        {
+            if( chr->properties() & btle::GATT_READ )
+            {
+                verify( const service* srv = dev.db().fetch_service(pair.first) );
+                plugin_->read_characteristic_value(dev,*srv,*chr);
+                return;
+            }
+            throw btle::exceptions::attribute_not_readable("attribute cannot be read");
+        }
+        throw btle::exceptions::attribute_not_found("device does not contain this uuid");
+    }
+    throw btle::exceptions::device_not_connected("device not connected");
 }
 
 void collector::device_discovered(device& dev)
@@ -275,6 +307,7 @@ void collector::device_discovered(device& dev)
             }
         }
     }
+    // secondary check uuid filter list
     if( filter_.size() )
     {
         for( uuid_iterator_const it = filter_.begin(); it != filter_.end(); ++it )
@@ -318,6 +351,26 @@ void collector::device_characteristics_discovered(device& dev, const service& sr
             // TODO
         }
     }
+}
+
+void collector::device_characteristic_read(device& dev, const uuid_pair& pair, const std::string& data, const error& err)
+{
+
+}
+
+void collector::device_characteristic_written(device& dev, const uuid_pair& pair, const error& err)
+{
+
+}
+
+void collector::device_characteristic_nofication_state_changed(device& dev, const uuid_pair& pair, bool notify, const error& err)
+{
+
+}
+
+void collector::device_characteristic_notify_data_updated(device& dev, const uuid_pair& pair, bool notify, const error& err)
+{
+
 }
 
 btle::device* collector::fetch_device(const bda& addr)
