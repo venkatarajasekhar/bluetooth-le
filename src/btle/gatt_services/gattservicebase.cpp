@@ -7,6 +7,27 @@ gattservicebase::gattservicebase()
 {
 }
 
+void gattservicebase::set_active(const uuid& uid)
+{
+
+}
+
+bool gattservicebase::is_active() const
+{
+    return false;
+}
+
+/**
+ * @brief gattservicebase::json, optional (NOTE will not be supported in 1.x.x version)
+ *                               to get e.g. Heart rate measurement in json
+ *                               to be passed to remote server
+ * @param uid
+ * @return
+ */
+std::string gattservicebase::json(const uuid& uid) const
+{
+    return "";
+}
 
 const btle::uuid_list& gattservicebase::included_characteristics() const
 {

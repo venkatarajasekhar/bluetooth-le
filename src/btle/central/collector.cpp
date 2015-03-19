@@ -67,11 +67,21 @@ void collector::stop_scan()
     plugin_->stop_scan();
 }
 
+/**
+ * @brief collector::set_auto_read_values, setup characteristic uuids to be read if found
+ * @param list
+ */
 void collector::set_auto_read_values(const uuid_list& list)
 {
     read_uuids_ = list;
 }
 
+/**
+ * @brief collector::set_auto_notify_values, setup notification/indications to be enabled automatically
+ *                                           note this overrides default set , which has been loaded from gatt service factory, use this functionality with
+ *                                           extra care
+ * @param list
+ */
 void collector::set_auto_notify_values(const uuid_list& list)
 {
     notify_uuids_ = list;
@@ -366,14 +376,28 @@ void collector::device_characteristics_discovered(device& dev, const service& sr
         {
             for( uuid_iterator_const it_uuid = read_uuids_.begin(); it_uuid != read_uuids_.end(); ++it_uuid )
             {
-                if((*it) == (*it_uuid))
+                if( (*it) == (*it_uuid) &&
+                    it->properties() & GATT_READ )
                 {
                     plugin_->read_characteristic_value(dev,srv,(*it));
                 }
             }
         }
         // second check notify list
+        for( chr_iterator_const it = chrs.begin(); it != chrs.end(); ++it )
+        {
+            for( uuid_iterator_const it_uuid = notify_uuids_.begin(); it_uuid != notify_uuids_.end(); ++it_uuid )
+            {
+                if( (*it) == (*it_uuid) &&
+                    ( it->properties() & GATT_INDICATE ||
+                      it->properties() & GATT_NOTIFY ))
+                {
+                    plugin_->set_characteristic_notify(dev,srv,(*it),true);
+                }
+            }
+        }
     }
+    // else inform optional callback to client about error
 }
 
 void collector::device_characteristic_read(device& dev, const service& srv, const characteristic& chr, const std::string& data, const error& err)

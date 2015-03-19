@@ -12,7 +12,23 @@ namespace btle {
 
         public:
 
+            /**
+             * @brief process_service_data, gatt service must implement gatt service processing
+             * for all included characteristics
+             * @param chr
+             * @param data
+             * @param size
+             */
             virtual void process_service_data(const uuid& chr, const uint8_t* data, size_t size) = 0;
+
+            /**
+             * @brief reset, informs gatt service to reset it's values,
+             *               typically after device has been disconnected
+             */
+            virtual void reset() = 0;
+            virtual void set_active(const uuid& uid);
+            virtual bool is_active() const;
+            virtual std::string json(const uuid& uid) const;
 
         public:
 

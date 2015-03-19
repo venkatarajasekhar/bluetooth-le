@@ -3,6 +3,7 @@
 #include "btle/gatt_services/gattserviceregisterer.h"
 
 #include <stdio.h>
+#include <cstring>
 
 using namespace btle::gatt_services;
 
@@ -17,21 +18,37 @@ rscservice::rscservice()
     service_ = (RSC_SERVICE);
 }
 
+/**
+ * @brief rscservice::speed, in km/h
+ * @return
+ */
 double rscservice::speed() const
 {
     return speed_;
 }
 
+/**
+ * @brief rscservice::cadence, in RPM
+ * @return
+ */
 int rscservice::cadence() const
 {
     return cadence_;
 }
 
+/**
+ * @brief rscservice::stride_length, in CM
+ * @return
+ */
 uint16_t rscservice::stride_length() const
 {
     return stride_length_;
 }
 
+/**
+ * @brief rscservice::distance, in meters
+ * @return
+ */
 double rscservice::distance() const
 {
     return distance_;
@@ -44,7 +61,7 @@ void rscservice::process_service_data(const uuid& chr, const uint8_t* data, size
         case RSC_MEASUREMENT:
         {
             int offset(1);
-            //memset(&flags_,0,sizeof(flags_));
+            memset(&flags_,0,sizeof(flags_));
             memcpy(&flags_,data,sizeof(flags_));
 
             uint16_t speed_mask(0);
