@@ -74,6 +74,11 @@ void cscservice::process_service_data(const uuid &chr, const uint8_t *data, size
     }
 }
 
+void cscservice::reset()
+{
+
+}
+
 int cscservice::process_speed_measurement(const uint8_t* msg, int offset)
 {
     time_t abs_time = time(NULL);

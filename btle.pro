@@ -42,7 +42,8 @@ SOURCES += \
     src/btle/exceptions/service_not_found.cpp \
     src/btle/exceptions/not_implemented.cpp \
     src/btle/gatt_services/cyclingpowerservice.cpp \
-    src/btle/log.cpp
+    src/btle/log.cpp \
+    src/btle/utility.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \
@@ -83,7 +84,8 @@ HEADERS += inc/btle/btle.h\
     inc/btle/gatt_services/cyclingpowerservice.h \
     inc/btle/verify.h \
     internal/btle/central/centralpluginobserver.h \
-    inc/btle/log.h
+    inc/btle/log.h \
+    inc/btle/utility.h
 
 unix {
     target.path = /usr/lib

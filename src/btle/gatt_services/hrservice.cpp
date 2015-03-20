@@ -90,4 +90,7 @@ void hrservice::process_service_data(const uuid &chr, const uint8_t* data, size_
     }
 }
 
+void hrservice::reset()
+{
 
+}

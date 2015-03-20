@@ -97,6 +97,11 @@ void cyclingpowerservice::process_service_data(const uuid &chr, const uint8_t *d
     }
 }
 
+void cyclingpowerservice::reset()
+{
+
+}
+
 int16_t cyclingpowerservice::instantaneous_power() const
 {
     return inst_power_;

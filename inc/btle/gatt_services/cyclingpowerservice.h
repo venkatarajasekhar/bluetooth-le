@@ -65,6 +65,7 @@ namespace btle {
         public: // from base
 
             void process_service_data(const uuid& chr, const uint8_t* data, size_t size);
+            void reset();
 
         public: // api
 

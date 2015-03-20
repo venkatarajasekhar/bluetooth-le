@@ -88,4 +88,9 @@ void rscservice::process_service_data(const uuid& chr, const uint8_t* data, size
     }
 }
 
+void rscservice::reset()
+{
+
+}
+
 
