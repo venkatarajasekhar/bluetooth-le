@@ -140,6 +140,11 @@ gatt_services::gattservicebase* device::gatt_service(const uuid& uid)
     return NULL;
 }
 
+connectionparameters& device::parameters()
+{
+    return parameters_;
+}
+
 bool device::operator == (const device& other) const
 {
     return bda_ == other.addr();

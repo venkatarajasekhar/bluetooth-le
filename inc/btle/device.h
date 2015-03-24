@@ -7,6 +7,7 @@
 #include "btle/bda.h"
 #include "btle/rssifilter.h"
 #include "btle/gatt_services/gattservicebase.h"
+#include "btle/connectionparameters.h"
 
 #include <map>
 
@@ -32,17 +33,23 @@ namespace btle {
 
         const std::string& name();
         const advertisementdata* advertisement_data_for_key(btle::advertisement_type key) const;
+
         gattdatabase& db();
         const gattdatabase& db() const;
+
         rssifilter& rssi_filter();
         const rssifilter& rssi_filter() const;
+
         connection_state state() const;
         std::string state_string() const;
+
         const bda& addr() const;
         bool is_service_advertiset(const uuid& uid) const;
+
         const gatt_services::gattservicebase* gatt_service(const uuid& uid) const;
         gatt_services::gattservicebase* gatt_service(const uuid& uid);
 
+        connectionparameters& parameters();
         // operators
         bool operator == (const device& other) const;
 
@@ -65,6 +72,7 @@ namespace btle {
         bda bda_;
         rssifilter rssifilter_;
         gatt_services::gatt_service_list gatt_services_;
+        connectionparameters parameters_;
     };
 
     typedef std::vector<device*> device_list;

@@ -6,10 +6,33 @@
 
 namespace btle {
     namespace central {
+
+        enum central_plugin_extras
+        {
+            /**
+             * Plugin can update connection parameters
+             */
+            PLUGIN_CONNECTION_PARAMETER_CAPABILITY = 0x01,
+            /**
+             * Plugin has caps. for security manager controlling for 3rd party
+             */
+            PLUGIN_SMP_FULL_CAPABILITY = 0x02,
+            /**
+             * Plugin has caps. for Gatt server i.e. 3rd party can optionally add an service
+             */
+            PLUGIN_GATT_SERVER_CAPABILITY = 0x04
+        };
+
         class centralplugininterface{
         public:
 
             centralplugininterface(){}
+
+            /**
+             * @brief features
+             * @return @see central_plugin_extras, returns bit mask of extra features if any
+             */
+            virtual unsigned int features(){return 0;}
 
             /**
              * @brief devices
@@ -101,6 +124,7 @@ namespace btle {
              * @param notify
              */
             virtual void write_descriptor(device& dev, const service& srv, const characteristic& chr, descriptor& desc, bool notify) = 0;
+
         };
     }
 }
