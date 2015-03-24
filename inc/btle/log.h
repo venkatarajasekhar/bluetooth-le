@@ -48,7 +48,7 @@ namespace btle {
 
     #define func_log \
     logfunc ___func(__FUNCTION__);\
-    ___func;
+    ((void)___func);
 
     #ifdef _MSC_VER
     #define _log(...) log::instance().trace("LOG",__FUNCTION__,__VA_ARGS__);

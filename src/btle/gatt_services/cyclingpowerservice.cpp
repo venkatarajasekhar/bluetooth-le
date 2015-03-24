@@ -172,12 +172,12 @@ uint16_t cyclingpowerservice::first_cranck_measurement_angle() const
     return first_cranck_measurement_angle_;
 }
 
-std::vector<int16_t> cyclingpowerservice::inst_force_magnitude_array() const
+const std::vector<int16_t>& cyclingpowerservice::inst_force_magnitude_array() const
 {
     return inst_force_magnitude_array_;
 }
 
-std::vector<double> cyclingpowerservice::inst_torque_magnitude_array() const
+const std::vector<double>& cyclingpowerservice::inst_torque_magnitude_array() const
 {
     return inst_torque_magnitude_array_;
 }

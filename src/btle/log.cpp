@@ -10,14 +10,7 @@
 using namespace btle;
 
 namespace {
-    #ifdef _MSC_VER
-    #define __vsnprintf(buf, fmt, ap) _vsnprintf(const_cast<char*>(buf.data()), buf.size(), fmt, ap)
-    #else
-    #define __vsnprintf(buf, fmt, ap) ::vsnprintf(const_cast<char*>(buf.data()), buf.size(), fmt, ap)
-    #endif
-
     #define LOG_BUFFER_SIZE 1000
-
     static void default_adapter( const std::string& str )
     {
         std::printf("%s\n",str.c_str());
@@ -58,7 +51,7 @@ void log::trace(const char* tag,const char* method, const char* format, ...)
         std::stringstream ss;
         std::string buf(LOG_BUFFER_SIZE, 0);
         va_start(ap, format);
-        __vsnprintf(buf, format, ap);
+        vsnprintf(const_cast<char*>(buf.data()),LOG_BUFFER_SIZE,format,ap);
         va_end(ap);
         ss << '[' << tag << ']' << '[' << method << "] " << buf;
         if( options_ & LOG_PRINT )

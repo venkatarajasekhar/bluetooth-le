@@ -56,6 +56,10 @@ namespace btle {
             void device_characteristic_nofication_state_changed(device& dev, const service& srv, const characteristic& chr, bool notify, const error& err);
             void device_characteristic_notify_data_updated(device& dev, const service& srv, const characteristic& chr, const std::string &data);
 
+        public: // callbacks
+
+            virtual void device_discovered_cb(device& dev) = 0;
+
         private:
 
             device* fetch_device(const bda& addr);

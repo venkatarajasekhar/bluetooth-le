@@ -19,6 +19,13 @@ std::string utility::to_string(unsigned int value)
     return ss.str();
 }
 
+std::string utility::to_string(double value)
+{
+    std::stringstream ss;
+    ss << value;
+    return ss.str();
+}
+
 std::string utility::to_hex_string(const uint8_t* data, size_t size, char separator)
 {
     std::stringstream ss_hex;
@@ -31,12 +38,7 @@ std::string utility::to_hex_string(const uint8_t* data, size_t size, char separa
 
 std::string utility::to_hex_string(const std::string& data, char separator)
 {
-    std::stringstream ss_hex;
-    for( unsigned int i=0; i < data.size(); ++i )
-    {
-        ss_hex << std::uppercase << std::hex << std::setw(2) << std::setfill('0') << (unsigned int)(unsigned char)*(data.c_str()+i) << separator;
-    }
-    return ss_hex.str();
+    return to_hex_string((const uint8_t*)data.c_str(),data.size(),separator);
 }
 
 int utility::to_int(const std::string& data)

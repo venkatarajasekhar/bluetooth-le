@@ -1,8 +1,6 @@
 #ifndef GATTSERVICEREGISTERER_H
 #define GATTSERVICEREGISTERER_H
 
-//class gattservicebase;
-
 namespace btle {
     namespace gatt_services {
         template<typename T>

@@ -83,8 +83,8 @@ namespace btle {
             uint16_t bottom_dead_spot_angle() const;
             uint16_t accumulated_energy() const;
             uint16_t first_cranck_measurement_angle() const;
-            std::vector<int16_t> inst_force_magnitude_array() const;
-            std::vector<double> inst_torque_magnitude_array() const;
+            const std::vector<int16_t>& inst_force_magnitude_array() const;
+            const std::vector<double>& inst_torque_magnitude_array() const;
 
         private:
 

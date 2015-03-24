@@ -17,15 +17,13 @@ namespace btle {
 
             void populate(std::vector<gattservicebase*>& services);
             void deplete(std::vector<gattservicebase*>& services);
-
-        private:
             typedef gattservicebase* (*service_constructor)();
-            typedef std::set<service_constructor> constructors;
+            typedef std::vector<service_constructor> constructors;
+            void insert(service_constructor constructor);
 
         private:
+
             gattservicefactory();
-        public:
-            void insert(service_constructor constructor);
 
         private:
             constructors constructors_;

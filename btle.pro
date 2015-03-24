@@ -43,7 +43,9 @@ SOURCES += \
     src/btle/exceptions/not_implemented.cpp \
     src/btle/gatt_services/cyclingpowerservice.cpp \
     src/btle/log.cpp \
-    src/btle/utility.cpp
+    src/btle/utility.cpp \
+    src/btle/central/win8/win8centralplugin.cpp \
+    src/btle/connectionparameters.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \
@@ -85,9 +87,35 @@ HEADERS += inc/btle/btle.h\
     inc/btle/verify.h \
     internal/btle/central/centralpluginobserver.h \
     inc/btle/log.h \
-    inc/btle/utility.h
+    inc/btle/utility.h \
+    internal/btle/central/centralpluginregisterer.h \
+    internal/btle/central/centralpluginregisterer.hpp \
+    internal/btle/central/win8/win8centralplugin.h \
+    inc/btle/connectionparameters.h
+
+ios{
+    OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h
+    OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm
+}
+
+macx{
+    OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h
+    OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm
+}
+
+android{
+}
+
+win{
+}
+
+linux{
+}
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+OBJECTIVE_SOURCES += \
+    src/btle/central/apple/corebluetoothcentralplugin.mm

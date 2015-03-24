@@ -22,3 +22,8 @@ void centralpluginfactory::deplete(std::vector<centralplugininterface> &plugins)
 centralpluginfactory::centralpluginfactory()
 {
 }
+
+void centralpluginfactory::insert(plugin_constructor constructor)
+{
+
+}

@@ -11,7 +11,7 @@ gattservicefactory& gattservicefactory::instance()
 
 void gattservicefactory::populate(std::vector<gattservicebase*>& services)
 {
-    for( std::set<service_constructor>::iterator it = constructors_.begin(); it != constructors_.end(); ++it )
+    for( std::vector<service_constructor>::iterator it = constructors_.begin(); it != constructors_.end(); ++it )
     {
         service_constructor create = (service_constructor)*it;
         services.push_back( (*create)() );
@@ -34,7 +34,7 @@ gattservicefactory::gattservicefactory()
 
 void gattservicefactory::insert(service_constructor constructor)
 {
-    constructors_.insert(constructor);
+    constructors_.push_back(constructor);
 }
 
 

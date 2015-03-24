@@ -9,6 +9,8 @@ namespace btle {
         class centralplugininterface{
         public:
 
+            centralplugininterface(){}
+
             /**
              * @brief devices
              * @return
@@ -89,6 +91,16 @@ namespace btle {
              * @param chr
              */
             virtual void set_characteristic_notify(device& dev,const service& srv, const characteristic& chr, bool notify) = 0;
+
+            /**
+             * @brief write_descriptor
+             * @param dev
+             * @param srv
+             * @param chr
+             * @param desc
+             * @param notify
+             */
+            virtual void write_descriptor(device& dev, const service& srv, const characteristic& chr, descriptor& desc, bool notify) = 0;
         };
     }
 }
