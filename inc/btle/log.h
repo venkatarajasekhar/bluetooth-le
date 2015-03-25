@@ -52,12 +52,12 @@ namespace btle {
 
     #ifdef _MSC_VER
     #define _log(...) log::instance().trace("LOG",__FUNCTION__,__VA_ARGS__);
-    #define _log_warning(...) log::instance().trace("WARNING",__VA_ARGS__);
-    #define _log_error(...) log::instance().trace("ERROR",__VA_ARGS__);
+    #define _log_warning(...) log::instance().trace("WARNING",__FUNCTION_,__VA_ARGS__);
+    #define _log_error(...) log::instance().trace("ERROR",__FUNCTION_,__VA_ARGS__);
     #elif __GNUC__
     #define _log(...) log::instance().trace("LOG",__FUNCTION__,##__VA_ARGS__);
-    #define _log_warning(...) log::instance().trace("WARNING",##__VA_ARGS__);
-    #define _log_error(...) log::instance().trace("ERROR",##__VA_ARGS__);
+    #define _log_warning(...) log::instance().trace("WARNING",__FUNCTION__,##__VA_ARGS__);
+    #define _log_error(...) log::instance().trace("ERROR",__FUNCTION__,##__VA_ARGS__);
     #endif
 }
 

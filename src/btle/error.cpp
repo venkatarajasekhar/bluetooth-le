@@ -1,5 +1,6 @@
 
 #include "btle/error.h"
+#include "btle/utility.h"
 
 using namespace btle;
 
@@ -14,13 +15,14 @@ error::error(const error& other)
 }
 
 error::error(int code)
-: base(),
+: base(utility::to_string(code),
+       "Error code: " + utility::to_string(code)),
   code_(code)
 {
 }
 
 error::error(int code,const std::string& description)
-: base("",description),
+: base(utility::to_string(code),description),
   code_(code)
 {
 }

@@ -2,6 +2,8 @@
 #include "btle/device.h"
 #include "btle/gatt_services/gattservicefactory.h"
 
+#include <sstream>
+
 using namespace btle;
 using namespace btle::gatt_services;
 
@@ -21,7 +23,8 @@ namespace{
 }
 
 device::device(const bda &addr)
-: advertisement_data_(),
+: base(),
+  advertisement_data_(),
   name_(),
   db_(),
   state_(DEVICE_DISCONNECTED),
@@ -62,11 +65,6 @@ gattdatabase& device::db()
 const gattdatabase& device::db() const
 {
     return db_;
-}
-
-rssifilter& device::rssi_filter()
-{
-    return rssifilter_;
 }
 
 const rssifilter& device::rssi_filter() const
@@ -148,6 +146,13 @@ connectionparameters& device::parameters()
 bool device::operator == (const device& other) const
 {
     return bda_ == other.addr();
+}
+
+std::string device::description() const
+{
+    std::stringstream ss;
+    ss << "Device addr: " << bda_.description() << "\n In connection state: " << state_string();
+    return ss.str();
 }
 
 void device::set_state(connection_state state)

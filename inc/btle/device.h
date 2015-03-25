@@ -30,28 +30,31 @@ namespace btle {
         ~device();
 
     public: //
-
+        // advertisement data related
         const std::string& name();
         const advertisementdata* advertisement_data_for_key(btle::advertisement_type key) const;
-
+        // gattdata base ralated
         gattdatabase& db();
         const gattdatabase& db() const;
-
-        rssifilter& rssi_filter();
+        // rssi related
         const rssifilter& rssi_filter() const;
-
+        // connection state related
         connection_state state() const;
         std::string state_string() const;
 
         const bda& addr() const;
         bool is_service_advertiset(const uuid& uid) const;
-
+        // build-in gatt service related
         const gatt_services::gattservicebase* gatt_service(const uuid& uid) const;
         gatt_services::gattservicebase* gatt_service(const uuid& uid);
 
         connectionparameters& parameters();
         // operators
         bool operator == (const device& other) const;
+
+    public: // from base
+
+        std::string description() const;
 
     public:
 

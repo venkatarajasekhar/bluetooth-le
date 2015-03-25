@@ -27,7 +27,7 @@ namespace btle {
     public:
 
         const std::string& string_value() const;
-        const std::string& description() const;
+        std::string description() const;
         void set_string_value(const std::string& value);
 
     protected:

@@ -23,7 +23,12 @@ connectionhandler::connectionhandler()
 : current_(&connectionhandler::free),
   free_(&connectionhandler::free),
   connecting_(&connectionhandler::connecting),
-  disconnecting_(&connectionhandler::disconnecting)
+  disconnecting_(&connectionhandler::disconnecting),
+  current_device_(NULL),
+  central_(NULL),
+  reconnectiontryes_(0),
+  options_(),
+  observers_()
 {
 }
 
@@ -55,12 +60,45 @@ void connectionhandler::device_disconnected(device& dev )
     (this->*current_)(dev,device_disconnected_action);
 }
 
+void connectionhandler::set_option(connectionhandler_options option, int value )
+{
+    options_[option] = value;
+}
+
+void connectionhandler::remove_option(connectionhandler_options option)
+{
+    if( options_.find(option) != options_.end() )
+        options_.erase(options_.find(option));
+}
+
+void connectionhandler::attach(connectionhandlerobserver* observer)
+{
+    observers_.push_back(observer);
+}
+
+void connectionhandler::detach(connectionhandlerobserver* observer)
+{
+    for( std::vector<connectionhandlerobserver*>::iterator it = observers_.begin();
+         it != observers_.end(); ++it )
+    {
+        if( (*it) == observer )
+        {
+            observers_.erase(it);
+            return;
+        }
+    }
+}
+
 void connectionhandler::change_device_state(
     device& dev,
     btle::connection_state state )
 {
     dev.set_state(state);
-    observer_->device_state_updated(dev);
+    for( std::vector<connectionhandlerobserver*>::iterator it = observers_.begin();
+         it != observers_.end(); ++it )
+    {
+        (*it)->device_state_changed(dev);
+    }
 }
 
 void connectionhandler::free( device& dev, int action )
@@ -86,7 +124,7 @@ void connectionhandler::free( device& dev, int action )
             if( dev.state() == btle::DEVICE_DISCONNECTED )
             {
                 change_device_state(dev,btle::DEVICE_CONNECTION_PARK);
-                observer_->scan_devices();
+                //observer_->scan_devices();
             }
             break;
         }
@@ -170,7 +208,7 @@ void connectionhandler::connecting( device& dev, int action )
                 if( is_reconnection_needed(dev) )
                 {
                     change_device_state( dev, btle::DEVICE_CONNECTION_PARK );
-                    observer_->scan_devices();
+                    //observer_->scan_devices();
                     change_state(free_,dev);
                 }
                 else
@@ -184,7 +222,7 @@ void connectionhandler::connecting( device& dev, int action )
                 if( is_reconnection_needed(dev) )
                 {
                     change_device_state( dev, btle::DEVICE_CONNECTION_PARK );
-                    observer_->scan_devices();
+                    //observer_->scan_devices();
                 }
                 else
                 {
@@ -317,6 +355,8 @@ void connectionhandler::disconnecting(device& dev, int action )
                     change_device_state(dev,btle::DEVICE_DISCONNECTED);
                     break;
                 }
+                default:
+                    assert(false);
             }
             break;
         }

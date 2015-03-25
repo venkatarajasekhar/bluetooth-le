@@ -52,7 +52,7 @@ const std::string& base::string_value() const
     return value_;
 }
 
-const std::string& base::description() const
+std::string base::description() const
 {
     return description_;
 }

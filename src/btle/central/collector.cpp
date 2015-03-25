@@ -1,5 +1,4 @@
 
-
 #include "btle/exceptions/attribute_not_found.h"
 #include "btle/exceptions/attribute_not_readable.h"
 #include "btle/exceptions/attribute_not_writable.h"
@@ -9,11 +8,26 @@
 #include "btle/central/collector.h"
 #include "btle/gatt_services/gattservicefactory.h"
 #include "btle/verify.h"
+#include "btle/log.h"
+
+namespace {
+    enum collector_flags{
+        CLIENT_SCAN   = 0x01,
+        INTERNAL_SCAN = 0x02
+    };
+}
 
 using namespace btle::central;
 using namespace btle::gatt_services;
 
 collector::collector()
+: filter_(),
+  bda_filter_(),
+  notify_uuids_(),
+  read_uuids_(),
+  plugin_(NULL),
+  connectionhandler_(),
+  flags_(0)
 {
     gatt_service_list services;
     gattservicefactory::instance().populate(services);
@@ -55,6 +69,7 @@ void collector::set_scan_filter(const bda_list &bdas)
 void collector::start_scan()
 {
     verify(plugin_)
+    flags_ |= CLIENT_SCAN;
     plugin_->start_scan();
 }
 
@@ -64,7 +79,17 @@ void collector::start_scan()
 void collector::stop_scan()
 {
     verify(plugin_)
+    flags_ &= ~CLIENT_SCAN;
     plugin_->stop_scan();
+}
+
+/**
+ * @brief collector::connection_handler
+ * @return
+ */
+connectionhandler& collector::connection_handler()
+{
+    return connectionhandler_;
 }
 
 /**
@@ -285,7 +310,9 @@ void collector::set_characteristic_notify(device& dev, const uuid& uid, bool not
             {
                 const service* srv = dev.db().fetch_service_by_chr_uuid(uid);
                 verify( srv );
-                plugin_->set_characteristic_notify(dev,*srv,*chr,notify);
+                // TODO fix descriptor
+                descriptor desc(CLIENT_CHARACTERISTIC_CONFIGURATION);
+                plugin_->write_descriptor(dev,*srv,*chr,desc,notify);
                 return;
             }
             throw btle::exceptions::attribute_not_readable("attribute cannot be read");
@@ -324,29 +351,35 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
 
 void collector::device_discovered(device& dev)
 {
-    // check first bda list
-    if( bda_filter_.size() )
+    if( flags_ & CLIENT_SCAN )
     {
-        for( bda_iterator_const it = bda_filter_.begin(); it != bda_filter_.end(); ++it )
+        // check first bda list
+        if( bda_filter_.size() )
         {
-            if( (*it) == dev.addr() )
+            for( bda_iterator_const it = bda_filter_.begin(); it != bda_filter_.end(); ++it )
             {
-                // propagate callback
-                return;
+                if( (*it) == dev.addr() )
+                {
+                    // propagate callback
+                    device_discovered_cb(dev);
+                    return;
+                }
             }
         }
-    }
-    // secondary check uuid filter list
-    if( filter_.size() )
-    {
-        for( uuid_iterator_const it = filter_.begin(); it != filter_.end(); ++it )
+        // secondary check uuid filter list
+        if( filter_.size() )
         {
-            if( dev.is_service_advertiset((*it)) )
+            for( uuid_iterator_const it = filter_.begin(); it != filter_.end(); ++it )
             {
-                // propagate callback
-                return;
+                if( dev.is_service_advertiset((*it)) )
+                {
+                    // propagate callback
+                    device_discovered_cb(dev);
+                    return;
+                }
             }
         }
+        device_discovered_cb(dev);
     }
 }
 
@@ -360,11 +393,12 @@ void collector::device_services_discovered(device& dev, const service_list& serv
             {
                 // TODO give heads up to client, the device has e.g. Heart Rate Service etc...
                 // something like device_features_updated
+                device_gatt_service_discovered_cb(dev,gatt_srv);
             }
             plugin_->discover_characteristics(dev,(*it));
         }
     }
-    // else inform optional callback to client
+    else device_service_discovery_failed_cb(dev,services,err);
 }
 
 void collector::device_characteristics_discovered(device& dev, const service& srv, const chr_list& chrs, const error& err)
@@ -397,10 +431,15 @@ void collector::device_characteristics_discovered(device& dev, const service& sr
             }
         }
     }
-    // else inform optional callback to client about error
+    else device_characteristic_discovery_failed_cb(dev,srv,chrs,err);
 }
 
-void collector::device_characteristic_read(device& dev, const service& srv, const characteristic& chr, const std::string& data, const error& err)
+void collector::device_characteristic_read(
+    device& dev,
+    const service& srv,
+    const characteristic& chr,
+    const std::string& data,
+    const error& err)
 {
     if( err.code() == 0 )
     {
@@ -433,8 +472,46 @@ void collector::device_characteristic_notify_data_updated(device& dev, const ser
         if( gatt_service->contains_characteristic_uuid(chr.uuid()) )
         {
             gatt_service->process_service_data(chr.uuid(),(const uint8_t*)data.c_str(),data.size());
+            device_service_value_updated_cb(dev,gatt_service);
         }
     }
+}
+
+/**
+ * @brief collector::device_gatt_service_discovered_cb, this callbacks idea is
+ * to be used in the next way:
+ * if( srv )
+ * {
+ *      switch( srv->service_uuid().uuid16bit() )
+ *      {
+ *          case HEART_RATE_SERVICE:
+ *          {
+ *              // enable Heart rate specific ui etc...
+ *              break;
+ *          }
+ *          etc...
+ *      }
+ * }
+ * @param dev
+ * @param srv
+ */
+void collector::device_gatt_service_discovered_cb(device& dev, const gattservicebase* srv)
+{
+    _log_warning("Device contains some included service or 3rd added service device: %s gatt uuid: %s",
+                 dev.description().c_str(),
+                 srv->service_uuid().description().c_str());
+}
+
+void collector::device_service_discovery_failed_cb(device& dev, const service_list& services, const error& err)
+{
+    _log_warning("device service discovery failed, override this callback for further logic device desc: %s error: %s",
+                 dev.description().c_str(),
+                 err.description().c_str());
+}
+
+void collector::device_characteristic_discovery_failed_cb(device& dev, const service& srv, const chr_list& chrs, const error& err)
+{
+    _log_warning("device service discovery failed, override this callback for further logic");
 }
 
 btle::device* collector::fetch_device(const bda& addr)

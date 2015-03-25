@@ -25,6 +25,10 @@ namespace btle {
             void start_scan();
             void stop_scan();
 
+        public: // settings related apis
+
+            connectionhandler& connection_handler();
+
         public:
 
             void set_auto_read_values(const uuid_list& list);
@@ -58,7 +62,44 @@ namespace btle {
 
         public: // callbacks
 
+            /**
+             * @brief device_discovered_cb, whenever a device has been discovered during scanning
+             * @param dev
+             */
             virtual void device_discovered_cb(device& dev) = 0;
+
+            /**
+             * @brief device_service_value_updated_cb, called upon whenever gatt service has been updated
+             * e.g. famous heart rate example:
+             *
+             *      switch( srv->service_uuid().uuid16bit() )
+             *      {
+             *          case HEART_RATE_SERVICE:
+             *          {
+             *              const hrservice* hr = ((const hrservice*)srv);
+             *              printf("Heart rate is: %d", hr->hr_value());
+             *              break;
+             *          }
+             *          etc...
+             *      }
+             *
+             * @param dev
+             * @param srv
+             */
+            virtual void device_service_value_updated_cb(device& dev, const gatt_services::gattservicebase* srv) = 0;
+
+            /**
+             * @brief device_service_value_updated_cb
+             * @param dev
+             * @param srv
+             * @param chr
+             * @param data
+             */
+            virtual void device_service_value_updated_cb(device& dev, const service& srv, const characteristic& chr, const std::string& data) = 0;
+
+            virtual void device_gatt_service_discovered_cb(device& dev, const gatt_services::gattservicebase *srv);
+            virtual void device_service_discovery_failed_cb(device& dev, const service_list& services, const error& err);
+            virtual void device_characteristic_discovery_failed_cb(device& dev, const service& srv, const chr_list& chrs, const error& err);
 
         private:
 
@@ -72,6 +113,7 @@ namespace btle {
             uuid_list read_uuids_;
             centralplugininterface* plugin_;
             connectionhandler connectionhandler_;
+            unsigned int flags_;
         };
     }
 }
