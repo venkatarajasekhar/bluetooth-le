@@ -54,7 +54,7 @@ int hrservice::energy_expeneded() const
     return energy_expended_;
 }
 
-void hrservice::process_service_data(const uuid &chr, const uint8_t* data, size_t size)
+void hrservice::process_service_notify_data(const uuid &chr, const uint8_t* data, size_t size)
 {
     switch( chr.uuid16bit() )
     {
@@ -88,6 +88,11 @@ void hrservice::process_service_data(const uuid &chr, const uint8_t* data, size_
             break;
         }
     }
+}
+
+void hrservice::process_service_value_read(const uuid &chr, const uint8_t *data, size_t size, const error &err)
+{
+
 }
 
 void hrservice::reset()

@@ -3,6 +3,7 @@
 
 #include "btle/base.h"
 #include "btle/uuid.h"
+#include "btle/error.h"
 
 namespace btle {
     namespace gatt_services {
@@ -19,14 +20,16 @@ namespace btle {
              * @param data
              * @param size
              */
-            virtual void process_service_data(const uuid& chr, const uint8_t* data, size_t size) = 0;
+            virtual void process_service_notify_data(const uuid& chr, const uint8_t* data, size_t size) = 0;
+
+            virtual void process_service_value_read(const uuid& chr, const uint8_t* data, size_t size, const error& err) = 0;
 
             /**
              * @brief reset, informs gatt service to reset it's values,
              *               typically after device has been disconnected
              */
             virtual void reset() = 0;
-            virtual void set_active(const uuid& uid);
+            virtual void set_active(const uuid& uid, bool notifying);
             virtual bool is_active() const;
             virtual std::string json(const uuid& uid) const;
 

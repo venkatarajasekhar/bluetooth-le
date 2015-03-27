@@ -1,7 +1,16 @@
 #include "uuid.h"
+
 #include <stdio.h>
+#include <sstream>
+#include <iomanip>
+#include <assert.h>
 
 using namespace btle;
+
+namespace {
+    #define UUID_16BIT_128_POST_FIX "-0000-1000-8000-00805f9b34fb"
+    #define UUID_16_128_FOMAT_LEN 36
+}
 
 uuid::uuid()
 : base()
@@ -24,7 +33,44 @@ uuid::uuid(const std::string& uuid_str)
 : base(uuid_str),
   uuid16_(0)
 {
-    // TODO conversion
+    switch(uuid_str.size())
+    {
+        case 2:
+        {
+            memcpy(&uuid16_,uuid_str.c_str(),sizeof(uuid16_));
+            value_ = "";
+            break;
+        }
+        case 4:
+        {
+            std::stringstream ss;
+            ss << std::hex << uuid_str;
+            ss >> uuid16_;
+            value_ = "";
+            break;
+        }
+        case 16:
+        case 32:
+            break;
+        case UUID_16_128_FOMAT_LEN:
+        {
+            std::string::size_type pos(uuid_str.find(UUID_16BIT_128_POST_FIX,
+                                       sizeof(UUID_16BIT_128_POST_FIX)));
+            if( pos != std::string::npos ){
+                std::string uuid_16( uuid_str.substr(pos - 5,4) );
+                std::stringstream ss;
+                ss << std::hex << uuid_16;
+                ss >> uuid16_;
+                value_ = "";
+            }
+            break;
+        }
+        default:
+        {
+            assert(false);
+            break;
+        }
+    }
 }
 
 uuid::uuid(const uint8_t uuid128[UUID_128_BIN_LENGTH])

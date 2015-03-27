@@ -20,6 +20,7 @@ namespace btle {
         service& operator << (const std::vector<characteristic>& chrs);
         bool operator == (const btle::uuid& uid) const;
         bool operator == (const service& other) const;
+        const characteristic &operator [](int index) const;
         const std::vector<characteristic>& characteristics() const;
         std::vector<characteristic>& characteristics();
         const btle::uuid& uuid() const;

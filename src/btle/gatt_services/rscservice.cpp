@@ -54,7 +54,7 @@ double rscservice::distance() const
     return distance_;
 }
 
-void rscservice::process_service_data(const uuid& chr, const uint8_t* data, size_t size)
+void rscservice::process_service_notify_data(const uuid& chr, const uint8_t* data, size_t size)
 {
     switch(chr.uuid16bit())
     {
@@ -86,6 +86,11 @@ void rscservice::process_service_data(const uuid& chr, const uint8_t* data, size
             break;
         }
     }
+}
+
+void rscservice::process_service_value_read(const uuid &chr, const uint8_t *data, size_t size, const error &err)
+{
+
 }
 
 void rscservice::reset()

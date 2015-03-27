@@ -441,14 +441,12 @@ void collector::device_characteristic_read(
     const std::string& data,
     const error& err)
 {
-    if( err.code() == 0 )
+    if( gattservicebase* gatt_service = dev.gatt_service(srv.uuid()) )
     {
-        if( gattservicebase* gatt_service = dev.gatt_service(srv.uuid()) )
+        if( gatt_service->contains_characteristic_uuid(chr.uuid()) )
         {
-            if( gatt_service->contains_characteristic_uuid(chr.uuid()) )
-            {
-                gatt_service->process_service_data(chr.uuid(),(const uint8_t*)data.c_str(),data.size());
-            }
+            gatt_service->process_service_value_read(chr.uuid(),(const uint8_t*)data.c_str(),data.size(), err);
+            device_service_value_updated_cb(dev,gatt_service);
         }
     }
     //
@@ -456,12 +454,15 @@ void collector::device_characteristic_read(
 
 void collector::device_characteristic_written(device& dev, const service& srv, const characteristic& chr, const error& err)
 {
-
+    // TODO
 }
 
 void collector::device_characteristic_nofication_state_changed(device& dev, const service& srv, const characteristic& chr, bool notify, const error& err)
 {
-
+    if( gattservicebase* gatt_service = dev.gatt_service(srv.uuid()) )
+    {
+        gatt_service->set_active(chr.uuid(),err.code() == 0 ? notify : false);
+    }
 }
 
 void collector::device_characteristic_notify_data_updated(device& dev, const service& srv, const characteristic& chr, const std::string& data)
@@ -471,7 +472,7 @@ void collector::device_characteristic_notify_data_updated(device& dev, const ser
     {
         if( gatt_service->contains_characteristic_uuid(chr.uuid()) )
         {
-            gatt_service->process_service_data(chr.uuid(),(const uint8_t*)data.c_str(),data.size());
+            gatt_service->process_service_notify_data(chr.uuid(),(const uint8_t*)data.c_str(),data.size());
             device_service_value_updated_cb(dev,gatt_service);
         }
     }
