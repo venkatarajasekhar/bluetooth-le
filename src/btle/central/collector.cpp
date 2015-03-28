@@ -379,6 +379,7 @@ void collector::device_discovered(device& dev)
                 }
             }
         }
+        // TODO add still optional manaufacturer data filter
         device_discovered_cb(dev);
     }
 }

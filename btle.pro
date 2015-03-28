@@ -45,7 +45,9 @@ SOURCES += \
     src/btle/log.cpp \
     src/btle/utility.cpp \
     src/btle/central/win8/win8centralplugin.cpp \
-    src/btle/connectionparameters.cpp
+    src/btle/connectionparameters.cpp \
+    src/btle/central/win8/win8peripheraldevice.cpp \
+    src/btle/gatt_services/glucoseservice.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \
@@ -91,7 +93,9 @@ HEADERS += inc/btle/btle.h\
     internal/btle/central/centralpluginregisterer.h \
     internal/btle/central/centralpluginregisterer.hpp \
     internal/btle/central/win8/win8centralplugin.h \
-    inc/btle/connectionparameters.h
+    inc/btle/connectionparameters.h \
+    internal/btle/central/win8/win8peripheraldevice.h \
+    inc/btle/gatt_services/glucoseservice.h
 
 ios{
     OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h

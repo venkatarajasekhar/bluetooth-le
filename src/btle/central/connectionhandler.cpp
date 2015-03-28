@@ -8,7 +8,7 @@ namespace{
     #define Entry    -1
     #define Exit     -2
 
-    enum connectionhandler_action
+    enum ch_action
     {
         connect_device_action,
         advertisement_head_received_action,

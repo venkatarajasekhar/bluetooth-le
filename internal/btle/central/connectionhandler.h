@@ -71,8 +71,6 @@ namespace btle {
             void disconnecting( device& dev, int action );
             void change_state(kConnectionHndlrState state, device &dev);
 
-        private: //
-
         private: // private functions
 
             bool is_reconnection_needed(device& dev);
