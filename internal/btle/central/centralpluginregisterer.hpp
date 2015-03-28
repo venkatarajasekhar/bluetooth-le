@@ -23,5 +23,5 @@ centralpluginregisterer<T>::~centralpluginregisterer()
 {
 }
 
-#endif // CENTRALPLUGINREGISTERER_HPP
+#endif
 

@@ -17,5 +17,5 @@ namespace btle {
 }
 #include "centralpluginregisterer.hpp"
 
-#endif // CENTRALPLUGINREGISTERER_H
+#endif
 

@@ -19,5 +19,5 @@ namespace btle {
 
 #include "btle/gatt_services/gattserviceregisterer.hpp"
 
-#endif // GATTSERVICEREGISTERER_H
+#endif
 

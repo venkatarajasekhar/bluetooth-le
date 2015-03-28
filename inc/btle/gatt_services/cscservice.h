@@ -99,5 +99,5 @@ namespace btle {
         };
     }
 }
-#endif // CSCSERVICE_H
+#endif
 
