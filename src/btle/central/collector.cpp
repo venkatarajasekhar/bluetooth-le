@@ -10,6 +10,10 @@
 #include "btle/verify.h"
 #include "btle/log.h"
 
+
+#include "btle/bdascanfilter.h"
+#include "btle/uuidscanfilter.h"
+
 namespace {
     enum collector_flags{
         CLIENT_SCAN   = 0x01,
@@ -21,13 +25,12 @@ using namespace btle::central;
 using namespace btle::gatt_services;
 
 collector::collector()
-: filter_(),
-  bda_filter_(),
-  notify_uuids_(),
+: notify_uuids_(),
   read_uuids_(),
   plugin_(NULL),
   connectionhandler_(),
-  flags_(0)
+  flags_(0),
+  filters_()
 {
     gatt_service_list services;
     gattservicefactory::instance().populate(services);
@@ -41,26 +44,28 @@ collector::collector()
         }
     }
     gattservicefactory::instance().deplete(services);
+
+    uuid_list list;
+    add_scan_filter(new uuidscanfilter(list));
+}
+
+collector::~collector()
+{
+    for( std::vector<scanfilterbase*>::iterator it = filters_.begin(); it != filters_.end(); ++it )
+    {
+        delete (*it);
+    }
 }
 
 /**
- * @brief collector::set_scan_filter, setup scan filter for certain type of devices e.g.
- *        Heart Rate Service etc..
- * @param filter
+ * @brief collector::add_scan_filter,
+ * adds abstract scan filter, library has build-in filters which can be used @see uuidscanfilter and
+ * bdascanfilter,
+ * @param filter, takes owner ship
  */
-void collector::set_scan_filter(const uuid_list& filter)
+void collector::add_scan_filter(scanfilterbase* filter)
 {
-    filter_ = filter;
-}
-
-/**
- * @brief collector::set_scan_filter, setup bda filter if the device does not advertise a certain type of service,
- *        you may want to still "monitor" a device or devices
- * @param bdas
- */
-void collector::set_scan_filter(const bda_list &bdas)
-{
-    bda_filter_ = bdas;
+    filters_.push_back(filter);
 }
 
 /**
@@ -351,32 +356,16 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
 
 void collector::device_discovered(device& dev)
 {
+    connectionhandler_.advertisement_head_received(dev);
     if( flags_ & CLIENT_SCAN )
     {
-        // check first bda list
-        if( bda_filter_.size() )
+        for( std::vector<scanfilterbase*>::iterator it = filters_.begin(); it != filters_.end(); ++it )
         {
-            for( bda_iterator_const it = bda_filter_.begin(); it != bda_filter_.end(); ++it )
+            if( (*it)->process(dev) )
             {
-                if( (*it) == dev.addr() )
-                {
-                    // propagate callback
-                    device_discovered_cb(dev);
-                    return;
-                }
-            }
-        }
-        // secondary check uuid filter list
-        if( filter_.size() )
-        {
-            for( uuid_iterator_const it = filter_.begin(); it != filter_.end(); ++it )
-            {
-                if( dev.is_service_advertiset((*it)) )
-                {
-                    // propagate callback
-                    device_discovered_cb(dev);
-                    return;
-                }
+                // propagate callback
+                device_discovered_cb(dev);
+                return;
             }
         }
         // TODO add still optional manaufacturer data filter

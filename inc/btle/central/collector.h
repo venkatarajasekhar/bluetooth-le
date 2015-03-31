@@ -4,6 +4,7 @@
 #include "btle/uuid.h"
 #include "btle/device.h"
 #include "btle/bda.h"
+#include "btle/scanfilterbase.h"
 #include "btle/central/centralplugininterface.h"
 #include "btle/central/centralpluginobserver.h"
 #include "btle/central/connectionhandler.h"
@@ -17,11 +18,11 @@ namespace btle {
         public:
 
             collector();
+            ~collector();
 
         public: // scannning
 
-            void set_scan_filter(const uuid_list& filter);
-            void set_scan_filter(const bda_list& bdas);
+            void add_scan_filter(scanfilterbase* filter);
             void start_scan();
             void stop_scan();
 
@@ -107,13 +108,12 @@ namespace btle {
 
         private:
 
-            uuid_list filter_;
-            bda_list  bda_filter_;
             uuid_list notify_uuids_;
             uuid_list read_uuids_;
             centralplugininterface* plugin_;
             connectionhandler connectionhandler_;
             unsigned int flags_;
+            std::vector<scanfilterbase*> filters_;
         };
     }
 }

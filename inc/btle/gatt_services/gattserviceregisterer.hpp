@@ -24,4 +24,4 @@ gattserviceregisterer<T>::~gattserviceregisterer()
 {
 }
 
-#endif // CSSERVICEREGISTERER_HPP
+#endif
