@@ -10,9 +10,16 @@ namespace {
     centralpluginregisterer<win8centralplugin> registration;
 }
 
-win8centralplugin::win8centralplugin()
+win8centralplugin::win8centralplugin(centralpluginobserver &observer)
+: centralplugininterface(observer),
+  base("","WIN8 central plugin implementation")
 {
 
+}
+
+const std::string& win8centralplugin::name()
+{
+    return "WIN8_CENTRAL";
 }
 
 std::vector<device*>& win8centralplugin::devices()

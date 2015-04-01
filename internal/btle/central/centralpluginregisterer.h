@@ -3,10 +3,13 @@
 
 namespace btle {
     namespace central {
+
+        class centralpluginobserver;
+
         template<typename T>
         class centralpluginregisterer{
         public:
-            static centralplugininterface* constructor();
+            static centralplugininterface* constructor(centralpluginobserver& observer);
             friend class centralpluginfactory;
 
             centralpluginregisterer();

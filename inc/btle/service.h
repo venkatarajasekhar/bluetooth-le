@@ -33,6 +33,7 @@ namespace btle {
         std::vector<characteristic> characteristics_;
         uint16_t start_handle_;
         uint16_t end_handle_;
+        int instance_id_;
     };
 
     typedef std::vector<service>::iterator service_iterator;

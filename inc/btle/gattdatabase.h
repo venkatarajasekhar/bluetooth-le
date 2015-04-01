@@ -12,6 +12,7 @@ namespace btle {
     public: // api
 
         gattdatabase& operator << (const service& srv);
+        gattdatabase& operator << (const service_list& services);
 
     public: // api
 

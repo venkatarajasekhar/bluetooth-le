@@ -20,14 +20,14 @@ namespace btle {
 
     public:
 
-        virtual bool operator == (const base& other);
+        //virtual bool operator == (const base& other);
         virtual std::string to_string() const;
         virtual int to_int(int base = 10);
 
     public:
 
         const std::string& string_value() const;
-        std::string description() const;
+        virtual std::string description() const;
         void set_string_value(const std::string& value);
 
     protected:

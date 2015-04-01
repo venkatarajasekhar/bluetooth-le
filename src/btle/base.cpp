@@ -32,10 +32,10 @@ base::~base()
 {
 }
 
-bool base::operator == (const base& other)
+/*bool base::operator == (const base& other)
 {
     return value_.compare(other.value_) != std::string::npos;
-}
+}*/
 
 std::string base::to_string() const
 {

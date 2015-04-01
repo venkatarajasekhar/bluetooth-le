@@ -23,6 +23,9 @@ namespace btle {
         public: // scannning
 
             void add_scan_filter(scanfilterbase* filter);
+            void clear_scan_filter(scanfilterbase* filter);
+            void clear_scan_filters();
+
             void start_scan();
             void stop_scan();
 
@@ -111,9 +114,10 @@ namespace btle {
             uuid_list notify_uuids_;
             uuid_list read_uuids_;
             centralplugininterface* plugin_;
+            std::vector<centralplugininterface*> plugins_;
             connectionhandler connectionhandler_;
             unsigned int flags_;
-            std::vector<scanfilterbase*> filters_;
+            scan_filters filters_;
         };
     }
 }

@@ -50,7 +50,8 @@ SOURCES += \
     src/btle/gatt_services/glucoseservice.cpp \
     src/btle/scanfilterbase.cpp \
     src/btle/uuidscanfilter.cpp \
-    src/btle/bdascanfilter.cpp
+    src/btle/bdascanfilter.cpp \
+    src/btle/central/centralplugininterface.cpp
 
 HEADERS += inc/btle/btle.h\
         inc/btle/btle_global.h \

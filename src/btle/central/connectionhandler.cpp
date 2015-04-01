@@ -99,6 +99,10 @@ void connectionhandler::change_device_state(
     {
         (*it)->device_state_changed(dev);
     }
+    if( state == DEVICE_DISCONNECTED )
+    {
+        // call reset
+    }
 }
 
 void connectionhandler::free( device& dev, int action )

@@ -3,13 +3,14 @@
 
 #include "btle/central/centralpluginfactory.h"
 #include "btle/central/centralplugininterface.h"
+#include "btle/central/centralpluginobserver.h"
 
 using namespace btle::central;
 
 template<typename T>
-centralplugininterface* centralpluginregisterer<T>::constructor()
+centralplugininterface* centralpluginregisterer<T>::constructor(centralpluginobserver& observer)
 {
-    return new T();
+    return new T(observer);
 }
 
 template<typename T>

@@ -6,12 +6,13 @@
 namespace btle {
     namespace central {
         namespace win8 {
-            class win8centralplugin: public centralplugininterface{
+            class win8centralplugin: public centralplugininterface, public base{
             public:
-                win8centralplugin();
+                win8centralplugin(centralpluginobserver& observer);
 
             public: // from base
 
+                const std::string& name();
                 std::vector<device*>& devices();
                 device* allocate_new_device(const bda& addr);
                 int start();
@@ -29,7 +30,7 @@ namespace btle {
 
             private:
 
-                device_list devices_;
+                //device_list devices_;
             };
         }
     }

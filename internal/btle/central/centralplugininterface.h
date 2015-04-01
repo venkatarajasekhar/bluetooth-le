@@ -7,6 +7,9 @@
 namespace btle {
     namespace central {
 
+        // forward declarations
+        class centralpluginobserver;
+
         enum central_plugin_extras
         {
             /**
@@ -26,13 +29,21 @@ namespace btle {
         class centralplugininterface{
         public:
 
-            centralplugininterface(){}
+            centralplugininterface(centralpluginobserver& observer);
+
+            virtual ~centralplugininterface();
 
             /**
              * @brief features
              * @return @see central_plugin_extras, returns bit mask of extra features if any
              */
-            virtual unsigned int features(){return 0;}
+            virtual unsigned int features();
+
+            /**
+             * @brief name
+             * @return
+             */
+            virtual const std::string& name() = 0;
 
             /**
              * @brief devices
@@ -125,6 +136,10 @@ namespace btle {
              */
             virtual void write_descriptor(device& dev, const service& srv, const characteristic& chr, descriptor& desc, bool notify) = 0;
 
+        protected:
+
+            centralpluginobserver& observer_;
+            std::vector<device*> devices_;
         };
     }
 }

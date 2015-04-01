@@ -62,7 +62,6 @@ namespace btle {
          */
         int instance_id_;
         std::vector<descriptor> descriptors_;
-
     };
 
     typedef std::vector<characteristic>::iterator chr_iterator;

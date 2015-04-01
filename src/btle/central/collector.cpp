@@ -44,14 +44,11 @@ collector::collector()
         }
     }
     gattservicefactory::instance().deplete(services);
-
-    uuid_list list;
-    add_scan_filter(new uuidscanfilter(list));
 }
 
 collector::~collector()
 {
-    for( std::vector<scanfilterbase*>::iterator it = filters_.begin(); it != filters_.end(); ++it )
+    for( scan_filters::iterator it = filters_.begin(); it != filters_.end(); ++it )
     {
         delete (*it);
     }
@@ -66,6 +63,31 @@ collector::~collector()
 void collector::add_scan_filter(scanfilterbase* filter)
 {
     filters_.push_back(filter);
+}
+
+/**
+ * @brief collector::clear_scan_filter
+ * @param filter
+ */
+void collector::clear_scan_filter(scanfilterbase* filter)
+{
+    for( scan_filters::iterator it = filters_.begin(); it != filters_.end(); ++it )
+    {
+        if( (*it) == filter )
+        {
+            delete (*it);
+            filters_.erase(it);
+            return;
+        }
+    }
+}
+
+/**
+ * @brief collector::clear_scan_filters
+ */
+void collector::clear_scan_filters()
+{
+    filters_.clear();
 }
 
 /**

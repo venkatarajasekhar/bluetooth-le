@@ -20,7 +20,7 @@ namespace btle {
         virtual bool process(device& dev)=0;
     };
 
-    typedef std::vector<scanfilterbase> scan_filters;
+    typedef std::vector<scanfilterbase*> scan_filters;
 }
 
 #endif // SCANFILTERBASE_H

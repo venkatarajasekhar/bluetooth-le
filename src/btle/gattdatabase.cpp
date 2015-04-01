@@ -15,6 +15,12 @@ gattdatabase& gattdatabase::operator << (const service& srv)
     return *this;
 }
 
+gattdatabase& gattdatabase::operator << (const service_list& services)
+{
+    services_ = services;
+    return *this;
+}
+
 const characteristic* gattdatabase::fetch_characteristic(const uuid& uid) const
 {
     for( std::vector<service>::const_iterator it_srv = services_.begin(); it_srv != services_.end(); ++it_srv )
