@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9524BD27-8F8B-44AA-9C8C-18C746E718C1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>btle</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9FFC7F02BD2A4FA4C5FE081A62F1514501AF2FF8</key>
+		<string>https://github.com/erkki-silvola/bluetooth-le.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>btle.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9FFC7F02BD2A4FA4C5FE081A62F1514501AF2FF8</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/erkki-silvola/bluetooth-le.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9FFC7F02BD2A4FA4C5FE081A62F1514501AF2FF8</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9FFC7F02BD2A4FA4C5FE081A62F1514501AF2FF8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>bluetooth-le</string>
+		</dict>
+	</array>
+</dict>
+</plist>

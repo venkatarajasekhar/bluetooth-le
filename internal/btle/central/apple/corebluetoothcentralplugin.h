@@ -2,6 +2,7 @@
 #define COREBLUETOOTHCENTRALPLUGIN_H
 
 #include "btle/central/centralplugininterface.h"
+#include "btle/central/apple/corebluetoothperipheraldevice.h"
 
 #ifdef DESKTOP_BUILD
 #import <IOBluetooth/IOBluetooth.h>
@@ -9,9 +10,32 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #endif
 
+//class btle::central::apple::corebluetoothcentralplugin;
+
+
 namespace btle {
     namespace central {
         namespace apple {
+            class corebluetoothcentralplugin;
+        }
+    }
+}
+
+
+@interface corebluetoothcentralpluginprivate : NSObject<CBCentralManagerDelegate,CBPeripheralDelegate>
+{
+@public
+    btle::central::apple::corebluetoothcentralplugin* parent_;
+}
+
+@property (retain) CBCentralManager* manager_;
+@end
+
+namespace btle {
+    namespace central {
+        namespace apple {
+            
+            
             class corebluetoothcentralplugin: public centralplugininterface, public base{
             public:
                 corebluetoothcentralplugin(centralpluginobserver& observer);
@@ -34,21 +58,19 @@ namespace btle {
                 void set_characteristic_notify(device& dev,const service& srv, const characteristic& chr, bool notify);
                 void write_descriptor(device& dev, const service& srv, const characteristic& chr, descriptor& desc, bool notify);
 
+                centralpluginobserver& observer();
+                corebluetoothperipheraldevice* find_device(CBPeripheral* peripheral);
+                
             private:
+                
+                corebluetoothcentralpluginprivate* privateimpl_;
 
             };
 
-            @interface corebluetoothcentralpluginprivate : NSObject<CBCentralManagerDelegate,CBPeripheralDelegate>
-            {
-            @public
-                corebluetoothcentralplugin* plugin_;
-            }
-
-            @property (retain) CBCentralManager* manager_;
-            @end
         }
     }
 }
+
 
 #endif // COREBLUETOOTHCENTRALPLUGIN_H
 

@@ -1,0 +1,741 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0DC7398F1ACDDEF7005F7BC0 /* libbtle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC739831ACDDEF7005F7BC0 /* libbtle.a */; };
+		0DC73A0A1ACDDF56005F7BC0 /* advertisementdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DC1ACDDF56005F7BC0 /* advertisementdata.cpp */; };
+		0DC73A0B1ACDDF56005F7BC0 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DD1ACDDF56005F7BC0 /* base.cpp */; };
+		0DC73A0C1ACDDF56005F7BC0 /* bda.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DE1ACDDF56005F7BC0 /* bda.cpp */; };
+		0DC73A0D1ACDDF56005F7BC0 /* bdascanfilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DF1ACDDF56005F7BC0 /* bdascanfilter.cpp */; };
+		0DC73A0E1ACDDF56005F7BC0 /* btle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739E01ACDDF56005F7BC0 /* btle.cpp */; };
+		0DC73A0F1ACDDF56005F7BC0 /* corebluetoothcentralplugin.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739E31ACDDF56005F7BC0 /* corebluetoothcentralplugin.mm */; };
+		0DC73A101ACDDF56005F7BC0 /* centralpluginfactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739E41ACDDF56005F7BC0 /* centralpluginfactory.cpp */; };
+		0DC73A111ACDDF56005F7BC0 /* centralplugininterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739E51ACDDF56005F7BC0 /* centralplugininterface.cpp */; };
+		0DC73A121ACDDF56005F7BC0 /* collector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739E61ACDDF56005F7BC0 /* collector.cpp */; };
+		0DC73A131ACDDF56005F7BC0 /* connectionhandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739E71ACDDF56005F7BC0 /* connectionhandler.cpp */; };
+		0DC73A161ACDDF56005F7BC0 /* characteristic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739EB1ACDDF56005F7BC0 /* characteristic.cpp */; };
+		0DC73A171ACDDF56005F7BC0 /* connectionparameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739EC1ACDDF56005F7BC0 /* connectionparameters.cpp */; };
+		0DC73A181ACDDF56005F7BC0 /* descriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739ED1ACDDF56005F7BC0 /* descriptor.cpp */; };
+		0DC73A191ACDDF56005F7BC0 /* device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739EE1ACDDF56005F7BC0 /* device.cpp */; };
+		0DC73A1A1ACDDF56005F7BC0 /* error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739EF1ACDDF56005F7BC0 /* error.cpp */; };
+		0DC73A1B1ACDDF56005F7BC0 /* attribute_not_found.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739F11ACDDF56005F7BC0 /* attribute_not_found.cpp */; };
+		0DC73A1C1ACDDF56005F7BC0 /* attribute_not_notifyable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739F21ACDDF56005F7BC0 /* attribute_not_notifyable.cpp */; };
+		0DC73A1D1ACDDF56005F7BC0 /* attribute_not_readable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739F31ACDDF56005F7BC0 /* attribute_not_readable.cpp */; };
+		0DC73A1E1ACDDF56005F7BC0 /* attribute_not_writable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739F41ACDDF56005F7BC0 /* attribute_not_writable.cpp */; };
+		0DC73A1F1ACDDF56005F7BC0 /* device_not_connected.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739F51ACDDF56005F7BC0 /* device_not_connected.cpp */; };
+		0DC73A201ACDDF56005F7BC0 /* link_not_active.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739F61ACDDF56005F7BC0 /* link_not_active.cpp */; };
+		0DC73A211ACDDF56005F7BC0 /* not_implemented.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739F71ACDDF56005F7BC0 /* not_implemented.cpp */; };
+		0DC73A221ACDDF56005F7BC0 /* service_not_found.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739F81ACDDF56005F7BC0 /* service_not_found.cpp */; };
+		0DC73A231ACDDF56005F7BC0 /* cscservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739FA1ACDDF56005F7BC0 /* cscservice.cpp */; };
+		0DC73A241ACDDF56005F7BC0 /* cyclingpowerservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739FB1ACDDF56005F7BC0 /* cyclingpowerservice.cpp */; };
+		0DC73A251ACDDF56005F7BC0 /* gattservicebase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739FC1ACDDF56005F7BC0 /* gattservicebase.cpp */; };
+		0DC73A261ACDDF56005F7BC0 /* gattservicefactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739FD1ACDDF56005F7BC0 /* gattservicefactory.cpp */; };
+		0DC73A271ACDDF56005F7BC0 /* glucoseservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739FE1ACDDF56005F7BC0 /* glucoseservice.cpp */; };
+		0DC73A281ACDDF56005F7BC0 /* hrservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739FF1ACDDF56005F7BC0 /* hrservice.cpp */; };
+		0DC73A291ACDDF56005F7BC0 /* rscservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A001ACDDF56005F7BC0 /* rscservice.cpp */; };
+		0DC73A2A1ACDDF56005F7BC0 /* gattdatabase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A011ACDDF56005F7BC0 /* gattdatabase.cpp */; };
+		0DC73A2B1ACDDF56005F7BC0 /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A021ACDDF56005F7BC0 /* log.cpp */; };
+		0DC73A2C1ACDDF56005F7BC0 /* rssifilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A031ACDDF56005F7BC0 /* rssifilter.cpp */; };
+		0DC73A2D1ACDDF56005F7BC0 /* scanfilterbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A041ACDDF56005F7BC0 /* scanfilterbase.cpp */; };
+		0DC73A2E1ACDDF56005F7BC0 /* service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A051ACDDF56005F7BC0 /* service.cpp */; };
+		0DC73A2F1ACDDF56005F7BC0 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A061ACDDF56005F7BC0 /* utility.cpp */; };
+		0DC73A301ACDDF56005F7BC0 /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A071ACDDF56005F7BC0 /* uuid.cpp */; };
+		0DC73A311ACDDF56005F7BC0 /* uuidscanfilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A081ACDDF56005F7BC0 /* uuidscanfilter.cpp */; };
+		0DC73A321ACDDF56005F7BC0 /* version.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A091ACDDF56005F7BC0 /* version.cpp */; };
+		0DC73A351ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A341ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0DC739901ACDDEF7005F7BC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0DC7397B1ACDDEF7005F7BC0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0DC739821ACDDEF7005F7BC0;
+			remoteInfo = btle;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0DC739811ACDDEF7005F7BC0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0DC739831ACDDEF7005F7BC0 /* libbtle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtle.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DC7398E1ACDDEF7005F7BC0 /* btleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = btleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DC7399F1ACDDF56005F7BC0 /* advertisementdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = advertisementdata.h; sourceTree = "<group>"; };
+		0DC739A01ACDDF56005F7BC0 /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
+		0DC739A11ACDDF56005F7BC0 /* bda.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bda.h; sourceTree = "<group>"; };
+		0DC739A21ACDDF56005F7BC0 /* bdascanfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bdascanfilter.h; sourceTree = "<group>"; };
+		0DC739A31ACDDF56005F7BC0 /* btle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btle.h; sourceTree = "<group>"; };
+		0DC739A41ACDDF56005F7BC0 /* btle_global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btle_global.h; sourceTree = "<group>"; };
+		0DC739A61ACDDF56005F7BC0 /* collector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = collector.h; sourceTree = "<group>"; };
+		0DC739A71ACDDF56005F7BC0 /* characteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = characteristic.h; sourceTree = "<group>"; };
+		0DC739A81ACDDF56005F7BC0 /* connectionparameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connectionparameters.h; sourceTree = "<group>"; };
+		0DC739A91ACDDF56005F7BC0 /* descriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = descriptor.h; sourceTree = "<group>"; };
+		0DC739AA1ACDDF56005F7BC0 /* device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = device.h; sourceTree = "<group>"; };
+		0DC739AB1ACDDF56005F7BC0 /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
+		0DC739AD1ACDDF56005F7BC0 /* attribute_not_found.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attribute_not_found.h; sourceTree = "<group>"; };
+		0DC739AE1ACDDF56005F7BC0 /* attribute_not_notifyable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attribute_not_notifyable.h; sourceTree = "<group>"; };
+		0DC739AF1ACDDF56005F7BC0 /* attribute_not_readable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attribute_not_readable.h; sourceTree = "<group>"; };
+		0DC739B01ACDDF56005F7BC0 /* attribute_not_writable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attribute_not_writable.h; sourceTree = "<group>"; };
+		0DC739B11ACDDF56005F7BC0 /* device_not_connected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = device_not_connected.h; sourceTree = "<group>"; };
+		0DC739B21ACDDF56005F7BC0 /* link_not_active.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = link_not_active.h; sourceTree = "<group>"; };
+		0DC739B31ACDDF56005F7BC0 /* not_implemented.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = not_implemented.h; sourceTree = "<group>"; };
+		0DC739B41ACDDF56005F7BC0 /* service_not_found.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = service_not_found.h; sourceTree = "<group>"; };
+		0DC739B61ACDDF56005F7BC0 /* cscservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cscservice.h; sourceTree = "<group>"; };
+		0DC739B71ACDDF56005F7BC0 /* cyclingpowerservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cyclingpowerservice.h; sourceTree = "<group>"; };
+		0DC739B81ACDDF56005F7BC0 /* gattservicebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gattservicebase.h; sourceTree = "<group>"; };
+		0DC739B91ACDDF56005F7BC0 /* gattservicefactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gattservicefactory.h; sourceTree = "<group>"; };
+		0DC739BA1ACDDF56005F7BC0 /* gattserviceregisterer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gattserviceregisterer.h; sourceTree = "<group>"; };
+		0DC739BB1ACDDF56005F7BC0 /* gattserviceregisterer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = gattserviceregisterer.hpp; sourceTree = "<group>"; };
+		0DC739BC1ACDDF56005F7BC0 /* glucoseservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glucoseservice.h; sourceTree = "<group>"; };
+		0DC739BD1ACDDF56005F7BC0 /* hrservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hrservice.h; sourceTree = "<group>"; };
+		0DC739BE1ACDDF56005F7BC0 /* rscservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rscservice.h; sourceTree = "<group>"; };
+		0DC739BF1ACDDF56005F7BC0 /* gattdatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gattdatabase.h; sourceTree = "<group>"; };
+		0DC739C01ACDDF56005F7BC0 /* list_ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list_ext.h; sourceTree = "<group>"; };
+		0DC739C11ACDDF56005F7BC0 /* list_ext.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = list_ext.hpp; sourceTree = "<group>"; };
+		0DC739C21ACDDF56005F7BC0 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
+		0DC739C31ACDDF56005F7BC0 /* rssifilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rssifilter.h; sourceTree = "<group>"; };
+		0DC739C41ACDDF56005F7BC0 /* scanfilterbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scanfilterbase.h; sourceTree = "<group>"; };
+		0DC739C51ACDDF56005F7BC0 /* service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = service.h; sourceTree = "<group>"; };
+		0DC739C61ACDDF56005F7BC0 /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		0DC739C71ACDDF56005F7BC0 /* uuid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uuid.h; sourceTree = "<group>"; };
+		0DC739C81ACDDF56005F7BC0 /* uuidscanfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uuidscanfilter.h; sourceTree = "<group>"; };
+		0DC739C91ACDDF56005F7BC0 /* verify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = verify.h; sourceTree = "<group>"; };
+		0DC739CA1ACDDF56005F7BC0 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
+		0DC739CF1ACDDF56005F7BC0 /* corebluetoothcentralplugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = corebluetoothcentralplugin.h; sourceTree = "<group>"; };
+		0DC739D01ACDDF56005F7BC0 /* centralpluginfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centralpluginfactory.h; sourceTree = "<group>"; };
+		0DC739D11ACDDF56005F7BC0 /* centralplugininterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centralplugininterface.h; sourceTree = "<group>"; };
+		0DC739D21ACDDF56005F7BC0 /* centralpluginobserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centralpluginobserver.h; sourceTree = "<group>"; };
+		0DC739D31ACDDF56005F7BC0 /* centralpluginregisterer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = centralpluginregisterer.h; sourceTree = "<group>"; };
+		0DC739D41ACDDF56005F7BC0 /* centralpluginregisterer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = centralpluginregisterer.hpp; sourceTree = "<group>"; };
+		0DC739D51ACDDF56005F7BC0 /* connectionhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connectionhandler.h; sourceTree = "<group>"; };
+		0DC739D61ACDDF56005F7BC0 /* connectionhandlerobserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connectionhandlerobserver.h; sourceTree = "<group>"; };
+		0DC739DC1ACDDF56005F7BC0 /* advertisementdata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = advertisementdata.cpp; sourceTree = "<group>"; };
+		0DC739DD1ACDDF56005F7BC0 /* base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base.cpp; sourceTree = "<group>"; };
+		0DC739DE1ACDDF56005F7BC0 /* bda.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bda.cpp; sourceTree = "<group>"; };
+		0DC739DF1ACDDF56005F7BC0 /* bdascanfilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bdascanfilter.cpp; sourceTree = "<group>"; };
+		0DC739E01ACDDF56005F7BC0 /* btle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = btle.cpp; sourceTree = "<group>"; };
+		0DC739E31ACDDF56005F7BC0 /* corebluetoothcentralplugin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = corebluetoothcentralplugin.mm; sourceTree = "<group>"; };
+		0DC739E41ACDDF56005F7BC0 /* centralpluginfactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = centralpluginfactory.cpp; sourceTree = "<group>"; };
+		0DC739E51ACDDF56005F7BC0 /* centralplugininterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = centralplugininterface.cpp; sourceTree = "<group>"; };
+		0DC739E61ACDDF56005F7BC0 /* collector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collector.cpp; sourceTree = "<group>"; };
+		0DC739E71ACDDF56005F7BC0 /* connectionhandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = connectionhandler.cpp; sourceTree = "<group>"; };
+		0DC739EB1ACDDF56005F7BC0 /* characteristic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = characteristic.cpp; sourceTree = "<group>"; };
+		0DC739EC1ACDDF56005F7BC0 /* connectionparameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = connectionparameters.cpp; sourceTree = "<group>"; };
+		0DC739ED1ACDDF56005F7BC0 /* descriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = descriptor.cpp; sourceTree = "<group>"; };
+		0DC739EE1ACDDF56005F7BC0 /* device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = device.cpp; sourceTree = "<group>"; };
+		0DC739EF1ACDDF56005F7BC0 /* error.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = error.cpp; sourceTree = "<group>"; };
+		0DC739F11ACDDF56005F7BC0 /* attribute_not_found.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attribute_not_found.cpp; sourceTree = "<group>"; };
+		0DC739F21ACDDF56005F7BC0 /* attribute_not_notifyable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attribute_not_notifyable.cpp; sourceTree = "<group>"; };
+		0DC739F31ACDDF56005F7BC0 /* attribute_not_readable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attribute_not_readable.cpp; sourceTree = "<group>"; };
+		0DC739F41ACDDF56005F7BC0 /* attribute_not_writable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attribute_not_writable.cpp; sourceTree = "<group>"; };
+		0DC739F51ACDDF56005F7BC0 /* device_not_connected.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = device_not_connected.cpp; sourceTree = "<group>"; };
+		0DC739F61ACDDF56005F7BC0 /* link_not_active.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = link_not_active.cpp; sourceTree = "<group>"; };
+		0DC739F71ACDDF56005F7BC0 /* not_implemented.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = not_implemented.cpp; sourceTree = "<group>"; };
+		0DC739F81ACDDF56005F7BC0 /* service_not_found.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = service_not_found.cpp; sourceTree = "<group>"; };
+		0DC739FA1ACDDF56005F7BC0 /* cscservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cscservice.cpp; sourceTree = "<group>"; };
+		0DC739FB1ACDDF56005F7BC0 /* cyclingpowerservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cyclingpowerservice.cpp; sourceTree = "<group>"; };
+		0DC739FC1ACDDF56005F7BC0 /* gattservicebase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gattservicebase.cpp; sourceTree = "<group>"; };
+		0DC739FD1ACDDF56005F7BC0 /* gattservicefactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gattservicefactory.cpp; sourceTree = "<group>"; };
+		0DC739FE1ACDDF56005F7BC0 /* glucoseservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = glucoseservice.cpp; sourceTree = "<group>"; };
+		0DC739FF1ACDDF56005F7BC0 /* hrservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hrservice.cpp; sourceTree = "<group>"; };
+		0DC73A001ACDDF56005F7BC0 /* rscservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rscservice.cpp; sourceTree = "<group>"; };
+		0DC73A011ACDDF56005F7BC0 /* gattdatabase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gattdatabase.cpp; sourceTree = "<group>"; };
+		0DC73A021ACDDF56005F7BC0 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = log.cpp; sourceTree = "<group>"; };
+		0DC73A031ACDDF56005F7BC0 /* rssifilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rssifilter.cpp; sourceTree = "<group>"; };
+		0DC73A041ACDDF56005F7BC0 /* scanfilterbase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scanfilterbase.cpp; sourceTree = "<group>"; };
+		0DC73A051ACDDF56005F7BC0 /* service.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = service.cpp; sourceTree = "<group>"; };
+		0DC73A061ACDDF56005F7BC0 /* utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utility.cpp; sourceTree = "<group>"; };
+		0DC73A071ACDDF56005F7BC0 /* uuid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uuid.cpp; sourceTree = "<group>"; };
+		0DC73A081ACDDF56005F7BC0 /* uuidscanfilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uuidscanfilter.cpp; sourceTree = "<group>"; };
+		0DC73A091ACDDF56005F7BC0 /* version.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cpp; sourceTree = "<group>"; };
+		0DC73A331ACDE239005F7BC0 /* corebluetoothperipheraldevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = corebluetoothperipheraldevice.h; sourceTree = "<group>"; };
+		0DC73A341ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = corebluetoothperipheraldevice.mm; sourceTree = "<group>"; };
+		0DC73A681ACDEB2D005F7BC0 /* btle_core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = btle_core.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0DC739801ACDDEF7005F7BC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DC7398B1ACDDEF7005F7BC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DC7398F1ACDDEF7005F7BC0 /* libbtle.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0DC7397A1ACDDEF7005F7BC0 = {
+			isa = PBXGroup;
+			children = (
+				0DC7399D1ACDDF56005F7BC0 /* inc */,
+				0DC739CB1ACDDF56005F7BC0 /* internal */,
+				0DC739DA1ACDDF56005F7BC0 /* src */,
+				0DC739921ACDDEF7005F7BC0 /* btleTests */,
+				0DC739841ACDDEF7005F7BC0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0DC739841ACDDEF7005F7BC0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739831ACDDEF7005F7BC0 /* libbtle.a */,
+				0DC7398E1ACDDEF7005F7BC0 /* btleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0DC739921ACDDEF7005F7BC0 /* btleTests */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739931ACDDEF7005F7BC0 /* Supporting Files */,
+			);
+			path = btleTests;
+			sourceTree = "<group>";
+		};
+		0DC739931ACDDEF7005F7BC0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0DC7399D1ACDDF56005F7BC0 /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				0DC7399E1ACDDF56005F7BC0 /* btle */,
+				0DC73A681ACDEB2D005F7BC0 /* btle_core.h */,
+			);
+			path = inc;
+			sourceTree = "<group>";
+		};
+		0DC7399E1ACDDF56005F7BC0 /* btle */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739A51ACDDF56005F7BC0 /* central */,
+				0DC739AC1ACDDF56005F7BC0 /* exceptions */,
+				0DC739B51ACDDF56005F7BC0 /* gatt_services */,
+				0DC7399F1ACDDF56005F7BC0 /* advertisementdata.h */,
+				0DC739A01ACDDF56005F7BC0 /* base.h */,
+				0DC739A11ACDDF56005F7BC0 /* bda.h */,
+				0DC739A21ACDDF56005F7BC0 /* bdascanfilter.h */,
+				0DC739A31ACDDF56005F7BC0 /* btle.h */,
+				0DC739A41ACDDF56005F7BC0 /* btle_global.h */,
+				0DC739A71ACDDF56005F7BC0 /* characteristic.h */,
+				0DC739A81ACDDF56005F7BC0 /* connectionparameters.h */,
+				0DC739A91ACDDF56005F7BC0 /* descriptor.h */,
+				0DC739AA1ACDDF56005F7BC0 /* device.h */,
+				0DC739AB1ACDDF56005F7BC0 /* error.h */,
+				0DC739BF1ACDDF56005F7BC0 /* gattdatabase.h */,
+				0DC739C01ACDDF56005F7BC0 /* list_ext.h */,
+				0DC739C11ACDDF56005F7BC0 /* list_ext.hpp */,
+				0DC739C21ACDDF56005F7BC0 /* log.h */,
+				0DC739C31ACDDF56005F7BC0 /* rssifilter.h */,
+				0DC739C41ACDDF56005F7BC0 /* scanfilterbase.h */,
+				0DC739C51ACDDF56005F7BC0 /* service.h */,
+				0DC739C61ACDDF56005F7BC0 /* utility.h */,
+				0DC739C71ACDDF56005F7BC0 /* uuid.h */,
+				0DC739C81ACDDF56005F7BC0 /* uuidscanfilter.h */,
+				0DC739C91ACDDF56005F7BC0 /* verify.h */,
+				0DC739CA1ACDDF56005F7BC0 /* version.h */,
+			);
+			path = btle;
+			sourceTree = "<group>";
+		};
+		0DC739A51ACDDF56005F7BC0 /* central */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739A61ACDDF56005F7BC0 /* collector.h */,
+			);
+			path = central;
+			sourceTree = "<group>";
+		};
+		0DC739AC1ACDDF56005F7BC0 /* exceptions */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739AD1ACDDF56005F7BC0 /* attribute_not_found.h */,
+				0DC739AE1ACDDF56005F7BC0 /* attribute_not_notifyable.h */,
+				0DC739AF1ACDDF56005F7BC0 /* attribute_not_readable.h */,
+				0DC739B01ACDDF56005F7BC0 /* attribute_not_writable.h */,
+				0DC739B11ACDDF56005F7BC0 /* device_not_connected.h */,
+				0DC739B21ACDDF56005F7BC0 /* link_not_active.h */,
+				0DC739B31ACDDF56005F7BC0 /* not_implemented.h */,
+				0DC739B41ACDDF56005F7BC0 /* service_not_found.h */,
+			);
+			path = exceptions;
+			sourceTree = "<group>";
+		};
+		0DC739B51ACDDF56005F7BC0 /* gatt_services */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739B61ACDDF56005F7BC0 /* cscservice.h */,
+				0DC739B71ACDDF56005F7BC0 /* cyclingpowerservice.h */,
+				0DC739B81ACDDF56005F7BC0 /* gattservicebase.h */,
+				0DC739B91ACDDF56005F7BC0 /* gattservicefactory.h */,
+				0DC739BA1ACDDF56005F7BC0 /* gattserviceregisterer.h */,
+				0DC739BB1ACDDF56005F7BC0 /* gattserviceregisterer.hpp */,
+				0DC739BC1ACDDF56005F7BC0 /* glucoseservice.h */,
+				0DC739BD1ACDDF56005F7BC0 /* hrservice.h */,
+				0DC739BE1ACDDF56005F7BC0 /* rscservice.h */,
+			);
+			path = gatt_services;
+			sourceTree = "<group>";
+		};
+		0DC739CB1ACDDF56005F7BC0 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739CC1ACDDF56005F7BC0 /* btle */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		0DC739CC1ACDDF56005F7BC0 /* btle */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739CD1ACDDF56005F7BC0 /* central */,
+			);
+			path = btle;
+			sourceTree = "<group>";
+		};
+		0DC739CD1ACDDF56005F7BC0 /* central */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739CE1ACDDF56005F7BC0 /* apple */,
+				0DC739D01ACDDF56005F7BC0 /* centralpluginfactory.h */,
+				0DC739D11ACDDF56005F7BC0 /* centralplugininterface.h */,
+				0DC739D21ACDDF56005F7BC0 /* centralpluginobserver.h */,
+				0DC739D31ACDDF56005F7BC0 /* centralpluginregisterer.h */,
+				0DC739D41ACDDF56005F7BC0 /* centralpluginregisterer.hpp */,
+				0DC739D51ACDDF56005F7BC0 /* connectionhandler.h */,
+				0DC739D61ACDDF56005F7BC0 /* connectionhandlerobserver.h */,
+			);
+			path = central;
+			sourceTree = "<group>";
+		};
+		0DC739CE1ACDDF56005F7BC0 /* apple */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739CF1ACDDF56005F7BC0 /* corebluetoothcentralplugin.h */,
+				0DC73A331ACDE239005F7BC0 /* corebluetoothperipheraldevice.h */,
+			);
+			path = apple;
+			sourceTree = "<group>";
+		};
+		0DC739DA1ACDDF56005F7BC0 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739DB1ACDDF56005F7BC0 /* btle */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		0DC739DB1ACDDF56005F7BC0 /* btle */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739E11ACDDF56005F7BC0 /* central */,
+				0DC739F01ACDDF56005F7BC0 /* exceptions */,
+				0DC739F91ACDDF56005F7BC0 /* gatt_services */,
+				0DC739DC1ACDDF56005F7BC0 /* advertisementdata.cpp */,
+				0DC739DD1ACDDF56005F7BC0 /* base.cpp */,
+				0DC739DE1ACDDF56005F7BC0 /* bda.cpp */,
+				0DC739DF1ACDDF56005F7BC0 /* bdascanfilter.cpp */,
+				0DC739E01ACDDF56005F7BC0 /* btle.cpp */,
+				0DC739EB1ACDDF56005F7BC0 /* characteristic.cpp */,
+				0DC739EC1ACDDF56005F7BC0 /* connectionparameters.cpp */,
+				0DC739ED1ACDDF56005F7BC0 /* descriptor.cpp */,
+				0DC739EE1ACDDF56005F7BC0 /* device.cpp */,
+				0DC739EF1ACDDF56005F7BC0 /* error.cpp */,
+				0DC73A011ACDDF56005F7BC0 /* gattdatabase.cpp */,
+				0DC73A021ACDDF56005F7BC0 /* log.cpp */,
+				0DC73A031ACDDF56005F7BC0 /* rssifilter.cpp */,
+				0DC73A041ACDDF56005F7BC0 /* scanfilterbase.cpp */,
+				0DC73A051ACDDF56005F7BC0 /* service.cpp */,
+				0DC73A061ACDDF56005F7BC0 /* utility.cpp */,
+				0DC73A071ACDDF56005F7BC0 /* uuid.cpp */,
+				0DC73A081ACDDF56005F7BC0 /* uuidscanfilter.cpp */,
+				0DC73A091ACDDF56005F7BC0 /* version.cpp */,
+			);
+			path = btle;
+			sourceTree = "<group>";
+		};
+		0DC739E11ACDDF56005F7BC0 /* central */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739E21ACDDF56005F7BC0 /* apple */,
+				0DC739E41ACDDF56005F7BC0 /* centralpluginfactory.cpp */,
+				0DC739E51ACDDF56005F7BC0 /* centralplugininterface.cpp */,
+				0DC739E61ACDDF56005F7BC0 /* collector.cpp */,
+				0DC739E71ACDDF56005F7BC0 /* connectionhandler.cpp */,
+			);
+			path = central;
+			sourceTree = "<group>";
+		};
+		0DC739E21ACDDF56005F7BC0 /* apple */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739E31ACDDF56005F7BC0 /* corebluetoothcentralplugin.mm */,
+				0DC73A341ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm */,
+			);
+			path = apple;
+			sourceTree = "<group>";
+		};
+		0DC739F01ACDDF56005F7BC0 /* exceptions */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739F11ACDDF56005F7BC0 /* attribute_not_found.cpp */,
+				0DC739F21ACDDF56005F7BC0 /* attribute_not_notifyable.cpp */,
+				0DC739F31ACDDF56005F7BC0 /* attribute_not_readable.cpp */,
+				0DC739F41ACDDF56005F7BC0 /* attribute_not_writable.cpp */,
+				0DC739F51ACDDF56005F7BC0 /* device_not_connected.cpp */,
+				0DC739F61ACDDF56005F7BC0 /* link_not_active.cpp */,
+				0DC739F71ACDDF56005F7BC0 /* not_implemented.cpp */,
+				0DC739F81ACDDF56005F7BC0 /* service_not_found.cpp */,
+			);
+			path = exceptions;
+			sourceTree = "<group>";
+		};
+		0DC739F91ACDDF56005F7BC0 /* gatt_services */ = {
+			isa = PBXGroup;
+			children = (
+				0DC739FA1ACDDF56005F7BC0 /* cscservice.cpp */,
+				0DC739FB1ACDDF56005F7BC0 /* cyclingpowerservice.cpp */,
+				0DC739FC1ACDDF56005F7BC0 /* gattservicebase.cpp */,
+				0DC739FD1ACDDF56005F7BC0 /* gattservicefactory.cpp */,
+				0DC739FE1ACDDF56005F7BC0 /* glucoseservice.cpp */,
+				0DC739FF1ACDDF56005F7BC0 /* hrservice.cpp */,
+				0DC73A001ACDDF56005F7BC0 /* rscservice.cpp */,
+			);
+			path = gatt_services;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0DC739821ACDDEF7005F7BC0 /* btle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DC739971ACDDEF7005F7BC0 /* Build configuration list for PBXNativeTarget "btle" */;
+			buildPhases = (
+				0DC7397F1ACDDEF7005F7BC0 /* Sources */,
+				0DC739801ACDDEF7005F7BC0 /* Frameworks */,
+				0DC739811ACDDEF7005F7BC0 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = btle;
+			productName = btle;
+			productReference = 0DC739831ACDDEF7005F7BC0 /* libbtle.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		0DC7398D1ACDDEF7005F7BC0 /* btleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DC7399A1ACDDEF7005F7BC0 /* Build configuration list for PBXNativeTarget "btleTests" */;
+			buildPhases = (
+				0DC7398A1ACDDEF7005F7BC0 /* Sources */,
+				0DC7398B1ACDDEF7005F7BC0 /* Frameworks */,
+				0DC7398C1ACDDEF7005F7BC0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0DC739911ACDDEF7005F7BC0 /* PBXTargetDependency */,
+			);
+			name = btleTests;
+			productName = btleTests;
+			productReference = 0DC7398E1ACDDEF7005F7BC0 /* btleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0DC7397B1ACDDEF7005F7BC0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Erkki Silvola";
+				TargetAttributes = {
+					0DC739821ACDDEF7005F7BC0 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					0DC7398D1ACDDEF7005F7BC0 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 0DC7397E1ACDDEF7005F7BC0 /* Build configuration list for PBXProject "btle" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0DC7397A1ACDDEF7005F7BC0;
+			productRefGroup = 0DC739841ACDDEF7005F7BC0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0DC739821ACDDEF7005F7BC0 /* btle */,
+				0DC7398D1ACDDEF7005F7BC0 /* btleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0DC7398C1ACDDEF7005F7BC0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0DC7397F1ACDDEF7005F7BC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DC73A321ACDDF56005F7BC0 /* version.cpp in Sources */,
+				0DC73A2F1ACDDF56005F7BC0 /* utility.cpp in Sources */,
+				0DC73A121ACDDF56005F7BC0 /* collector.cpp in Sources */,
+				0DC73A0D1ACDDF56005F7BC0 /* bdascanfilter.cpp in Sources */,
+				0DC73A271ACDDF56005F7BC0 /* glucoseservice.cpp in Sources */,
+				0DC73A221ACDDF56005F7BC0 /* service_not_found.cpp in Sources */,
+				0DC73A201ACDDF56005F7BC0 /* link_not_active.cpp in Sources */,
+				0DC73A1A1ACDDF56005F7BC0 /* error.cpp in Sources */,
+				0DC73A2C1ACDDF56005F7BC0 /* rssifilter.cpp in Sources */,
+				0DC73A0C1ACDDF56005F7BC0 /* bda.cpp in Sources */,
+				0DC73A161ACDDF56005F7BC0 /* characteristic.cpp in Sources */,
+				0DC73A261ACDDF56005F7BC0 /* gattservicefactory.cpp in Sources */,
+				0DC73A1B1ACDDF56005F7BC0 /* attribute_not_found.cpp in Sources */,
+				0DC73A351ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm in Sources */,
+				0DC73A0B1ACDDF56005F7BC0 /* base.cpp in Sources */,
+				0DC73A301ACDDF56005F7BC0 /* uuid.cpp in Sources */,
+				0DC73A0E1ACDDF56005F7BC0 /* btle.cpp in Sources */,
+				0DC73A111ACDDF56005F7BC0 /* centralplugininterface.cpp in Sources */,
+				0DC73A1E1ACDDF56005F7BC0 /* attribute_not_writable.cpp in Sources */,
+				0DC73A181ACDDF56005F7BC0 /* descriptor.cpp in Sources */,
+				0DC73A2D1ACDDF56005F7BC0 /* scanfilterbase.cpp in Sources */,
+				0DC73A131ACDDF56005F7BC0 /* connectionhandler.cpp in Sources */,
+				0DC73A281ACDDF56005F7BC0 /* hrservice.cpp in Sources */,
+				0DC73A231ACDDF56005F7BC0 /* cscservice.cpp in Sources */,
+				0DC73A171ACDDF56005F7BC0 /* connectionparameters.cpp in Sources */,
+				0DC73A191ACDDF56005F7BC0 /* device.cpp in Sources */,
+				0DC73A211ACDDF56005F7BC0 /* not_implemented.cpp in Sources */,
+				0DC73A1D1ACDDF56005F7BC0 /* attribute_not_readable.cpp in Sources */,
+				0DC73A251ACDDF56005F7BC0 /* gattservicebase.cpp in Sources */,
+				0DC73A2A1ACDDF56005F7BC0 /* gattdatabase.cpp in Sources */,
+				0DC73A291ACDDF56005F7BC0 /* rscservice.cpp in Sources */,
+				0DC73A0F1ACDDF56005F7BC0 /* corebluetoothcentralplugin.mm in Sources */,
+				0DC73A1F1ACDDF56005F7BC0 /* device_not_connected.cpp in Sources */,
+				0DC73A0A1ACDDF56005F7BC0 /* advertisementdata.cpp in Sources */,
+				0DC73A2E1ACDDF56005F7BC0 /* service.cpp in Sources */,
+				0DC73A1C1ACDDF56005F7BC0 /* attribute_not_notifyable.cpp in Sources */,
+				0DC73A101ACDDF56005F7BC0 /* centralpluginfactory.cpp in Sources */,
+				0DC73A311ACDDF56005F7BC0 /* uuidscanfilter.cpp in Sources */,
+				0DC73A2B1ACDDF56005F7BC0 /* log.cpp in Sources */,
+				0DC73A241ACDDF56005F7BC0 /* cyclingpowerservice.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DC7398A1ACDDEF7005F7BC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0DC739911ACDDEF7005F7BC0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0DC739821ACDDEF7005F7BC0 /* btle */;
+			targetProxy = 0DC739901ACDDEF7005F7BC0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0DC739951ACDDEF7005F7BC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		0DC739961ACDDEF7005F7BC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0DC739981ACDDEF7005F7BC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LIBTOOLFLAGS = "-all_load";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "inc internal inc/btle internal/btle inc/btle/central internal/btle/central";
+			};
+			name = Debug;
+		};
+		0DC739991ACDDEF7005F7BC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LIBTOOLFLAGS = "-all_load";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "inc internal inc/btle internal/btle inc/btle/central internal/btle/central";
+			};
+			name = Release;
+		};
+		0DC7399B1ACDDEF7005F7BC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = btleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0DC7399C1ACDDEF7005F7BC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = btleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0DC7397E1ACDDEF7005F7BC0 /* Build configuration list for PBXProject "btle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DC739951ACDDEF7005F7BC0 /* Debug */,
+				0DC739961ACDDEF7005F7BC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DC739971ACDDEF7005F7BC0 /* Build configuration list for PBXNativeTarget "btle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DC739981ACDDEF7005F7BC0 /* Debug */,
+				0DC739991ACDDEF7005F7BC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DC7399A1ACDDEF7005F7BC0 /* Build configuration list for PBXNativeTarget "btleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DC7399B1ACDDEF7005F7BC0 /* Debug */,
+				0DC7399C1ACDDEF7005F7BC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0DC7397B1ACDDEF7005F7BC0 /* Project object */;
+}
