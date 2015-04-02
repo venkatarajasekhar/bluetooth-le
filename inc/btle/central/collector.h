@@ -20,6 +20,10 @@ namespace btle {
             collector();
             ~collector();
 
+        public: // plugin start/stop etc...
+            
+            int auto_start();
+            
         public: // scannning
 
             void add_scan_filter(scanfilterbase* filter);

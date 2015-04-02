@@ -6,6 +6,7 @@
 #include "btle/exceptions/service_not_found.h"
 
 #include "btle/central/collector.h"
+#include "btle/central/centralpluginfactory.h"
 #include "btle/gatt_services/gattservicefactory.h"
 #include "btle/verify.h"
 #include "btle/log.h"
@@ -32,6 +33,7 @@ collector::collector()
   flags_(0),
   filters_()
 {
+    centralpluginfactory::instance().populate(plugins_, *this);
     gatt_service_list services;
     gattservicefactory::instance().populate(services);
     // setup automatically all included gatt services notifications
@@ -52,6 +54,12 @@ collector::~collector()
     {
         delete (*it);
     }
+}
+
+int collector::auto_start()
+{
+    plugin_ = plugins_[0];
+    return plugin_->start();
 }
 
 /**
