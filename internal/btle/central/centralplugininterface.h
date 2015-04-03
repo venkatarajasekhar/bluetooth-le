@@ -26,6 +26,15 @@ namespace btle {
             PLUGIN_GATT_SERVER_CAPABILITY = 0x04
         };
 
+        enum central_plugin_state
+        {
+            STATE_POWERED_ON,
+            STATE_POWERED_OFF,
+            STATE_POWERED_RESETTING,
+            STATE_POWERED_UNKNOWN,
+            STATE_POWERED_NON_SUPPORTED
+        };
+        
         class centralplugininterface{
         public:
 

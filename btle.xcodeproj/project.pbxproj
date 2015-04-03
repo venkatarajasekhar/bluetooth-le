@@ -656,7 +656,10 @@
 		0DC739981ACDDEF7005F7BC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					BTLE_EXPORT_IMPORT,
+				);
 				OTHER_LIBTOOLFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -667,7 +670,10 @@
 		0DC739991ACDDEF7005F7BC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					BTLE_EXPORT_IMPORT,
+				);
 				OTHER_LIBTOOLFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

@@ -7,6 +7,10 @@ gattservicebase::gattservicebase()
 {
 }
 
+gattservicebase::~gattservicebase()
+{
+}
+
 void gattservicebase::set_active(const uuid& uid, bool notifying)
 {
 

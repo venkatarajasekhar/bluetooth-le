@@ -16,7 +16,7 @@ namespace btle {
     enum characteristic_properties{
          GATT_BROADCAST                        = 0x01,
          GATT_READ                             = 0x02,
-         GATT_WRITE_WITHOUT_RESP               = 0x04,
+         GATT_WRITE_WITHOUT_RESPONSE           = 0x04,
          GATT_WRITE                            = 0x08,
          GATT_NOTIFY                           = 0x10,
          GATT_INDICATE                         = 0x20,
@@ -57,9 +57,6 @@ namespace btle {
         uint16_t attribute_handle_;
         uint16_t characteristic_value_handle_;
         uint8_t  characteristic_properties_;
-        /**
-         * @brief instance_id_, unique instance id NOTE non supported by all plugins
-         */
         int instance_id_;
         std::vector<descriptor> descriptors_;
     };

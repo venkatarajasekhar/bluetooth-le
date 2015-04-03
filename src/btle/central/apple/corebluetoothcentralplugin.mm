@@ -15,7 +15,7 @@ namespace {
 
 @implementation corebluetoothcentralpluginprivate
 
-@synthesize manager_;
+//@synthesize manager_;
 
 -(id) init:(corebluetoothcentralplugin*) plugin
 {
@@ -37,11 +37,31 @@ namespace {
     // TODO
     switch ([central state]) {
         case CBCentralManagerStatePoweredOn:
+        {
+            parent_->observer().plugin_state_changed(STATE_POWERED_ON);
+            break;
+        }
         case CBCentralManagerStatePoweredOff:
+        {
+            parent_->observer().plugin_state_changed(STATE_POWERED_OFF);
+            break;
+        }
         case CBCentralManagerStateResetting:
+        {
+            parent_->observer().plugin_state_changed(STATE_POWERED_RESETTING);
+            break;
+        }
         case CBCentralManagerStateUnauthorized:
         case CBCentralManagerStateUnknown:
+        {
+            parent_->observer().plugin_state_changed(STATE_POWERED_UNKNOWN);
+            break;
+        }
         case CBCentralManagerStateUnsupported:
+        {
+            parent_->observer().plugin_state_changed(STATE_POWERED_NON_SUPPORTED);
+            break;
+        }
         default:
             break;
     }
@@ -148,17 +168,19 @@ int corebluetoothcentralplugin::start()
 
 void corebluetoothcentralplugin::stop()
 {
-
+    privateimpl_= nil;
 }
 
 void corebluetoothcentralplugin::start_scan( const uuid_list* services )
 {
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber  numberWithBool:YES], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
 
+    [privateimpl_->manager_ scanForPeripheralsWithServices:nil options:options];
 }
 
 void corebluetoothcentralplugin::stop_scan()
 {
-
+    [privateimpl_->manager_ stopScan];
 }
 
 void corebluetoothcentralplugin::connect_device(device& dev)

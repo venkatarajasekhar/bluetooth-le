@@ -8,6 +8,10 @@ scanfilterbase::scanfilterbase()
 {
 }
 
+scanfilterbase::~scanfilterbase()
+{
+}
+
 scanfilterbase::scanfilterbase(const std::string& description)
 : base("",description)
 {

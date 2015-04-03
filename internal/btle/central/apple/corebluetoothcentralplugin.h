@@ -10,9 +10,6 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #endif
 
-//class btle::central::apple::corebluetoothcentralplugin;
-
-
 namespace btle {
     namespace central {
         namespace apple {
@@ -26,9 +23,9 @@ namespace btle {
 {
 @public
     btle::central::apple::corebluetoothcentralplugin* parent_;
+    CBCentralManager* manager_;
 }
 
-@property (retain) CBCentralManager* manager_;
 @end
 
 namespace btle {

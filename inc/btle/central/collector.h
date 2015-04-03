@@ -60,6 +60,7 @@ namespace btle {
 
         private: // from observer
 
+            void plugin_state_changed(central_plugin_state state);
             void device_discovered(device& dev);
             void device_services_discovered(device& dev, const service_list& services, const error& err);
             void device_characteristics_discovered(device& dev, const service& srv, const chr_list& chrs, const error& err);
@@ -122,6 +123,7 @@ namespace btle {
             connectionhandler connectionhandler_;
             unsigned int flags_;
             scan_filters filters_;
+            central_plugin_state state_;
         };
     }
 }

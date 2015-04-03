@@ -10,6 +10,7 @@ namespace btle {
         class BTLE_API gattservicebase: public base{
         public:
             gattservicebase();
+            virtual ~gattservicebase();
 
         public:
 

@@ -31,7 +31,8 @@ collector::collector()
   plugin_(NULL),
   connectionhandler_(),
   flags_(0),
-  filters_()
+  filters_(),
+  state_(STATE_POWERED_UNKNOWN)
 {
     centralpluginfactory::instance().populate(plugins_, *this);
     gatt_service_list services;
@@ -105,7 +106,8 @@ void collector::start_scan()
 {
     verify(plugin_)
     flags_ |= CLIENT_SCAN;
-    plugin_->start_scan();
+    if( state_ == STATE_POWERED_ON ) plugin_->start_scan();
+    else _log_warning("BT STATE NOT POWERED!");
 }
 
 /**
@@ -277,11 +279,11 @@ void collector::write_characteristic_value(device& dev, const uuid& uid, const s
                     return;
                 }
             }
-            if( chr->properties() & btle::GATT_WRITE_WITHOUT_RESP )
+            if( chr->properties() & btle::GATT_WRITE_WITHOUT_RESPONSE )
             {
                 const service* srv = dev.db().fetch_service_by_chr_uuid(uid);
                 verify( srv );
-                plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE_WITHOUT_RESP);
+                plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE_WITHOUT_RESPONSE);
                 return;
             }
             throw btle::exceptions::attribute_not_writable("attribute cannot be written");
@@ -313,11 +315,11 @@ void collector::write_characteristic_value(device& dev, const uuid_pair& pair, c
                     return;
                 }
             }
-            if( chr->properties() & btle::GATT_WRITE_WITHOUT_RESP )
+            if( chr->properties() & btle::GATT_WRITE_WITHOUT_RESPONSE )
             {
                 const service* srv = dev.db().fetch_service(pair.first);
                 verify( srv );
-                plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE_WITHOUT_RESP);
+                plugin_->write_characteristic_value(dev,*srv,*chr,data,btle::GATT_WRITE_WITHOUT_RESPONSE);
                 return;
             }
             throw btle::exceptions::attribute_not_writable("attribute cannot be written");
@@ -382,6 +384,22 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
         throw btle::exceptions::attribute_not_found("device does not contain this uuid");
     }
     throw btle::exceptions::device_not_connected("device not connected");
+}
+
+void collector::plugin_state_changed(central_plugin_state state)
+{
+    switch (state) {
+        case STATE_POWERED_ON:
+        {
+            if( flags_ & CLIENT_SCAN )
+            {
+                plugin_->start_scan();
+            }
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 void collector::device_discovered(device& dev)

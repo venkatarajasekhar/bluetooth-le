@@ -9,6 +9,7 @@ namespace btle {
     {
     public:
         scanfilterbase();
+        virtual ~scanfilterbase();
         scanfilterbase(const std::string& description);
         scanfilterbase(const scanfilterbase& other);
 
