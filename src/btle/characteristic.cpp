@@ -54,6 +54,20 @@ characteristic::characteristic(
 characteristic::characteristic(
     const btle::uuid& uid,
     uint8_t properties,
+    long int instance_id)
+: base(),
+  uuid_(uid),
+  attribute_handle_(0),
+  characteristic_value_handle_(0),
+  characteristic_properties_(properties),
+  instance_id_(instance_id),
+  descriptors_()
+{
+}
+
+characteristic::characteristic(
+    const btle::uuid& uid,
+    uint8_t properties,
     uint16_t attribute_handle,
     uint16_t characteristic_properties)
 : base(),
@@ -90,6 +104,11 @@ const uuid& characteristic::uuid() const
 uint8_t characteristic::attribute_handle() const
 {
     return attribute_handle_;
+}
+
+long int characteristic::instance_id() const
+{
+    return instance_id_;
 }
 
 characteristic& characteristic::operator << (const descriptor& desc)

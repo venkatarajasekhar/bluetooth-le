@@ -120,7 +120,7 @@ const gatt_services::gattservicebase* device::gatt_service(const uuid& uid) cons
     {
         if( (*it)->service_uuid() == uid )
         {
-            return (const gattservicebase*)&(*it);
+            return (const gattservicebase*)(*it);
         }
     }
     return NULL;
@@ -132,7 +132,7 @@ gatt_services::gattservicebase* device::gatt_service(const uuid& uid)
     {
         if( (*it)->service_uuid() == uid )
         {
-            return (gattservicebase*)&(*it);
+            return (gattservicebase*)(*it);
         }
     }
     return NULL;

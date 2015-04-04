@@ -10,6 +10,8 @@ namespace btle {
         public:
             virtual void plugin_state_changed(central_plugin_state state)=0;
             virtual void device_discovered(device& dev) = 0;
+            virtual void device_connected(device& dev)=0;
+            virtual void device_disconnected(device& dev)=0;
             virtual void device_services_discovered(device& dev, const service_list& services, const error& err) = 0;
             virtual void device_characteristics_discovered(device& dev, const service& srv, const chr_list& chrs, const error& err) = 0;
             virtual void device_characteristic_read(device& dev, const service& srv, const characteristic& chr, const std::string& data, const error& err) = 0;

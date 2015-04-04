@@ -31,6 +31,7 @@ namespace btle {
         bool operator == (const uuid& other) const;
         bool operator == (uint16_t uuid16) const;
         bool operator == (const uint8_t uuid128[UUID_128_BIN_LENGTH]) const;
+        bool operator == (const std::string& uuid_str) const;
         bool operator != (uint16_t uuid16) const;
         bool operator != (const uint8_t uuid128[UUID_128_BIN_LENGTH]) const;
         bool operator != (const std::string& uuid_str) const;

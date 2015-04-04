@@ -32,6 +32,13 @@ int error::code() const
     return code_;
 }
 
+error& error::operator = (const error& other)
+{
+    code_ = other.code();
+    description_ = other.description();
+    return *this;
+}
+
 bool error::operator == (const error& other) const
 {
     return this->code_ == other.code();

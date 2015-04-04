@@ -114,6 +114,11 @@ bool uuid::operator == (const uint8_t uuid128[UUID_128_BIN_LENGTH]) const
     return value_.compare(std::string((const char*)uuid128,UUID_128_BIN_LENGTH)) != std::string::npos;
 }
 
+bool uuid::operator == (const std::string& uuid_str) const
+{
+    return value_.compare(uuid_str) != std::string::npos;
+}
+
 bool uuid::operator != (uint16_t uuid16) const
 {
     return !(*this == uuid16);

@@ -62,6 +62,8 @@ namespace btle {
 
             void plugin_state_changed(central_plugin_state state);
             void device_discovered(device& dev);
+            void device_connected(device& dev);
+            void device_disconnected(device& dev);
             void device_services_discovered(device& dev, const service_list& services, const error& err);
             void device_characteristics_discovered(device& dev, const service& srv, const chr_list& chrs, const error& err);
             void device_characteristic_read(device& dev, const service& srv, const characteristic& chr, const std::string& data, const error& err);

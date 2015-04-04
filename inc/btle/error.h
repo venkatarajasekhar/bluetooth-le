@@ -14,6 +14,7 @@ namespace btle {
     public: //
 
         int code() const;
+        error& operator = (const error& other);
         bool operator == (const error& other) const;
 
     private:

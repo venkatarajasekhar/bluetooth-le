@@ -1,6 +1,8 @@
 
 #include "btle/central/apple/corebluetoothcentralplugin.h"
 #include "btle/central/centralpluginregisterer.h"
+#include "btle/service.h"
+#include "btle/log.h"
 
 using namespace btle::central::apple;
 using namespace btle::central;
@@ -9,7 +11,7 @@ using namespace btle;
 namespace {
     centralpluginregisterer<corebluetoothcentralplugin> registration;
     
-    
+    #define UUID_2_STRING(a) std::string([[[a UUID] UUIDString] UTF8String])
 }
 
 
@@ -73,43 +75,102 @@ namespace {
     if( dev == NULL )
     {
         dev = new corebluetoothperipheraldevice(std::string([[[aPeripheral identifier] UUIDString] UTF8String]));
+        dev->peripheral_ = aPeripheral;
+        [dev->peripheral_ setDelegate:self];
         parent_->devices().push_back(dev);
     }
-    
+    // TODO
     parent_->observer().device_discovered(*dev);
 }
 
 - (void)centralManager:(CBCentralManager *)central didRetrievePeripherals:(NSArray *)peripherals
 {
+    // TODO
 }
 
 - (void)centralManager:(CBCentralManager *)central didRetrieveConnectedPeripherals:(NSArray *)peripherals
 {
+    // TODO
 }
 
 - (void) centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)aPeripheral
 {
+    corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
+    assert(dev);
+    parent_->observer().device_connected(*dev);
 }
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)aPeripheral error:(NSError *)error
 {
+    corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
+    assert(dev);
+    parent_->observer().device_disconnected(*dev);
 }
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)aPeripheral error:(NSError *)error
 {
+    corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
+    assert(dev);
+    parent_->observer().device_disconnected(*dev);
 }
 
 //
 - (void) peripheral:(CBPeripheral *)aPeripheral didDiscoverServices:(NSError *)error
 {
+    btle::func_log
+    
+    corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
+    assert(dev);
+    btle::service_list list;
+    btle::error err(0);
+    if( error == nil ){
+        dev->process_services_discovered(aPeripheral, list);
+    }
+    else{
+        err = btle::error((int)[error code],"Unknown CoreBluetooth error");
+    }
+    parent_->observer().device_services_discovered(*dev, list, err);
 }
 
 - (void) peripheral:(CBPeripheral *)aPeripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
+    func_log
+    
+    corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
+    assert(dev);
+    btle::service_list list;
+    btle::error err(0);
+    if( error == nil ){
+        btle::service* srv( dev->process_characteristics_discovered(service) );
+        assert( srv );
+        parent_->observer().device_characteristics_discovered(*dev, *srv, srv->characteristics(), err);
+    }
+    else{
+        err = btle::error((int)[error code],"Unknown CoreBluetooth error");
+        btle::service srv( (uuid(UUID_2_STRING(service))) );
+        parent_->observer().device_characteristics_discovered(*dev, srv, srv.characteristics(), err);
+    }
 }
 
 - (void) peripheral:(CBPeripheral *)aPeripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
+    func_log
+    
+    corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
+    assert(dev);
+    btle::service_list list;
+    btle::error err(0);
+    if( error == nil ){
+        btle::service* srv = NULL;
+        btle::characteristic* chr = NULL;
+        dev->fetch_service_and_characteristic(characteristic, srv, chr);
+        std::string data((const char*)[[characteristic value] bytes],[[characteristic value] length]);
+        assert( srv && chr );
+        parent_->observer().device_characteristic_notify_data_updated(*dev, *srv, *chr, data);
+    }
+    else{
+        err = btle::error((int)[error code],"Unknown CoreBluetooth error");
+    }
 }
 
 - (void)peripheralDidUpdateRSSI:(CBPeripheral *)aPeripheral error:(NSError *)error
@@ -185,22 +246,30 @@ void corebluetoothcentralplugin::stop_scan()
 
 void corebluetoothcentralplugin::connect_device(device& dev)
 {
-
+    [privateimpl_->manager_ connectPeripheral:((corebluetoothperipheraldevice&)dev).peripheral_ options:nil];
 }
 
 void corebluetoothcentralplugin::disconnect_device(device& dev)
 {
-
+    [privateimpl_->manager_ cancelPeripheralConnection:((corebluetoothperipheraldevice&)dev).peripheral_];
 }
 
 void corebluetoothcentralplugin::cancel_pending_connection(device& dev)
 {
+    [privateimpl_->manager_ cancelPeripheralConnection:((corebluetoothperipheraldevice&)dev).peripheral_];
+}
 
+void corebluetoothcentralplugin::discover_services(device& dev)
+{
+    [((corebluetoothperipheraldevice&)dev).peripheral_ discoverServices:nil];
 }
 
 void corebluetoothcentralplugin::discover_characteristics(device& dev, const service& srv)
 {
-
+    corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
+    CBService* service = core_dev.fetch_service(srv);
+    assert(service);
+    [core_dev.peripheral_ discoverCharacteristics:nil forService:service];
 }
 
 void corebluetoothcentralplugin::read_characteristic_value(device& dev,const service& srv, const characteristic& chr)
@@ -215,7 +284,10 @@ void corebluetoothcentralplugin::write_characteristic_value(device& dev,const se
 
 void corebluetoothcentralplugin::set_characteristic_notify(device& dev,const service& srv, const characteristic& chr, bool notify)
 {
-
+    corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
+    CBCharacteristic* aChr = core_dev.fetch_characteristic(chr);
+    assert(aChr);
+    [core_dev.peripheral_ setNotifyValue:notify forCharacteristic:aChr];
 }
 
 void corebluetoothcentralplugin::write_descriptor(device& dev, const service& srv, const characteristic& chr, descriptor& desc, bool notify)

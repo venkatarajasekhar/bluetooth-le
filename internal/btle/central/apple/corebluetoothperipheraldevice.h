@@ -16,7 +16,17 @@ namespace btle {
             {
             public:
                 corebluetoothperipheraldevice(const bda& addr);
+                
                 void process_adv_data();
+                void process_services_discovered(CBPeripheral* peripheral, btle::service_list& list);
+                btle::service* process_characteristics_discovered(CBService* service);
+
+                void fetch_service_and_characteristic(CBCharacteristic* aChr,btle::service*& service, btle::characteristic*& chr);
+                CBService* fetch_service(const btle::service& srv);
+                CBCharacteristic* fetch_characteristic(const btle::characteristic& srv);
+                
+            public: // data
+                CBPeripheral *peripheral_;
             };
         }
     }

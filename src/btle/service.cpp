@@ -24,6 +24,18 @@ service::service(const btle::uuid& uid)
 
 service::service(
     const btle::uuid& uid,
+    long int instance_id)
+: base(),
+  uuid_(uid),
+  characteristics_(),
+  start_handle_(0),
+  end_handle_(0),
+  instance_id_(instance_id)
+{
+}
+
+service::service(
+    const btle::uuid& uid,
     uint16_t start_handle,
     uint16_t end_handle)
 : base(),
@@ -39,8 +51,8 @@ service::service(const service& other)
   uuid_(other.uuid_),
   characteristics_(other.characteristics_),
   start_handle_(other.start_handle_),
-  end_handle_(other.end_handle_)
-
+  end_handle_(other.end_handle_),
+  instance_id_(other.instance_id_)
 {
 }
 
@@ -105,4 +117,10 @@ uint16_t service::end_handle() const
 {
     return end_handle_;
 }
+
+long int service::instance_id() const
+{
+    return instance_id_;
+}
+
 

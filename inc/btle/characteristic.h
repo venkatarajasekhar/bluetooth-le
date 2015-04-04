@@ -35,6 +35,9 @@ namespace btle {
                        uint8_t properties);
         characteristic(const btle::uuid& uid,
                        uint8_t properties,
+                       long int instance_id);
+        characteristic(const btle::uuid& uid,
+                       uint8_t properties,
                        uint16_t attribute_handle,
                        uint16_t characteristic_properties);
         characteristic(const characteristic& other);
@@ -44,6 +47,7 @@ namespace btle {
         uint8_t properties() const;
         const btle::uuid& uuid() const;
         uint8_t attribute_handle() const;
+        long int instance_id() const;
 
         // operators
         characteristic& operator << (const descriptor& desc);
@@ -57,7 +61,7 @@ namespace btle {
         uint16_t attribute_handle_;
         uint16_t characteristic_value_handle_;
         uint8_t  characteristic_properties_;
-        int instance_id_;
+        long int instance_id_;
         std::vector<descriptor> descriptors_;
     };
 

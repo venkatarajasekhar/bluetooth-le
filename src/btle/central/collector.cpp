@@ -60,6 +60,7 @@ collector::~collector()
 int collector::auto_start()
 {
     plugin_ = plugins_[0];
+    connectionhandler_.setup(plugin_);
     return plugin_->start();
 }
 
@@ -421,10 +422,22 @@ void collector::device_discovered(device& dev)
     }
 }
 
+void collector::device_connected(device& dev)
+{
+    connectionhandler_.device_connected(dev);
+    plugin_->discover_services(dev);
+}
+
+void collector::device_disconnected(device& dev)
+{
+    connectionhandler_.device_disconnected(dev);
+}
+
 void collector::device_services_discovered(device& dev, const service_list& services, const error& err)
 {
     if( err.code() == 0 )
     {
+        dev.db() << services;
         for( service_iterator_const it = services.begin(); it != services.end(); ++it )
         {
             if( gattservicebase* gatt_srv = dev.gatt_service(it->uuid()) )
@@ -460,7 +473,7 @@ void collector::device_characteristics_discovered(device& dev, const service& sr
         {
             for( uuid_iterator_const it_uuid = notify_uuids_.begin(); it_uuid != notify_uuids_.end(); ++it_uuid )
             {
-                if( (*it) == (*it_uuid) &&
+                if( it->uuid() == (*it_uuid) &&
                     ( it->properties() & GATT_INDICATE ||
                       it->properties() & GATT_NOTIFY ))
                 {

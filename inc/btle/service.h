@@ -9,6 +9,8 @@ namespace btle {
     public:
         service();
         service(const uuid& uid);
+        service(const uuid& uid,
+                long int instance_id);
         service(const uuid &uid,
                 uint16_t start_handle,
                 uint16_t end_handle);
@@ -21,19 +23,22 @@ namespace btle {
         bool operator == (const btle::uuid& uid) const;
         bool operator == (const service& other) const;
         const characteristic &operator [](int index) const;
+        
         const std::vector<characteristic>& characteristics() const;
         std::vector<characteristic>& characteristics();
+        
         const btle::uuid& uuid() const;
         uint16_t start_handle() const;
         uint16_t end_handle() const;
-
+        long int instance_id() const;
+        
     private:
 
         btle::uuid uuid_;
         std::vector<characteristic> characteristics_;
         uint16_t start_handle_;
         uint16_t end_handle_;
-        int instance_id_;
+        long int instance_id_;
     };
 
     typedef std::vector<service>::iterator service_iterator;

@@ -32,6 +32,11 @@ connectionhandler::connectionhandler()
 {
 }
 
+void connectionhandler::setup(centralplugininterface* central)
+{
+    central_ = central;
+}
+
 void connectionhandler::advertisement_head_received(device& dev)
 {
     if( dev.state() == btle::DEVICE_CONNECTION_PARK )
@@ -416,6 +421,10 @@ void connectionhandler::change_state(kConnectionHndlrState state, device& dev)
 
 bool connectionhandler::is_reconnection_needed(device& dev)
 {
-    return ++dev.reconnections_ < reconnectiontryes_;
+    if( options_.find(RECONNECTION_TRYES) != options_.end() )
+    {
+        return ++dev.reconnections_ < options_[RECONNECTION_TRYES];
+    }
+    return true;
 }
 

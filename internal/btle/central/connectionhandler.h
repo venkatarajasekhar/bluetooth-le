@@ -38,8 +38,10 @@ namespace btle {
         class BTLE_API connectionhandler
         {
         public:
+            
             connectionhandler();
-
+            void setup(centralplugininterface* central);
+            
         private:
 
             // when new adv has been received
