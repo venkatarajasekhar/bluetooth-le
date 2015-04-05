@@ -2,6 +2,8 @@
 #define ADVERTISEMENTDATA_H
 
 #include <string>
+#include <map>
+
 #include "btle/base.h"
 
 namespace btle{
@@ -42,6 +44,8 @@ namespace btle{
         advertisementdata( const advertisementdata& other );
         advertisementdata& operator = (const advertisementdata& other);
     };
+    
+    typedef std::map<btle::advertisement_type,btle::advertisementdata> adv_fields;
 }
 
 #endif // ADVERTISEMENTDATA_H

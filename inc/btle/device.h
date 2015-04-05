@@ -8,6 +8,7 @@
 #include "btle/rssifilter.h"
 #include "btle/gatt_services/gattservicebase.h"
 #include "btle/connectionparameters.h"
+#include "btle/advertisementfields.h"
 
 #include <map>
 
@@ -43,11 +44,12 @@ namespace btle {
         std::string state_string() const;
 
         const bda& addr() const;
-        bool is_service_advertiset(const uuid& uid) const;
         // build-in gatt service related
         const gatt_services::gattservicebase* gatt_service(const uuid& uid) const;
         gatt_services::gattservicebase* gatt_service(const uuid& uid);
 
+        advertisementfields& advertisement_fields();
+        
         connectionparameters& parameters();
         // operators
         bool operator == (const device& other) const;
@@ -64,11 +66,7 @@ namespace btle {
 
     protected:
 
-        /**
-         * @brief advertisement_data_, only peripheral device has advertisement fields
-         * this does not store history, only current adv data, or updates an field
-         */
-        std::map<btle::advertisement_type,btle::advertisementdata> advertisement_data_;
+        advertisementfields advertisement_fields_;
         std::string name_;
         gattdatabase db_;
         connection_state state_;

@@ -17,8 +17,6 @@ namespace {
 
 @implementation corebluetoothcentralpluginprivate
 
-//@synthesize manager_;
-
 -(id) init:(corebluetoothcentralplugin*) plugin
 {
     self = [super init];
@@ -95,6 +93,8 @@ namespace {
 
 - (void) centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)aPeripheral
 {
+    func_log
+    
     corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
     assert(dev);
     parent_->observer().device_connected(*dev);
@@ -102,6 +102,8 @@ namespace {
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)aPeripheral error:(NSError *)error
 {
+    func_log
+    
     corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
     assert(dev);
     parent_->observer().device_disconnected(*dev);
@@ -109,6 +111,8 @@ namespace {
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)aPeripheral error:(NSError *)error
 {
+    func_log
+    
     corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
     assert(dev);
     parent_->observer().device_disconnected(*dev);
@@ -117,7 +121,7 @@ namespace {
 //
 - (void) peripheral:(CBPeripheral *)aPeripheral didDiscoverServices:(NSError *)error
 {
-    btle::func_log
+    func_log
     
     corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
     assert(dev);

@@ -27,7 +27,7 @@ namespace btle {
         public: // scannning
 
             void add_scan_filter(scanfilterbase* filter);
-            void clear_scan_filter(scanfilterbase* filter);
+            void remove_scan_filter(scanfilterbase* filter);
             void clear_scan_filters();
 
             void start_scan();

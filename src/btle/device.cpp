@@ -24,7 +24,7 @@ namespace{
 
 device::device(const bda &addr)
 : base(),
-  advertisement_data_(),
+  advertisement_fields_(),
   name_(),
   db_(),
   state_(DEVICE_DISCONNECTED),
@@ -46,15 +46,7 @@ device::~device()
  */
 const std::string& device::name()
 {
-    return name_;
-}
-
-const advertisementdata* device::advertisement_data_for_key(btle::advertisement_type key) const
-{
-    if( advertisement_data_.find(key) != advertisement_data_.end() ){
-        return (const advertisementdata*)&advertisement_data_.find(key)->second;
-    }
-    else return NULL;
+    return advertisement_fields_.name();
 }
 
 gattdatabase& device::db()
@@ -87,33 +79,6 @@ const bda& device::addr() const
     return bda_;
 }
 
-bool device::is_service_advertiset(const uuid& uid) const
-{
-    if(uid.is16bit())
-    {
-        if( advertisement_data_.find(btle::GAP_ADTYPE_16BIT_COMPLETE) == advertisement_data_.end() )
-        {
-            if( advertisement_data_.find(btle::GAP_ADTYPE_16BIT_MORE) != advertisement_data_.end() )
-            {
-                return uuid(advertisement_data_.find(btle::GAP_ADTYPE_16BIT_MORE)->second.string_value()) == uid;
-            }
-        }
-//        else return advertisement_data_[btle::GAP_ADTYPE_16BIT_COMPLETE] == uid;
-    }
-    else
-    {
-        if( advertisement_data_.find(btle::GAP_ADTYPE_128BIT_COMPLETE) == advertisement_data_.end() )
-        {
-            if( advertisement_data_.find(btle::GAP_ADTYPE_128BIT_MORE) != advertisement_data_.end() )
-            {
-//                return advertisement_data_[btle::GAP_ADTYPE_128BIT_MORE] == uid;
-            }
-        }
-//        else return advertisement_data_[btle::GAP_ADTYPE_128BIT_COMPLETE] == uid;
-    }
-    return false;
-}
-
 const gatt_services::gattservicebase* device::gatt_service(const uuid& uid) const
 {
     for( gatt_service_iterator_const it = gatt_services_.begin(); it != gatt_services_.end(); ++it )
@@ -136,6 +101,11 @@ gatt_services::gattservicebase* device::gatt_service(const uuid& uid)
         }
     }
     return NULL;
+}
+
+advertisementfields& device::advertisement_fields()
+{
+    return advertisement_fields_;
 }
 
 connectionparameters& device::parameters()

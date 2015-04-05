@@ -48,6 +48,8 @@
 		0DC73A311ACDDF56005F7BC0 /* uuidscanfilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A081ACDDF56005F7BC0 /* uuidscanfilter.cpp */; };
 		0DC73A321ACDDF56005F7BC0 /* version.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A091ACDDF56005F7BC0 /* version.cpp */; };
 		0DC73A351ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A341ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm */; };
+		0DC73A6F1AD12F1E005F7BC0 /* collectorobjc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A6E1AD12F1E005F7BC0 /* collectorobjc.mm */; };
+		0DC73A721AD12FE4005F7BC0 /* advertisementfields.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A711AD12FE4005F7BC0 /* advertisementfields.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +168,10 @@
 		0DC73A331ACDE239005F7BC0 /* corebluetoothperipheraldevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = corebluetoothperipheraldevice.h; sourceTree = "<group>"; };
 		0DC73A341ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = corebluetoothperipheraldevice.mm; sourceTree = "<group>"; };
 		0DC73A681ACDEB2D005F7BC0 /* btle_core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = btle_core.h; sourceTree = "<group>"; };
+		0DC73A6D1AD12F01005F7BC0 /* collectorobjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = collectorobjc.h; sourceTree = "<group>"; };
+		0DC73A6E1AD12F1E005F7BC0 /* collectorobjc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = collectorobjc.mm; sourceTree = "<group>"; };
+		0DC73A701AD12FC5005F7BC0 /* advertisementfields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = advertisementfields.h; sourceTree = "<group>"; };
+		0DC73A711AD12FE4005F7BC0 /* advertisementfields.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = advertisementfields.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +266,7 @@
 				0DC739C81ACDDF56005F7BC0 /* uuidscanfilter.h */,
 				0DC739C91ACDDF56005F7BC0 /* verify.h */,
 				0DC739CA1ACDDF56005F7BC0 /* version.h */,
+				0DC73A701AD12FC5005F7BC0 /* advertisementfields.h */,
 			);
 			path = btle;
 			sourceTree = "<group>";
@@ -268,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				0DC739A61ACDDF56005F7BC0 /* collector.h */,
+				0DC73A6D1AD12F01005F7BC0 /* collectorobjc.h */,
 			);
 			path = central;
 			sourceTree = "<group>";
@@ -376,6 +384,7 @@
 				0DC73A071ACDDF56005F7BC0 /* uuid.cpp */,
 				0DC73A081ACDDF56005F7BC0 /* uuidscanfilter.cpp */,
 				0DC73A091ACDDF56005F7BC0 /* version.cpp */,
+				0DC73A711AD12FE4005F7BC0 /* advertisementfields.cpp */,
 			);
 			path = btle;
 			sourceTree = "<group>";
@@ -388,6 +397,7 @@
 				0DC739E51ACDDF56005F7BC0 /* centralplugininterface.cpp */,
 				0DC739E61ACDDF56005F7BC0 /* collector.cpp */,
 				0DC739E71ACDDF56005F7BC0 /* connectionhandler.cpp */,
+				0DC73A6E1AD12F1E005F7BC0 /* collectorobjc.mm */,
 			);
 			path = central;
 			sourceTree = "<group>";
@@ -521,6 +531,7 @@
 				0DC73A321ACDDF56005F7BC0 /* version.cpp in Sources */,
 				0DC73A2F1ACDDF56005F7BC0 /* utility.cpp in Sources */,
 				0DC73A121ACDDF56005F7BC0 /* collector.cpp in Sources */,
+				0DC73A6F1AD12F1E005F7BC0 /* collectorobjc.mm in Sources */,
 				0DC73A0D1ACDDF56005F7BC0 /* bdascanfilter.cpp in Sources */,
 				0DC73A271ACDDF56005F7BC0 /* glucoseservice.cpp in Sources */,
 				0DC73A221ACDDF56005F7BC0 /* service_not_found.cpp in Sources */,
@@ -537,6 +548,7 @@
 				0DC73A0E1ACDDF56005F7BC0 /* btle.cpp in Sources */,
 				0DC73A111ACDDF56005F7BC0 /* centralplugininterface.cpp in Sources */,
 				0DC73A1E1ACDDF56005F7BC0 /* attribute_not_writable.cpp in Sources */,
+				0DC73A721AD12FE4005F7BC0 /* advertisementfields.cpp in Sources */,
 				0DC73A181ACDDF56005F7BC0 /* descriptor.cpp in Sources */,
 				0DC73A2D1ACDDF56005F7BC0 /* scanfilterbase.cpp in Sources */,
 				0DC73A131ACDDF56005F7BC0 /* connectionhandler.cpp in Sources */,

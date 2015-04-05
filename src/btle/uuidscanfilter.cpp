@@ -19,7 +19,7 @@ bool uuidscanfilter::process(device &dev)
 {
     for( uuid_iterator_const it = uuids_.begin(); it != uuids_.end(); ++it )
     {
-        if( dev.is_service_advertiset((*it)) )
+        if( dev.advertisement_fields().is_service_advertiset((*it)) )
         {
             return true;
         }

@@ -79,7 +79,7 @@ void collector::add_scan_filter(scanfilterbase* filter)
  * @brief collector::clear_scan_filter
  * @param filter
  */
-void collector::clear_scan_filter(scanfilterbase* filter)
+void collector::remove_scan_filter(scanfilterbase* filter)
 {
     for( scan_filters::iterator it = filters_.begin(); it != filters_.end(); ++it )
     {
