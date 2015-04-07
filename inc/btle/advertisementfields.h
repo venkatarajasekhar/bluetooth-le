@@ -8,6 +8,9 @@
 #include <map>
 
 namespace btle {
+    /**
+     * @brief The advertisementfields class, general purpose advertisement fields "processor"
+     */
     class advertisementfields: public base
     {
     public:

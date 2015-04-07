@@ -22,6 +22,7 @@ namespace btle {
                 void connect_device(device& dev);
                 void disconnect_device(device& dev);
                 void cancel_pending_connection(device& dev);
+                void discover_services(device& dev);
                 void discover_characteristics(device& dev, const service& srv);
                 void read_characteristic_value(device& dev,const service& srv, const characteristic& chr);
                 void write_characteristic_value(device& dev,const service& srv, const characteristic& chr, const std::string& data, characteristic_properties type);

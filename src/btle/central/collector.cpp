@@ -408,17 +408,19 @@ void collector::device_discovered(device& dev)
     connectionhandler_.advertisement_head_received(dev);
     if( flags_ & CLIENT_SCAN )
     {
-        for( std::vector<scanfilterbase*>::iterator it = filters_.begin(); it != filters_.end(); ++it )
+        if( filters_.size() )
         {
-            if( (*it)->process(dev) )
+            for( std::vector<scanfilterbase*>::iterator it = filters_.begin(); it != filters_.end(); ++it )
             {
-                // propagate callback
-                device_discovered_cb(dev);
-                return;
+                if( (*it)->process(dev) )
+                {
+                    // propagate callback
+                    device_discovered_cb(dev);
+                    return;
+                }
             }
         }
-        // TODO add still optional manaufacturer data filter
-        device_discovered_cb(dev);
+        else device_discovered_cb(dev);
     }
 }
 

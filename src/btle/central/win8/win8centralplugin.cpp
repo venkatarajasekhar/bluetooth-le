@@ -67,6 +67,11 @@ void win8centralplugin::cancel_pending_connection(device& dev)
 
 }
 
+void win8centralplugin::discover_services(device& dev)
+{
+
+}
+
 void win8centralplugin::discover_characteristics(device& dev, const service& srv)
 {
 

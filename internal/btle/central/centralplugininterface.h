@@ -107,7 +107,8 @@ namespace btle {
             virtual void cancel_pending_connection(device& dev)=0;
             
             /**
-             *
+             * @brief discover_services
+             * @param dev
              */
             virtual void discover_services(device& dev)= 0;
             
