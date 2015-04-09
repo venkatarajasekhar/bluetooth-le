@@ -9,7 +9,7 @@ QT       -= gui
 TARGET = btle
 TEMPLATE = lib
 
-DEFINES += BTLE_LIBRARY
+DEFINES += BTLE_LIBRARY DESKTOP_BUILD
 INCLUDEPATH += inc inc/btle internal internal/btle internal/btle/central
 
 SOURCES += \
@@ -51,10 +51,15 @@ SOURCES += \
     src/btle/scanfilterbase.cpp \
     src/btle/uuidscanfilter.cpp \
     src/btle/bdascanfilter.cpp \
-    src/btle/central/centralplugininterface.cpp
+    src/btle/central/centralplugininterface.cpp \
+    src/btle/rssiscanfilter.cpp \
+    src/btle/advertisementfields.cpp \
+    src/btle/central/collectorqt.cpp \
+    src/btle/central/collectorsimpleqt.cpp
 
-HEADERS += inc/btle/btle.h\
-        inc/btle/btle_global.h \
+HEADERS += \
+    inc/btle/btle.h\
+    inc/btle/btle_global.h \
     inc/btle/base.h \
     inc/btle/uuid.h \
     inc/btle/characteristic.h \
@@ -102,14 +107,26 @@ HEADERS += inc/btle/btle.h\
     inc/btle/gatt_services/glucoseservice.h \
     inc/btle/scanfilterbase.h \
     inc/btle/uuidscanfilter.h \
-    inc/btle/bdascanfilter.h
+    inc/btle/bdascanfilter.h \
+    inc/btle/rssiscanfilter.h\
+    inc/btle/advertisementfields.h \
+    inc/btle/central/collectorqt.h \
+    inc/btle/central/collectorsimpleqt.h
 
 ios{
+    LIBS += -framework Foundation \
+            -framework CoreFoundation \
+            -framework CoreBluetooth
+
     OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h
     OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm
 }
 
 macx{
+    LIBS += -framework Foundation \
+            -framework CoreFoundation \
+            -framework IOBluetooth
+
     OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h
     OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm
 }

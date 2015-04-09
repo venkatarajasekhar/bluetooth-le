@@ -11,9 +11,9 @@ namespace {
 
 cyclingpowerservice::cyclingpowerservice()
 {
-    service_ = CYCLING_POWER_SERVICE;
-    mandatory_notifications_.push_back(CYCLING_POWER_MEASUREMENT);
-    included_characteristics_.push_back(CYCLING_POWER_MEASUREMENT);
+    service_ = uuid(CYCLING_POWER_SERVICE);
+    mandatory_notifications_.push_back(uuid(CYCLING_POWER_MEASUREMENT));
+    included_characteristics_.push_back(uuid(CYCLING_POWER_MEASUREMENT));
 }
 
 void cyclingpowerservice::process_service_notify_data(const uuid &chr, const uint8_t *data, size_t size)

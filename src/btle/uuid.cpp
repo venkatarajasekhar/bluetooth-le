@@ -119,6 +119,11 @@ bool uuid::operator == (const std::string& uuid_str) const
     return value_.compare(uuid_str) != std::string::npos;
 }
 
+bool uuid::operator != (const uuid& other) const
+{
+    return !(*this == other);
+}
+
 bool uuid::operator != (uint16_t uuid16) const
 {
     return !(*this == uuid16);

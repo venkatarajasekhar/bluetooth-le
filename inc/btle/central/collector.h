@@ -14,7 +14,7 @@ namespace btle {
         /**
          * @brief The collector class, main interface class for lib central usage
          */
-        class BTLE_API collector: public centralpluginobserver{
+        class BTLE_API collector: public centralpluginobserver, private connectionhandlerobserver{
         public:
 
             collector();
@@ -57,6 +57,10 @@ namespace btle {
             void write_characteristic_value(device& dev, const uuid_pair& pair, const std::string& data, bool write_with_out_resp = false);
             void set_characteristic_notify(device& dev, const uuid& uid, bool notify);
             void set_characteristic_notify(device& dev, const uuid_pair& pair, bool notify);
+
+        private: // from connectionhandler
+
+            void device_state_changed(btle::device& dev);
 
         private: // from observer
 
@@ -107,6 +111,8 @@ namespace btle {
              * @param data
              */
             virtual void device_service_value_updated_cb(device& dev, const service& srv, const characteristic& chr, const std::string& data) = 0;
+            virtual void device_characteristic_read_cb(device& dev, const service& srv, const characteristic& chrs, const std::string& data, const error& err)=0;
+            virtual void device_state_changed_cb(device& dev)=0;
 
             virtual void device_gatt_service_discovered_cb(device& dev, const gatt_services::gattservicebase *srv);
             virtual void device_service_discovery_failed_cb(device& dev, const service_list& services, const error& err);

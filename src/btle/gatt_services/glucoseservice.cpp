@@ -13,9 +13,9 @@ namespace {
 
 glucoseservice::glucoseservice()
 {
-    service_ = GLUCOSE_SERVICE;
-    included_characteristics_.push_back(GLUCOSE_MEASUREMENT);
-    mandatory_notifications_.push_back(GLUCOSE_MEASUREMENT);
+    service_ = uuid(GLUCOSE_SERVICE);
+    included_characteristics_.push_back(uuid(GLUCOSE_MEASUREMENT));
+    mandatory_notifications_.push_back(uuid(GLUCOSE_MEASUREMENT));
 }
 
 void glucoseservice::process_service_notify_data(const uuid& chr, const uint8_t* data, size_t size)

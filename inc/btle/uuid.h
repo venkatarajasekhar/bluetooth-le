@@ -15,9 +15,9 @@ namespace btle {
     public:
         uuid();
         uuid(const uuid& other);
-        uuid(uint16_t uuid16);
-        uuid(const std::string& uuid_str);
-        uuid(const uint8_t uuid128[UUID_128_BIN_LENGTH]);
+        explicit uuid(uint16_t uuid16);
+        explicit uuid(const std::string& uuid_str);
+        explicit uuid(const uint8_t uuid128[UUID_128_BIN_LENGTH]);
 
         // getters
         uint16_t uuid16bit() const;
@@ -32,6 +32,7 @@ namespace btle {
         bool operator == (uint16_t uuid16) const;
         bool operator == (const uint8_t uuid128[UUID_128_BIN_LENGTH]) const;
         bool operator == (const std::string& uuid_str) const;
+        bool operator != (const uuid& other) const;
         bool operator != (uint16_t uuid16) const;
         bool operator != (const uint8_t uuid128[UUID_128_BIN_LENGTH]) const;
         bool operator != (const std::string& uuid_str) const;

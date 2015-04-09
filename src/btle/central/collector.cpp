@@ -47,6 +47,7 @@ collector::collector()
         }
     }
     gattservicefactory::instance().deplete(services);
+    connectionhandler_.attach(this);
 }
 
 collector::~collector()
@@ -387,6 +388,11 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
     throw btle::exceptions::device_not_connected("device not connected");
 }
 
+void collector::device_state_changed(btle::device& dev)
+{
+    device_state_changed_cb(dev);
+}
+
 void collector::plugin_state_changed(central_plugin_state state)
 {
     switch (state) {
@@ -502,7 +508,7 @@ void collector::device_characteristic_read(
             device_service_value_updated_cb(dev,gatt_service);
         }
     }
-    //
+    else device_characteristic_read_cb(dev,srv,chr,data,err);
 }
 
 void collector::device_characteristic_written(device& dev, const service& srv, const characteristic& chr, const error& err)

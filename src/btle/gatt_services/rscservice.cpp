@@ -13,9 +13,9 @@ namespace {
 
 rscservice::rscservice()
 {
-    mandatory_notifications_.push_back(RSC_MEASUREMENT);
-    included_characteristics_.push_back(RSC_MEASUREMENT);
-    service_ = (RSC_SERVICE);
+    mandatory_notifications_.push_back(uuid(RSC_MEASUREMENT));
+    included_characteristics_.push_back(uuid(RSC_MEASUREMENT));
+    service_ = uuid(RSC_SERVICE);
 }
 
 /**
