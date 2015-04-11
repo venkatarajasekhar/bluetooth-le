@@ -23,6 +23,13 @@ namespace btle {
         DEVICE_CONNECTED,
         DEVICE_CONNECTION_PARK
     };
+    
+    enum advertisement_type
+    {
+        DEVICE_ADVERTISEMENT_CONNECTABLE_UNDIRECTED,
+        DEVICE_ADVERTISEMENT_NON_CONNECTABLE,
+        DEVICE_ADVERTISEMENT_DIRECTED
+    };
 
     class BTLE_API device: public base
     {
@@ -38,7 +45,7 @@ namespace btle {
         gattdatabase& db();
         const gattdatabase& db() const;
         // rssi related
-        const rssifilter& rssi_filter() const;
+        rssifilter& rssi_filter();
         // connection state related
         connection_state state() const;
         std::string state_string() const;
@@ -53,6 +60,7 @@ namespace btle {
         connectionparameters& parameters();
         // operators
         bool operator == (const device& other) const;
+        btle::advertisement_type advertisement_type() const;
 
     public: // from base
 
@@ -74,6 +82,7 @@ namespace btle {
         rssifilter rssifilter_;
         gatt_services::gatt_service_list gatt_services_;
         connectionparameters parameters_;
+        btle::advertisement_type advertisement_type_;
     };
 
     typedef std::vector<device*> device_list;

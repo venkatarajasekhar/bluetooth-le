@@ -30,7 +30,8 @@ device::device(const bda &addr)
   state_(DEVICE_DISCONNECTED),
   bda_(addr),
   rssifilter_(),
-  gatt_services_()
+  gatt_services_(),
+  advertisement_type_(DEVICE_ADVERTISEMENT_CONNECTABLE_UNDIRECTED)
 {
     gattservicefactory::instance().populate(gatt_services_);
 }
@@ -59,7 +60,7 @@ const gattdatabase& device::db() const
     return db_;
 }
 
-const rssifilter& device::rssi_filter() const
+rssifilter& device::rssi_filter()
 {
     return rssifilter_;
 }
@@ -116,6 +117,11 @@ connectionparameters& device::parameters()
 bool device::operator == (const device& other) const
 {
     return bda_ == other.addr();
+}
+
+btle::advertisement_type device::advertisement_type() const
+{
+    return advertisement_type_;
 }
 
 std::string device::description() const

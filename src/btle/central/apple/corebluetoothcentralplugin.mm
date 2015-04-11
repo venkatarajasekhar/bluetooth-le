@@ -12,6 +12,46 @@ namespace {
     centralpluginregisterer<corebluetoothcentralplugin> registration;
     
     #define UUID_2_STRING(a) std::string([[[a UUID] UUIDString] UTF8String])
+    
+    inline void process_advertisement_fields(NSDictionary* dic, adv_fields& fields)
+    {
+        if( NSString* name = [dic objectForKey:CBAdvertisementDataLocalNameKey] )
+        {
+            fields[btle::GAP_ADTYPE_LOCAL_NAME_COMPLETE] = advertisementdata([name UTF8String]);
+        }
+        if( NSNumber* power = [dic objectForKey:CBAdvertisementDataTxPowerLevelKey] )
+        {
+            fields[btle::GAP_ADTYPE_POWER_LEVEL] = advertisementdata([[power stringValue] UTF8String]);
+        }
+        if( NSData* service_data = [dic objectForKey:CBAdvertisementDataServiceDataKey] )
+        {
+            fields[GAP_ADTYPE_SERVICE_DATA] = advertisementdata(std::string((const char*)[service_data bytes],[service_data length]));
+        }
+        if( NSData* man_data = [dic objectForKey:CBAdvertisementDataManufacturerDataKey] )
+        {
+            fields[GAP_ADTYPE_MANUFACTURER_SPECIFIC] = advertisementdata(std::string((const char*)[man_data bytes],[man_data length]));
+        }
+        if( NSArray* uuids = [dic objectForKey:CBAdvertisementDataServiceUUIDsKey] )
+        {
+            std::string uuids_bin;
+            int len=2;
+            for( CBUUID* uid : uuids )
+            {
+                uuids_bin.append((const char*)[[uid data] bytes],[[uid data] length]);
+                len = (int)[[uid data] length];
+            }
+            if( [uuids count] == 1 )
+            {
+                if(len == 2) fields[GAP_ADTYPE_16BIT_COMPLETE] = advertisementdata(uuids_bin);
+                else fields[GAP_ADTYPE_128BIT_COMPLETE] = advertisementdata(uuids_bin);
+            }
+            else if( [uuids count] > 1 )
+            {
+                if(len == 2) fields[GAP_ADTYPE_16BIT_MORE] = advertisementdata(uuids_bin);
+                else fields[GAP_ADTYPE_128BIT_MORE] = advertisementdata(uuids_bin);
+            }
+        }
+    }
 }
 
 
@@ -73,12 +113,16 @@ namespace {
     if( dev == NULL )
     {
         dev = new corebluetoothperipheraldevice(std::string([[[aPeripheral identifier] UUIDString] UTF8String]));
+#ifdef DESKTOP_BUILD
+        [aPeripheral retain];
+#endif
         dev->peripheral_ = aPeripheral;
         [dev->peripheral_ setDelegate:self];
         parent_->devices().push_back(dev);
     }
-    // TODO
-    parent_->observer().device_discovered(*dev);
+    adv_fields fields;
+    process_advertisement_fields(advertisementData, fields);
+    parent_->observer().device_discovered(*dev,fields,[RSSI intValue]);
 }
 
 - (void)centralManager:(CBCentralManager *)central didRetrievePeripherals:(NSArray *)peripherals

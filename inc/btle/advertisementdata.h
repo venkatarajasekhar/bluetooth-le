@@ -11,7 +11,7 @@ namespace btle{
     /**
      * @brief The advertisement_type enum
      */
-    enum advertisement_type
+    enum advertisement_data_type
     {
         GAP_ADTYPE_FLAGS                        = 0x01,
         GAP_ADTYPE_16BIT_MORE                   = 0x02,
@@ -45,7 +45,7 @@ namespace btle{
         advertisementdata& operator = (const advertisementdata& other);
     };
     
-    typedef std::map<btle::advertisement_type,btle::advertisementdata> adv_fields;
+    typedef std::map<btle::advertisement_data_type,btle::advertisementdata> adv_fields;
 }
 
 #endif // ADVERTISEMENTDATA_H

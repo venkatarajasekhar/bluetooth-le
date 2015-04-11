@@ -18,15 +18,15 @@ namespace btle {
         advertisementfields(const advertisementfields& other);
         
         // operators
-        advertisementfields& operator << (const std::map<btle::advertisement_type,btle::advertisementdata>& fields);
-        const advertisementdata* operator[](btle::advertisement_type key) const;
+        advertisementfields& operator << (const std::map<btle::advertisement_data_type,btle::advertisementdata>& fields);
+        const advertisementdata* operator[](btle::advertisement_data_type key) const;
         
         // get
         const std::string& name() const;
         bool is_service_advertiset( const btle::uuid& uid ) const;
         
     private:
-        std::map<btle::advertisement_type,btle::advertisementdata> fields_;
+        std::map<btle::advertisement_data_type,btle::advertisementdata> fields_;
         std::string name_;
         uuid_list advertiset_services_;
     };

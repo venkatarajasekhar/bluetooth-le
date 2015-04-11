@@ -67,8 +67,8 @@ int collector::auto_start()
 
 /**
  * @brief collector::add_scan_filter,
- * adds abstract scan filter, library has build-in filters which can be used @see uuidscanfilter and
- * bdascanfilter,
+ * adds abstract scan filter, library has build-in filters which can be used @see uuidscanfilter ,
+ * @see bdascanfilter and @see rssiscanfilter
  * @param filter, takes owner ship
  */
 void collector::add_scan_filter(scanfilterbase* filter)
@@ -409,8 +409,11 @@ void collector::plugin_state_changed(central_plugin_state state)
     }
 }
 
-void collector::device_discovered(device& dev)
+void collector::device_discovered(device& dev, adv_fields& fields, int rssi)
 {
+    dev.advertisement_fields() << fields;
+    dev.rssi_filter() << rssi;
+    // inform connectionhandler
     connectionhandler_.advertisement_head_received(dev);
     if( flags_ & CLIENT_SCAN )
     {
@@ -572,6 +575,11 @@ void collector::device_service_discovery_failed_cb(device& dev, const service_li
 void collector::device_characteristic_discovery_failed_cb(device& dev, const service& srv, const chr_list& chrs, const error& err)
 {
     _log_warning("device service discovery failed, override this callback for further logic");
+}
+
+void collector::plugin_state_changed_cb(central_plugin_state state)
+{
+    _log_warning("plugin state: %i",state);
 }
 
 btle::device* collector::fetch_device(const bda& addr)

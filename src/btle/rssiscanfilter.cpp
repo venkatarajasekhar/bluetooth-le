@@ -1,10 +1,11 @@
 
 #include "btle/rssiscanfilter.h"
+#include "btle/utility.h"
 
 using namespace btle;
 
 rssiscanfilter::rssiscanfilter(int rssi_limit)
-: scanfilterbase("BDA based scan filer"),
+: scanfilterbase("RSSI based scan filer limit set to: " + utility::to_string(rssi_limit)),
   rssi_limit_(rssi_limit)
 {
 }

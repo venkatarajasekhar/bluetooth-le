@@ -19,7 +19,7 @@ advertisementfields::advertisementfields(const advertisementfields& other)
 {
 }
 
-advertisementfields& advertisementfields::operator << (const std::map<btle::advertisement_type,btle::advertisementdata>& fields)
+advertisementfields& advertisementfields::operator << (const std::map<btle::advertisement_data_type,btle::advertisementdata>& fields)
 {
     // process
     for( adv_fields::const_iterator it = fields.begin(); it != fields.end(); ++it )
@@ -83,7 +83,7 @@ advertisementfields& advertisementfields::operator << (const std::map<btle::adve
     return *this;
 }
 
-const advertisementdata* advertisementfields::operator[](btle::advertisement_type key) const
+const advertisementdata* advertisementfields::operator[](btle::advertisement_data_type key) const
 {
     return fields_.find(key) != fields_.end() ? (const advertisementdata*)&fields_.find(key)->second : NULL;
 }
@@ -105,7 +105,7 @@ bool advertisementfields::is_service_advertiset( const btle::uuid& uid ) const
                 return uuid(fields_.find(btle::GAP_ADTYPE_16BIT_MORE)->second.string_value()) == uid;
             }
         }
-        //        else return advertisement_data_[btle::GAP_ADTYPE_16BIT_COMPLETE] == uid;
+        else return uuid(fields_.find(btle::GAP_ADTYPE_16BIT_COMPLETE)->second.string_value()) == uid;;
     }
     else
     {

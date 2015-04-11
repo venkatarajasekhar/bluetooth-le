@@ -11,6 +11,11 @@ gattdatabase::gattdatabase()
 
 gattdatabase& gattdatabase::operator << (const service& srv)
 {
+    for (service_iterator_const it = services_.begin(); it != services_.end(); ++it) {
+        if( (*it) == srv ){
+            return *this;
+        }
+    }
     services_.push_back(srv);
     return *this;
 }

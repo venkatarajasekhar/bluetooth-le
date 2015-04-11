@@ -130,10 +130,20 @@ void connectionhandler::free( device& dev, int action )
         }
         case connect_device_action:
         {
-            if( dev.state() == btle::DEVICE_DISCONNECTED )
-            {
-                change_device_state(dev,btle::DEVICE_CONNECTION_PARK);
-                //observer_->scan_devices();
+            switch (dev.state()) {
+                case btle::DEVICE_DISCONNECTED:
+                {
+                    change_device_state(dev,btle::DEVICE_CONNECTION_PARK);
+                    break;
+                }
+                case btle::DEVICE_DISCONNECTION_PARK:
+                {
+                    // just change state
+                    change_device_state(dev,btle::DEVICE_CONNECTED);
+                    break;
+                }
+                default:
+                    break;
             }
             break;
         }

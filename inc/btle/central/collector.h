@@ -65,7 +65,7 @@ namespace btle {
         private: // from observer
 
             void plugin_state_changed(central_plugin_state state);
-            void device_discovered(device& dev);
+            void device_discovered(device& dev, adv_fields& fields, int rssi);
             void device_connected(device& dev);
             void device_disconnected(device& dev);
             void device_services_discovered(device& dev, const service_list& services, const error& err);
@@ -117,6 +117,7 @@ namespace btle {
             virtual void device_gatt_service_discovered_cb(device& dev, const gatt_services::gattservicebase *srv);
             virtual void device_service_discovery_failed_cb(device& dev, const service_list& services, const error& err);
             virtual void device_characteristic_discovery_failed_cb(device& dev, const service& srv, const chr_list& chrs, const error& err);
+            virtual void plugin_state_changed_cb(central_plugin_state state);
 
         private:
 

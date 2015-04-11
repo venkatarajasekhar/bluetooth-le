@@ -50,6 +50,8 @@
 		0DC73A351ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A341ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm */; };
 		0DC73A6F1AD12F1E005F7BC0 /* collectorobjc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A6E1AD12F1E005F7BC0 /* collectorobjc.mm */; };
 		0DC73A721AD12FE4005F7BC0 /* advertisementfields.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A711AD12FE4005F7BC0 /* advertisementfields.cpp */; };
+		0DC73A751AD9B6CE005F7BC0 /* rssiscanfilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A741AD9B6CE005F7BC0 /* rssiscanfilter.cpp */; };
+		0DC73A781AD9C1E2005F7BC0 /* collectorsimpleobjc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A771AD9C1E2005F7BC0 /* collectorsimpleobjc.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +174,10 @@
 		0DC73A6E1AD12F1E005F7BC0 /* collectorobjc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = collectorobjc.mm; sourceTree = "<group>"; };
 		0DC73A701AD12FC5005F7BC0 /* advertisementfields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = advertisementfields.h; sourceTree = "<group>"; };
 		0DC73A711AD12FE4005F7BC0 /* advertisementfields.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = advertisementfields.cpp; sourceTree = "<group>"; };
+		0DC73A731AD9B690005F7BC0 /* rssiscanfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rssiscanfilter.h; sourceTree = "<group>"; };
+		0DC73A741AD9B6CE005F7BC0 /* rssiscanfilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rssiscanfilter.cpp; sourceTree = "<group>"; };
+		0DC73A761AD9C1B4005F7BC0 /* collectorsimpleobjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = collectorsimpleobjc.h; sourceTree = "<group>"; };
+		0DC73A771AD9C1E2005F7BC0 /* collectorsimpleobjc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = collectorsimpleobjc.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +256,7 @@
 				0DC739A31ACDDF56005F7BC0 /* btle.h */,
 				0DC739A41ACDDF56005F7BC0 /* btle_global.h */,
 				0DC739A71ACDDF56005F7BC0 /* characteristic.h */,
+				0DC73A731AD9B690005F7BC0 /* rssiscanfilter.h */,
 				0DC739A81ACDDF56005F7BC0 /* connectionparameters.h */,
 				0DC739A91ACDDF56005F7BC0 /* descriptor.h */,
 				0DC739AA1ACDDF56005F7BC0 /* device.h */,
@@ -276,6 +283,7 @@
 			children = (
 				0DC739A61ACDDF56005F7BC0 /* collector.h */,
 				0DC73A6D1AD12F01005F7BC0 /* collectorobjc.h */,
+				0DC73A761AD9C1B4005F7BC0 /* collectorsimpleobjc.h */,
 			);
 			path = central;
 			sourceTree = "<group>";
@@ -369,6 +377,7 @@
 				0DC739DD1ACDDF56005F7BC0 /* base.cpp */,
 				0DC739DE1ACDDF56005F7BC0 /* bda.cpp */,
 				0DC739DF1ACDDF56005F7BC0 /* bdascanfilter.cpp */,
+				0DC73A741AD9B6CE005F7BC0 /* rssiscanfilter.cpp */,
 				0DC739E01ACDDF56005F7BC0 /* btle.cpp */,
 				0DC739EB1ACDDF56005F7BC0 /* characteristic.cpp */,
 				0DC739EC1ACDDF56005F7BC0 /* connectionparameters.cpp */,
@@ -398,6 +407,7 @@
 				0DC739E61ACDDF56005F7BC0 /* collector.cpp */,
 				0DC739E71ACDDF56005F7BC0 /* connectionhandler.cpp */,
 				0DC73A6E1AD12F1E005F7BC0 /* collectorobjc.mm */,
+				0DC73A771AD9C1E2005F7BC0 /* collectorsimpleobjc.mm */,
 			);
 			path = central;
 			sourceTree = "<group>";
@@ -535,6 +545,7 @@
 				0DC73A0D1ACDDF56005F7BC0 /* bdascanfilter.cpp in Sources */,
 				0DC73A271ACDDF56005F7BC0 /* glucoseservice.cpp in Sources */,
 				0DC73A221ACDDF56005F7BC0 /* service_not_found.cpp in Sources */,
+				0DC73A781AD9C1E2005F7BC0 /* collectorsimpleobjc.mm in Sources */,
 				0DC73A201ACDDF56005F7BC0 /* link_not_active.cpp in Sources */,
 				0DC73A1A1ACDDF56005F7BC0 /* error.cpp in Sources */,
 				0DC73A2C1ACDDF56005F7BC0 /* rssifilter.cpp in Sources */,
@@ -563,6 +574,7 @@
 				0DC73A291ACDDF56005F7BC0 /* rscservice.cpp in Sources */,
 				0DC73A0F1ACDDF56005F7BC0 /* corebluetoothcentralplugin.mm in Sources */,
 				0DC73A1F1ACDDF56005F7BC0 /* device_not_connected.cpp in Sources */,
+				0DC73A751AD9B6CE005F7BC0 /* rssiscanfilter.cpp in Sources */,
 				0DC73A0A1ACDDF56005F7BC0 /* advertisementdata.cpp in Sources */,
 				0DC73A2E1ACDDF56005F7BC0 /* service.cpp in Sources */,
 				0DC73A1C1ACDDF56005F7BC0 /* attribute_not_notifyable.cpp in Sources */,
