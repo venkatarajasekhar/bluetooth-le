@@ -116,7 +116,7 @@ void connectionhandler::free( device& dev, int action )
     {
         case Entry:
         {
-            // TODO check pending disconnections
+            // TODO check pending disconnections or connections if setting is direct connection
             break;
         }
         case advertisement_head_received_action:

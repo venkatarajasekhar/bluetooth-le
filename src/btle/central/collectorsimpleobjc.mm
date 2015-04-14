@@ -106,6 +106,11 @@ public:
     void device_characteristic_discovery_failed_cb(device& dev, const service& srv, const chr_list& chrs, const error& err)
     {
     }
+    
+    void plugin_state_changed_cb(central_plugin_state state)
+    {
+        [objc_->delegate_ plugin_state_changed:state];
+    }
 };
 
 @implementation collectorsimpleobjc
