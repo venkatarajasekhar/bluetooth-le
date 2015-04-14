@@ -27,14 +27,18 @@ class collectorsimpleobjcimpl;
 - (instancetype)initWithDelegate:(id<collectorsimpleobjc_delegate>)delegate;
 - (void) connect_device:(NSString*) addr;
 - (void) disconnect_device:(NSString*) addr;
+- (void) scan_devices;
+- (void) stop_scan_devices;
 
 @end
 
 @protocol collectorsimpleobjc_delegate <NSObject>
 
 @required
--(void) device_discovered:(NSString*) addr name: (NSString*) name rssi: (int) rssi;
--(void) device_service_value_updated:(NSString*) addr name: (NSString*) name srv: (NSString*) srv value: (double) value json:(NSString*) json;
+-(void) device_discovered:(NSString*) addr name: (NSString*) name state:(NSString*) state rssi: (int) rssi;
+-(void) device_service_value_updated:(NSString*) addr name: (NSString*) name srv: (NSString*) srv json:(NSString*) json;
+-(void) device_hr_value_updated:(NSString*) addr name: (NSString*) name hr: (int) hr contact: (bool) contact rrs: (NSMutableArray*) rrs energy: (int) energy;
+-(void) device_rsc_value_updated:(NSString*) addr name: (NSString*) name speed: (double) speed walking: (bool) walking strideLength: (int) strideLength distance: (double) distance;
 -(void) device_characteristic_read:(NSString*) addr name: (NSString*) name srv: (NSString*) srv chr: (NSString*) chr data: (NSString*) data err: (int) err;
 -(void) device_state_changed:(NSString*) addr name: (NSString*) name state: (NSString*) state;
 

@@ -27,21 +27,46 @@ public:
     {
         [objc_->delegate_ device_discovered:DEV_ADDR_TO_NSSTRING(dev)
                                        name:DEV_NAME_TO_NSSTRING(dev)
+                                       state:[NSString stringWithUTF8String:dev.state_string().c_str()]
                                        rssi:dev.rssi_filter().mean_median()];
     }
     
     void device_service_value_updated_cb(device& dev, const gatt_services::gattservicebase* srv)
     {
         NSString* service_string = [NSString stringWithUTF8String:srv->service_uuid().to_string().c_str()];
+        NSString* dev_addr = DEV_ADDR_TO_NSSTRING(dev);
+        NSString* dev_name = DEV_NAME_TO_NSSTRING(dev);
+        NSString* srv_json = @"";//[NSString stringWithUTF8String:srv->json(uuid(HEART_RATE_MEASUREMENT)).c_str()];
+        [objc_->delegate_ device_service_value_updated:dev_addr
+                                                  name:dev_name
+                                                   srv:service_string
+                                                  json:srv_json];
         switch (srv->service_uuid().uuid16bit()) {
             case HEART_RATE_SERVICE:
             {
                 const hrservice* hr = (const hrservice*)srv;
-                [objc_->delegate_ device_service_value_updated:DEV_ADDR_TO_NSSTRING(dev)
-                                                          name:DEV_NAME_TO_NSSTRING(dev)
-                                                           srv:service_string
-                                                         value:(double)hr->hr_value()
-                             json:[NSString stringWithUTF8String:srv->json(uuid(HEART_RATE_MEASUREMENT)).c_str()]];
+                NSMutableArray* rrs = [[NSMutableArray alloc] initWithCapacity:hr->rr_values().size()];
+                for( std::vector<int>::const_iterator it = hr->rr_values().begin(); it != hr->rr_values().end(); ++it )
+                {
+                    [rrs addObject:[[NSNumber alloc] initWithInt:*it]];
+                }
+                [objc_->delegate_ device_hr_value_updated:DEV_ADDR_TO_NSSTRING(dev)
+                                                     name:DEV_NAME_TO_NSSTRING(dev)
+                                                       hr:hr->hr_value()
+                                                  contact:hr->sensor_contact()
+                                                      rrs:rrs
+                                                   energy:hr->energy_expeneded()];
+                break;
+            }
+            case RSC_SERVICE:
+            {
+                const rscservice* rsc = (const rscservice*)srv;
+                [objc_->delegate_ device_rsc_value_updated:DEV_ADDR_TO_NSSTRING(dev)
+                                                      name:DEV_NAME_TO_NSSTRING(dev)
+                                                     speed:rsc->speed()
+                                                   walking:rsc->is_walking()
+                                              strideLength:rsc->stride_length()
+                                                  distance:rsc->distance()];
                 break;
             }
             default:
@@ -106,6 +131,16 @@ public:
 -(void) disconnect_device:(NSString *)addr
 {
     collector_->disconnect_device(bda([addr UTF8String]));
+}
+
+- (void) scan_devices
+{
+    collector_->start_scan();
+}
+
+- (void) stop_scan_devices
+{
+    collector_->stop_scan();
 }
 
 @end

@@ -46,6 +46,8 @@ namespace btle {
             int cadence() const;
             uint16_t stride_length() const;
             double distance() const;
+            bool is_walking() const;
+            bool is_running() const;
 
         public:
 

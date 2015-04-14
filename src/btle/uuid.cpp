@@ -38,7 +38,7 @@ uuid::uuid(const std::string& uuid_str)
         case 2:
         {
             memcpy(&uuid16_,uuid_str.c_str(),sizeof(uuid16_));
-            value_ = "";
+            //value_ = "";
             break;
         }
         case 4:
@@ -46,7 +46,7 @@ uuid::uuid(const std::string& uuid_str)
             std::stringstream ss;
             ss << std::hex << uuid_str;
             ss >> uuid16_;
-            value_ = "";
+            //value_ = "";
             break;
         }
         case 16:
@@ -61,7 +61,7 @@ uuid::uuid(const std::string& uuid_str)
                 std::stringstream ss;
                 ss << std::hex << uuid_16;
                 ss >> uuid16_;
-                value_ = "";
+                //value_ = "";
             }
             break;
         }

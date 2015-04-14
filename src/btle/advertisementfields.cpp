@@ -29,7 +29,7 @@ advertisementfields& advertisementfields::operator << (const std::map<btle::adve
             case GAP_ADTYPE_LOCAL_NAME_SHORT:
             case GAP_ADTYPE_LOCAL_NAME_COMPLETE:
             {
-                if( it->second.string_value().compare(name_) == std::string::npos )
+                if( it->second.string_value().compare(name_) != std::string::npos )
                 {
                     name_ = it->second.string_value();
                 }

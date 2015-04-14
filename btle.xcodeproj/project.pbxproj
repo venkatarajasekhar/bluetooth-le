@@ -52,6 +52,8 @@
 		0DC73A721AD12FE4005F7BC0 /* advertisementfields.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A711AD12FE4005F7BC0 /* advertisementfields.cpp */; };
 		0DC73A751AD9B6CE005F7BC0 /* rssiscanfilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A741AD9B6CE005F7BC0 /* rssiscanfilter.cpp */; };
 		0DC73A781AD9C1E2005F7BC0 /* collectorsimpleobjc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A771AD9C1E2005F7BC0 /* collectorsimpleobjc.mm */; };
+		0DC73A7B1ADD6421005F7BC0 /* smpkeys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A7A1ADD6421005F7BC0 /* smpkeys.cpp */; };
+		0DC73A7E1ADD690B005F7BC0 /* btlelibservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A7D1ADD690B005F7BC0 /* btlelibservice.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +180,10 @@
 		0DC73A741AD9B6CE005F7BC0 /* rssiscanfilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rssiscanfilter.cpp; sourceTree = "<group>"; };
 		0DC73A761AD9C1B4005F7BC0 /* collectorsimpleobjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = collectorsimpleobjc.h; sourceTree = "<group>"; };
 		0DC73A771AD9C1E2005F7BC0 /* collectorsimpleobjc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = collectorsimpleobjc.mm; sourceTree = "<group>"; };
+		0DC73A791ADD6403005F7BC0 /* smpkeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = smpkeys.h; sourceTree = "<group>"; };
+		0DC73A7A1ADD6421005F7BC0 /* smpkeys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = smpkeys.cpp; sourceTree = "<group>"; };
+		0DC73A7C1ADD68F0005F7BC0 /* btlelibservice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = btlelibservice.h; sourceTree = "<group>"; };
+		0DC73A7D1ADD690B005F7BC0 /* btlelibservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = btlelibservice.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +280,7 @@
 				0DC739C91ACDDF56005F7BC0 /* verify.h */,
 				0DC739CA1ACDDF56005F7BC0 /* version.h */,
 				0DC73A701AD12FC5005F7BC0 /* advertisementfields.h */,
+				0DC73A791ADD6403005F7BC0 /* smpkeys.h */,
 			);
 			path = btle;
 			sourceTree = "<group>";
@@ -315,6 +322,7 @@
 				0DC739BC1ACDDF56005F7BC0 /* glucoseservice.h */,
 				0DC739BD1ACDDF56005F7BC0 /* hrservice.h */,
 				0DC739BE1ACDDF56005F7BC0 /* rscservice.h */,
+				0DC73A7C1ADD68F0005F7BC0 /* btlelibservice.h */,
 			);
 			path = gatt_services;
 			sourceTree = "<group>";
@@ -394,6 +402,7 @@
 				0DC73A081ACDDF56005F7BC0 /* uuidscanfilter.cpp */,
 				0DC73A091ACDDF56005F7BC0 /* version.cpp */,
 				0DC73A711AD12FE4005F7BC0 /* advertisementfields.cpp */,
+				0DC73A7A1ADD6421005F7BC0 /* smpkeys.cpp */,
 			);
 			path = btle;
 			sourceTree = "<group>";
@@ -446,6 +455,7 @@
 				0DC739FE1ACDDF56005F7BC0 /* glucoseservice.cpp */,
 				0DC739FF1ACDDF56005F7BC0 /* hrservice.cpp */,
 				0DC73A001ACDDF56005F7BC0 /* rscservice.cpp */,
+				0DC73A7D1ADD690B005F7BC0 /* btlelibservice.cpp */,
 			);
 			path = gatt_services;
 			sourceTree = "<group>";
@@ -546,6 +556,7 @@
 				0DC73A271ACDDF56005F7BC0 /* glucoseservice.cpp in Sources */,
 				0DC73A221ACDDF56005F7BC0 /* service_not_found.cpp in Sources */,
 				0DC73A781AD9C1E2005F7BC0 /* collectorsimpleobjc.mm in Sources */,
+				0DC73A7E1ADD690B005F7BC0 /* btlelibservice.cpp in Sources */,
 				0DC73A201ACDDF56005F7BC0 /* link_not_active.cpp in Sources */,
 				0DC73A1A1ACDDF56005F7BC0 /* error.cpp in Sources */,
 				0DC73A2C1ACDDF56005F7BC0 /* rssifilter.cpp in Sources */,
@@ -573,6 +584,7 @@
 				0DC73A2A1ACDDF56005F7BC0 /* gattdatabase.cpp in Sources */,
 				0DC73A291ACDDF56005F7BC0 /* rscservice.cpp in Sources */,
 				0DC73A0F1ACDDF56005F7BC0 /* corebluetoothcentralplugin.mm in Sources */,
+				0DC73A7B1ADD6421005F7BC0 /* smpkeys.cpp in Sources */,
 				0DC73A1F1ACDDF56005F7BC0 /* device_not_connected.cpp in Sources */,
 				0DC73A751AD9B6CE005F7BC0 /* rssiscanfilter.cpp in Sources */,
 				0DC73A0A1ACDDF56005F7BC0 /* advertisementdata.cpp in Sources */,

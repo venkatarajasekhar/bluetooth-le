@@ -12,6 +12,9 @@ namespace {
 }
 
 hrservice::hrservice()
+: hr_value_(0),
+  rrs_(),
+  energy_expended_(0)
 {
     mandatory_notifications_.push_back(uuid(HEART_RATE_MEASUREMENT));
     included_characteristics_.push_back(uuid(HEART_RATE_MEASUREMENT));
@@ -33,7 +36,7 @@ int hrservice::hr_value() const
  */
 bool hrservice::sensor_contact() const
 {
-    return flags_.sensor_contact_bit_ != 0;
+    return flags_.sensor_contact_bit_ == 0x2;
 }
 
 /**
@@ -64,7 +67,7 @@ void hrservice::process_service_notify_data(const uuid &chr, const uint8_t* data
             memcpy(&flags_,data,sizeof(flags_));
 
             int offset(sizeof(flags_));
-            memcpy(&hr_value_,data+offset,flags_.hr_format_bit_+1);
+            memcpy(&hr_value_,&data[offset],flags_.hr_format_bit_+1);
             offset += flags_.hr_format_bit_+1;
 
             if ( flags_.energy_expended_bit_ )
@@ -83,6 +86,7 @@ void hrservice::process_service_notify_data(const uuid &chr, const uint8_t* data
                     double tmp=((double)rr_value/1024.0)*1000.0;
                     rr_value = (uint16_t)tmp;
                     rrs_.push_back(rr_value);
+                    offset += 2;
                 }
             }
             break;

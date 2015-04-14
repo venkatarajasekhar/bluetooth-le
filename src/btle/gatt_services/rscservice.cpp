@@ -12,6 +12,14 @@ namespace {
 }
 
 rscservice::rscservice()
+: speed_(0),
+  cadence_(0),
+  stride_length_(0),
+  distance_(0),
+  pending_operation_(rsc_cs_operation::RSC_CS_NONE),
+  completed_operation_(rsc_cs_operation::RSC_CS_NONE),
+  slocations_(0),
+  sensor_location_(0)
 {
     mandatory_notifications_.push_back(uuid(RSC_MEASUREMENT));
     included_characteristics_.push_back(uuid(RSC_MEASUREMENT));
@@ -52,6 +60,16 @@ uint16_t rscservice::stride_length() const
 double rscservice::distance() const
 {
     return distance_;
+}
+
+bool rscservice::is_walking() const
+{
+    return flags_.walking_status_;
+}
+
+bool rscservice::is_running() const
+{
+    return !is_walking();
 }
 
 void rscservice::process_service_notify_data(const uuid& chr, const uint8_t* data, size_t size)

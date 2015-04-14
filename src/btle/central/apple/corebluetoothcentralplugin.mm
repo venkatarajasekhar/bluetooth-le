@@ -2,6 +2,7 @@
 #include "btle/central/apple/corebluetoothcentralplugin.h"
 #include "btle/central/centralpluginregisterer.h"
 #include "btle/service.h"
+#include "btle/utility.h"
 #include "btle/log.h"
 
 using namespace btle::central::apple;
@@ -213,6 +214,7 @@ namespace {
         btle::characteristic* chr = NULL;
         dev->fetch_service_and_characteristic(characteristic, srv, chr);
         std::string data((const char*)[[characteristic value] bytes],[[characteristic value] length]);
+        NSLog(@"data hex: %s", utility::to_hex_string(data).c_str());
         assert( srv && chr );
         parent_->observer().device_characteristic_notify_data_updated(*dev, *srv, *chr, data);
     }
