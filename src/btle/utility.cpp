@@ -26,17 +26,17 @@ std::string utility::to_string(double value)
     return ss.str();
 }
 
-std::string utility::to_hex_string(const uint8_t* data, size_t size, char separator)
+std::string utility::to_hex_string(const uint8_t* data, size_t size,const char* separator)
 {
     std::stringstream ss_hex;
     for( unsigned int i=0; i < size; ++i )
     {
-        ss_hex << std::uppercase << std::hex << std::setw(2) << std::setfill('0') << (unsigned int)(unsigned char)*(data+i) << separator;
+        ss_hex << std::uppercase << std::hex << std::setw(2) << std::setfill('0') << (unsigned int)(unsigned char)*(data+i) << (separator ? separator : "");
     }
     return ss_hex.str();
 }
 
-std::string utility::to_hex_string(const std::string& data, char separator)
+std::string utility::to_hex_string(const std::string& data, const char *separator)
 {
     return to_hex_string((const uint8_t*)data.c_str(),data.size(),separator);
 }

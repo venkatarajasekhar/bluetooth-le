@@ -16,8 +16,8 @@ rscservice::rscservice()
   cadence_(0),
   stride_length_(0),
   distance_(0),
-  pending_operation_(rsc_cs_operation::RSC_CS_NONE),
-  completed_operation_(rsc_cs_operation::RSC_CS_NONE),
+  pending_operation_(RSC_CS_NONE),
+  completed_operation_(RSC_CS_NONE),
   slocations_(0),
   sensor_location_(0)
 {

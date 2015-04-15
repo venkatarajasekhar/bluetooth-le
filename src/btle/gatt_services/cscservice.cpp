@@ -81,7 +81,8 @@ void cscservice::process_service_value_read(const uuid& chr, const uint8_t* data
 
 void cscservice::reset()
 {
-
+    speed_ = CSC_SPEED_UNINIT;
+    cadence_ = CSC_CADENCE_UNINT;
 }
 
 int cscservice::process_speed_measurement(const uint8_t* msg, int offset)
@@ -94,7 +95,6 @@ int cscservice::process_speed_measurement(const uint8_t* msg, int offset)
     uint16_t tmp_curr_wheel_event_(0);
     memcpy(&tmp_curr_wheel_event_,msg+offset,sizeof(tmp_curr_wheel_event_));
     curr_wheel_event_ = (double)tmp_curr_wheel_event_/1024.0;
-
     if( speed_ == CSC_SPEED_UNINIT )
     {
         speed_ = 0;
@@ -148,17 +148,13 @@ int cscservice::process_cadence_measurement(const uint8_t *msg, int offset)
     prev_crank_revs_ = curr_crank_revs_;
     memcpy(&curr_crank_revs_,msg+offset,2);
     offset += 2;
-
     int crank_rounds = curr_crank_revs_ - prev_crank_revs_;
-
     if( curr_crank_revs_ < prev_crank_revs_ )
     {
         prev_crank_revs_ = (0xFFFF - prev_crank_revs_);
         crank_rounds = curr_crank_revs_ - prev_crank_revs_;
     }
-
     prev_crank_event_ = curr_crank_event_;
-
     uint16_t tmp_curr_crank_event_(0);
     memcpy(&tmp_curr_crank_event_,msg+offset,sizeof(tmp_curr_crank_event_));
     curr_crank_event_ = (double)tmp_curr_crank_event_/1024.0;
@@ -205,7 +201,7 @@ int cscservice::process_cadence_measurement(const uint8_t *msg, int offset)
  */
 double cscservice::speed() const
 {
-    return speed_;
+    return speed_ != CSC_SPEED_UNINIT ? speed_ : 0;
 }
 
 /**
@@ -214,7 +210,7 @@ double cscservice::speed() const
  */
 int cscservice::cadence() const
 {
-    return cadence_;
+    return cadence_ != CSC_CADENCE_UNINT ? cadence_ : 0;
 }
 
 /**

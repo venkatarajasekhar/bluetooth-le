@@ -1,4 +1,5 @@
-#include "uuid.h"
+#include "btle/uuid.h"
+#include "btle/utility.h"
 
 #include <stdio.h>
 #include <sstream>
@@ -136,5 +137,15 @@ bool uuid::operator != (const uint8_t uuid128[UUID_128_BIN_LENGTH]) const
 
 bool uuid::operator != (const std::string& uuid_str) const
 {
-    return value_.compare(uuid_str) == std::string::npos;//!(*this == uuid_str);
+    return value_.compare(uuid_str) == std::string::npos;
 }
+
+std::string uuid::to_string() const
+{
+    if( uuid16_ != 0 )
+    {
+        return utility::to_hex_string((const uint8_t*)&uuid16_,2,NULL);
+    }
+    else return value_;
+}
+

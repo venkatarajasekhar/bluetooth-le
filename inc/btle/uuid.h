@@ -37,6 +37,10 @@ namespace btle {
         bool operator != (const uint8_t uuid128[UUID_128_BIN_LENGTH]) const;
         bool operator != (const std::string& uuid_str) const;
 
+    public: // from base
+
+        std::string to_string() const;
+
     private:
         uint16_t uuid16_;
     };

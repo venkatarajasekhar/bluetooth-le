@@ -12,6 +12,8 @@ TEMPLATE = lib
 DEFINES += BTLE_LIBRARY DESKTOP_BUILD
 INCLUDEPATH += inc inc/btle internal internal/btle internal/btle/central
 
+QMAKE_LIBDIR += "$$DESTDIR"
+
 SOURCES += \
     src/btle/base.cpp \
     src/btle/uuid.cpp \
@@ -55,7 +57,9 @@ SOURCES += \
     src/btle/rssiscanfilter.cpp \
     src/btle/advertisementfields.cpp \
     src/btle/central/collectorqt.cpp \
-    src/btle/central/collectorsimpleqt.cpp
+    src/btle/central/collectorsimpleqt.cpp \
+    src/btle/gatt_services/btlelibservice.cpp \
+    src/btle/smpkeys.cpp
 
 HEADERS += \
     inc/btle/btle.h\
@@ -111,7 +115,9 @@ HEADERS += \
     inc/btle/rssiscanfilter.h\
     inc/btle/advertisementfields.h \
     inc/btle/central/collectorqt.h \
-    inc/btle/central/collectorsimpleqt.h
+    inc/btle/central/collectorsimpleqt.h \
+    inc/btle/gatt_services/btlelibservice.h \
+    inc/btle/smpkeys.h
 
 ios{
     LIBS += -framework Foundation \
