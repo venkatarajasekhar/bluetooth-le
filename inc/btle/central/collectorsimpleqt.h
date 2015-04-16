@@ -7,6 +7,10 @@
 
 namespace btle {
     namespace central {
+        /**
+         * @brief The collectorsimpleqt class
+         * super simple ble qt api, but still contains the most important features
+         */
         class BTLE_API collectorsimpleqt: public QObject, public collector{
         Q_OBJECT
 
@@ -32,15 +36,13 @@ namespace btle {
 
         signals:
 
-            /**
-             * @brief signal_device_discovered
-             * @param addr
-             * @param name
-             */
             void signal_device_discovered(const QString& addr, const QString& name);
-            void signal_device_service_value_updated(const QString& addr, const QString& name,const QString& srv,const QString& primary_measurement, double value, const QString& json);
+            void signal_device_service_value_updated(const QString& addr, const QString& name,const QString& srv, const QString& json);
+            void signal_device_hr_value_updated(const QString& addr, const QString& name, int hr, const QList<int>& rrs, bool contact, int energy);
+            void signal_device_rsc_value_updated(const QString& addr, const QString& name, double speed, bool walking, int cadence, int stride_length, double distance);
+            void signal_device_csc_value_updated(const QString& addr, const QString& name, double speed, int cadence, bool speed_present, bool cadence_present);
             void signal_device_characteristic_read(const QString& addr, const QString& name,const QString& srv, const QString& chr, const QString& data, int err);
-            void signal_device_state_changed(const QString& addr, const QString state);
+            void signal_device_state_changed(const QString& addr, const QString& state);
 
         private: // data
 

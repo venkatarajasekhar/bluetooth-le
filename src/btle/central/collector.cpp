@@ -20,6 +20,21 @@ namespace {
         CLIENT_SCAN   = 0x01,
         INTERNAL_SCAN = 0x02
     };
+
+    // allways enable notification ?
+    #define SERVICE_CHANGED                             0x2A05
+
+    // commonly read these chrs
+    #define DEVICE_NAME                                 0x2A00
+    #define APPEARANCE                                  0x2A01
+    #define BATTERY_LEVEL                               0x2A19
+    #define MODEL_NUMBER                                0x2A24
+    #define SERIAL_NUMBER                               0x2A25
+    #define FIRMWARE_REVISION                           0x2A26
+    #define HARDWARE_REVISION                           0x2A27
+    #define SOFTWARE_REVISION                           0x2A28
+    #define MANUFACTURER_NAME                           0x2A29
+
 }
 
 using namespace btle::central;
@@ -48,6 +63,17 @@ collector::collector()
     }
     gattservicefactory::instance().deplete(services);
     connectionhandler_.attach(this);
+
+    read_uuids_.push_back(uuid(DEVICE_NAME));
+    read_uuids_.push_back(uuid(APPEARANCE));
+    read_uuids_.push_back(uuid(BATTERY_LEVEL));
+    read_uuids_.push_back(uuid(MODEL_NUMBER));
+    read_uuids_.push_back(uuid(SERIAL_NUMBER));
+    read_uuids_.push_back(uuid(FIRMWARE_REVISION));
+    read_uuids_.push_back(uuid(HARDWARE_REVISION));
+    read_uuids_.push_back(uuid(SOFTWARE_REVISION));
+    read_uuids_.push_back(uuid(MANUFACTURER_NAME));
+    // TODO add allso service chrs to read
 }
 
 collector::~collector()
@@ -132,7 +158,8 @@ connectionhandler& collector::connection_handler()
 }
 
 /**
- * @brief collector::set_auto_read_values, setup characteristic uuids to be read if found
+ * @brief collector::set_auto_read_values, setup characteristic uuids to be read if found,
+ * NOTE this will override the default set!
  * @param list
  */
 void collector::set_auto_read_values(const uuid_list& list)
