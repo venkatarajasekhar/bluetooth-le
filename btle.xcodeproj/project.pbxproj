@@ -54,6 +54,7 @@
 		0DC73A781AD9C1E2005F7BC0 /* collectorsimpleobjc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A771AD9C1E2005F7BC0 /* collectorsimpleobjc.mm */; };
 		0DC73A7B1ADD6421005F7BC0 /* smpkeys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A7A1ADD6421005F7BC0 /* smpkeys.cpp */; };
 		0DC73A7E1ADD690B005F7BC0 /* btlelibservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A7D1ADD690B005F7BC0 /* btlelibservice.cpp */; };
+		0DC73A811AE68ED1005F7BC0 /* timer_darwin.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A801AE68ED1005F7BC0 /* timer_darwin.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0D4F08491AE6D68700F4A1A4 /* timercallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timercallback.h; sourceTree = "<group>"; };
 		0DC739831ACDDEF7005F7BC0 /* libbtle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtle.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DC7398E1ACDDEF7005F7BC0 /* btleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = btleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DC7399F1ACDDF56005F7BC0 /* advertisementdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = advertisementdata.h; sourceTree = "<group>"; };
@@ -184,6 +186,8 @@
 		0DC73A7A1ADD6421005F7BC0 /* smpkeys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = smpkeys.cpp; sourceTree = "<group>"; };
 		0DC73A7C1ADD68F0005F7BC0 /* btlelibservice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = btlelibservice.h; sourceTree = "<group>"; };
 		0DC73A7D1ADD690B005F7BC0 /* btlelibservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = btlelibservice.cpp; sourceTree = "<group>"; };
+		0DC73A7F1AE68E94005F7BC0 /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
+		0DC73A801AE68ED1005F7BC0 /* timer_darwin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = timer_darwin.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,6 +343,8 @@
 			isa = PBXGroup;
 			children = (
 				0DC739CD1ACDDF56005F7BC0 /* central */,
+				0DC73A7F1AE68E94005F7BC0 /* timer.h */,
+				0D4F08491AE6D68700F4A1A4 /* timercallback.h */,
 			);
 			path = btle;
 			sourceTree = "<group>";
@@ -403,6 +409,7 @@
 				0DC73A091ACDDF56005F7BC0 /* version.cpp */,
 				0DC73A711AD12FE4005F7BC0 /* advertisementfields.cpp */,
 				0DC73A7A1ADD6421005F7BC0 /* smpkeys.cpp */,
+				0DC73A801AE68ED1005F7BC0 /* timer_darwin.mm */,
 			);
 			path = btle;
 			sourceTree = "<group>";
@@ -592,6 +599,7 @@
 				0DC73A1C1ACDDF56005F7BC0 /* attribute_not_notifyable.cpp in Sources */,
 				0DC73A101ACDDF56005F7BC0 /* centralpluginfactory.cpp in Sources */,
 				0DC73A311ACDDF56005F7BC0 /* uuidscanfilter.cpp in Sources */,
+				0DC73A811AE68ED1005F7BC0 /* timer_darwin.mm in Sources */,
 				0DC73A2B1ACDDF56005F7BC0 /* log.cpp in Sources */,
 				0DC73A241ACDDF56005F7BC0 /* cyclingpowerservice.cpp in Sources */,
 			);

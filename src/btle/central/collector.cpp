@@ -74,6 +74,7 @@ collector::collector()
     read_uuids_.push_back(uuid(SOFTWARE_REVISION));
     read_uuids_.push_back(uuid(MANUFACTURER_NAME));
     // TODO add allso service chrs to read
+    
 }
 
 collector::~collector()
@@ -536,9 +537,10 @@ void collector::device_characteristic_read(
         {
             gatt_service->process_service_value_read(chr.uuid(),(const uint8_t*)data.c_str(),data.size(), err);
             device_service_value_updated_cb(dev,gatt_service);
+            return;
         }
     }
-    else device_characteristic_read_cb(dev,srv,chr,data,err);
+    device_characteristic_read_cb(dev,srv,chr,data,err);
 }
 
 void collector::device_characteristic_written(device& dev, const service& srv, const characteristic& chr, const error& err)
@@ -552,6 +554,11 @@ void collector::device_characteristic_nofication_state_changed(device& dev, cons
     {
         gatt_service->set_active(chr.uuid(),err.code() == 0 ? notify : false);
     }
+}
+
+void collector::device_descriptor_written(device& dev, const service& srv, const characteristic& chr, const descriptor& desc, const error& err)
+{
+    // TODO, NOTE device_characteristic_nofication_state_changed will be removed
 }
 
 void collector::device_characteristic_notify_data_updated(device& dev, const service& srv, const characteristic& chr, const std::string& data)

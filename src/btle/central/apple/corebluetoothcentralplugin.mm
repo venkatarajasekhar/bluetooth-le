@@ -207,19 +207,30 @@ namespace {
     
     corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
     assert(dev);
-    btle::service_list list;
     btle::error err(0);
-    if( error == nil ){
-        btle::service* srv = NULL;
-        btle::characteristic* chr = NULL;
-        dev->fetch_service_and_characteristic(characteristic, srv, chr);
-        std::string data((const char*)[[characteristic value] bytes],[[characteristic value] length]);
-        NSLog(@"data hex: %s", utility::to_hex_string(data).c_str());
-        assert( srv && chr );
-        parent_->observer().device_characteristic_notify_data_updated(*dev, *srv, *chr, data);
+    btle::service* srv = NULL;
+    btle::characteristic* chr = NULL;
+    dev->fetch_service_and_characteristic(characteristic, srv, chr);
+    assert( srv && chr );
+    if( [characteristic isNotifying] ){
+        if( error == nil ){
+            std::string data((const char*)[[characteristic value] bytes],[[characteristic value] length]);
+//          NSLog(@"data hex: %s", utility::to_hex_string(data).c_str());
+            parent_->observer().device_characteristic_notify_data_updated(*dev, *srv, *chr, data);
+        }
+        else{
+            _log_error("Unknown CoreBluetooth error");
+        }
     }
     else{
-        err = btle::error((int)[error code],"Unknown CoreBluetooth error");
+        std::string data="";
+        if( error == nil ){
+            data = std::string((const char*)[[characteristic value] bytes],[[characteristic value] length]);
+        }
+        else{
+            err = btle::error((int)[error code],"Unknown CoreBluetooth error");
+        }
+        parent_->observer().device_characteristic_read(*dev, *srv, *chr, data, err);
     }
 }
 
@@ -229,6 +240,18 @@ namespace {
 
 - (void)peripheral:(CBPeripheral *)aPeripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
+    func_log
+    
+    corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
+    assert(dev);
+    btle::error err(0);
+    btle::service* srv = NULL;
+    btle::characteristic* chr = NULL;
+    dev->fetch_service_and_characteristic(characteristic, srv, chr);
+    assert( srv && chr );
+    assert( chr->contains_descriptor_type(CLIENT_CHARACTERISTIC_CONFIGURATION) );
+    descriptor* desc = chr->descriptor_by_type(CLIENT_CHARACTERISTIC_CONFIGURATION);
+    
 }
 
 - (void)peripheral:(CBPeripheral *)aPeripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error

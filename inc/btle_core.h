@@ -6,6 +6,10 @@
 #include "btle/gatt_services/hrservice.h"
 #include "btle/gatt_services/rscservice.h"
 #include "btle/gatt_services/cscservice.h"
+#include "btle/uuidscanfilter.h"
+#include "btle/bdascanfilter.h"
+#include "btle/rssiscanfilter.h"
+#include "btle/log.h"
 
 using namespace btle;
 using namespace btle::central;

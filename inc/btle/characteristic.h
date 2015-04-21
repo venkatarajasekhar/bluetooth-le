@@ -52,9 +52,9 @@ namespace btle {
         // operators
         characteristic& operator << (const descriptor& desc);
         bool operator == (const characteristic& other) const;
-
         bool contains_descriptor_type(uint16_t type) const;
-
+        descriptor* descriptor_by_type(uint16_t type);
+        
     private:
 
         btle::uuid    uuid_;

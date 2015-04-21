@@ -19,7 +19,7 @@ namespace btle {
 
             collector();
             ~collector();
-
+            
         public: // plugin start/stop etc...
             
             int auto_start();
@@ -73,6 +73,7 @@ namespace btle {
             void device_characteristic_read(device& dev, const service& srv, const characteristic& chr, const std::string& data, const error& err);
             void device_characteristic_written(device& dev, const service& srv, const characteristic& chr, const error& err);
             void device_characteristic_nofication_state_changed(device& dev, const service& srv, const characteristic& chr, bool notify, const error& err);
+            void device_descriptor_written(device& dev, const service& srv, const characteristic& chr, const descriptor& desc, const error& err);
             void device_characteristic_notify_data_updated(device& dev, const service& srv, const characteristic& chr, const std::string &data);
 
         public: // callbacks

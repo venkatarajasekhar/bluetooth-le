@@ -43,7 +43,7 @@ bool hrservice::sensor_contact() const
  * @brief hrservice::rr_values, rr values in milliseconds
  * @return
  */
-const std::vector<int> hrservice::rr_values() const
+const std::vector<int>& hrservice::rr_values() const
 {
     return rrs_;
 }

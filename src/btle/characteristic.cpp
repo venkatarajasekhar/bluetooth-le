@@ -136,3 +136,15 @@ bool characteristic::contains_descriptor_type(uint16_t type) const
     return false;
 }
 
+descriptor* characteristic::descriptor_by_type(uint16_t type)
+{
+    for( std::vector<descriptor>::iterator it = descriptors_.begin(); it != descriptors_.end(); ++it )
+    {
+        if( it->type() == type )
+        {
+            return &(*it);
+        }
+    }
+    return NULL;
+}
+

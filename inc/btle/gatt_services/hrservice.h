@@ -33,7 +33,7 @@ namespace btle {
 
             int hr_value() const;
             bool sensor_contact() const;
-            const std::vector<int> rr_values() const;
+            const std::vector<int>& rr_values() const;
             int energy_expeneded() const;
 
         private:

@@ -15,6 +15,15 @@ descriptor::descriptor(
 
 descriptor::descriptor(
     uint16_t type,
+    bool notifying)
+: base(),
+  type_(type),
+  is_notifying_(notifying)
+{
+}
+
+descriptor::descriptor(
+    uint16_t type,
     uint16_t handle)
 : base(),
   type_(type),

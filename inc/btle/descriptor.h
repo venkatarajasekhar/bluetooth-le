@@ -18,6 +18,8 @@ namespace btle {
         descriptor();
         descriptor(uint16_t type);
         descriptor(uint16_t type,
+                   bool notifying);
+        descriptor(uint16_t type,
                    uint16_t handle);
         descriptor(const descriptor& other);
 

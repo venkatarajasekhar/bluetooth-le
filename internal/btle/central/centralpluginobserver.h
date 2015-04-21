@@ -17,6 +17,7 @@ namespace btle {
             virtual void device_characteristic_read(device& dev, const service& srv, const characteristic& chr, const std::string& data, const error& err) = 0;
             virtual void device_characteristic_written(device& dev, const service& srv, const characteristic& chr, const error& err) = 0;
             virtual void device_characteristic_nofication_state_changed(device& dev, const service& srv, const characteristic& chr, bool notify, const error& err) = 0;
+            virtual void device_descriptor_written(device& dev, const service& srv, const characteristic& chr, const descriptor& desc, const error& err) = 0;
             virtual void device_characteristic_notify_data_updated(device& dev, const service& srv, const characteristic& chr, const std::string& data) = 0;
 
         };
