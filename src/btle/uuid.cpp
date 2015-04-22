@@ -144,7 +144,20 @@ std::string uuid::to_string() const
 {
     if( uuid16_ != 0 )
     {
-        return utility::to_hex_string((const uint8_t*)&uuid16_,2,NULL);
+        std::stringstream ss_hex;
+        ss_hex << std::uppercase
+               << std::hex
+               << std::setw(2)
+               << std::setfill('0')
+               << (unsigned int)(unsigned char)((uuid16_&0xFF00)>>8)
+               << std::uppercase
+               << std::hex
+               << std::setw(2)
+               << std::setfill('0')
+               << (unsigned int)(unsigned char)(uuid16_);
+        
+        return ss_hex.str();
+        //return utility::to_hex_string((const uint8_t*)&uuid16_,2,NULL);
     }
     else return value_;
 }

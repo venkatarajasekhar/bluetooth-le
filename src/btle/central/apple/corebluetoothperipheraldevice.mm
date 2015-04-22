@@ -75,6 +75,24 @@ void corebluetoothperipheraldevice::fetch_service_and_characteristic(CBCharacter
     }
 }
 
+void corebluetoothperipheraldevice::fetch_service_and_characteristic(CBDescriptor* aDesc,btle::service*& service, btle::characteristic*& chr)
+{
+    for( service_iterator it_s = db_.services().begin(); it_s != db_.services().end(); ++it_s )
+    {
+        if( it_s->instance_id() == (long int)aDesc.characteristic.service )
+        {
+            for( chr_iterator it_c = it_s->characteristics().begin(); it_c != it_s->characteristics().end(); ++it_c )
+            {
+                if( it_c->instance_id() == (long int)aDesc.characteristic )
+                {
+                    chr = (btle::characteristic*)&(*it_c);
+                    service = (btle::service*)&(*it_s);
+                    return;
+                }
+            }
+        }
+    }
+}
 
 CBService* corebluetoothperipheraldevice::fetch_service(const btle::service& srv)
 {

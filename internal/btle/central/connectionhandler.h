@@ -4,6 +4,7 @@
 #include "btle/central/connectionhandlerobserver.h"
 #include "btle/central/centralplugininterface.h"
 #include "btle/device.h"
+#include "btle/timer.h"
 
 #include <vector>
 #include <map>
@@ -16,15 +17,15 @@ namespace btle {
              * default connection handler behaviour, and recommemded one,
              * trigger connection from advertisement head
              */
-            CONNECTION_FROM_ADVERTISEMENT_HEAD = 0,
+            CONNECTION_FROM_ADVERTISEMENT_HEAD = 0x01,
             /**
              * connection is direct ie will suspend connection handler
              * if no timeout has been set
              */
-            CONNECTION_DIRECT                  = 0x01,
-            CONNECTION_TIMEOUT                 = 0x02,
-            DISCONNECTION_TIMEOUT              = 0x04,
-            RECONNECTION_TRYES                 = 0x08
+            CONNECTION_DIRECT                  = 0x02,
+            CONNECTION_TIMEOUT                 = 0x04,
+            DISCONNECTION_TIMEOUT              = 0x08,
+            RECONNECTION_TRYES                 = 0x10
         };
 
         class connectionhandler;
@@ -35,7 +36,7 @@ namespace btle {
         typedef void (connectionhandler::*kConnectionHndlrState)( device&, int );
 
 
-        class BTLE_API connectionhandler
+        class BTLE_API connectionhandler: public timercallback
         {
         public:
             
@@ -73,6 +74,10 @@ namespace btle {
             void disconnecting( device& dev, int action );
             void change_state(kConnectionHndlrState state, device &dev);
 
+        private:
+            
+            void timer_expired(timer* t);
+            
         private: // private functions
 
             bool is_reconnection_needed(device& dev);
@@ -83,12 +88,14 @@ namespace btle {
             kConnectionHndlrState free_;
             kConnectionHndlrState connecting_;
             kConnectionHndlrState disconnecting_;
+
             device* current_device_;
             centralplugininterface* central_;
             int reconnectiontryes_;
             std::map<connectionhandler_options,int> options_;
             std::vector<connectionhandlerobserver*> observers_;
-
+            timer timer_;
+            
             friend class collector;
         };
     }

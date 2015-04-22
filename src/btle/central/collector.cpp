@@ -47,11 +47,14 @@ collector::collector()
   connectionhandler_(),
   flags_(0),
   filters_(),
-  state_(STATE_POWERED_UNKNOWN)
+  state_(STATE_POWERED_UNKNOWN),
+  tmp_store_()
 {
     centralpluginfactory::instance().populate(plugins_, *this);
+    _log("Central plugins count: %i",plugins_.size());
     gatt_service_list services;
     gattservicefactory::instance().populate(services);
+    _log("Build-in gatt services count: %i",services.size());
     // setup automatically all included gatt services notifications
     for( gatt_service_iterator it = services.begin(); it != services.end(); ++it )
     {
@@ -146,7 +149,7 @@ void collector::stop_scan()
 {
     verify(plugin_)
     flags_ &= ~CLIENT_SCAN;
-    plugin_->stop_scan();
+    plugin_->stop_scan(); // should be safe to call stop even if not powered
 }
 
 /**
@@ -159,8 +162,9 @@ connectionhandler& collector::connection_handler()
 }
 
 /**
- * @brief collector::set_auto_read_values, setup characteristic uuids to be read if found,
- * NOTE this will override the default set!
+ * @brief collector::set_auto_read_values, 
+ *        setup characteristic uuids to be read if found,
+ *        NOTE this will override the default set!
  * @param list
  */
 void collector::set_auto_read_values(const uuid_list& list)
@@ -188,16 +192,15 @@ void collector::set_auto_notify_values(const uuid_list& list)
 void collector::connect_device(const bda& addr)
 {
     verify(plugin_)
-    if( device* dev = fetch_device(addr) )
-    {
-        connectionhandler_.connect_device(*dev);
-    }
-    else
+    device* dev(fetch_device(addr));
+    if( !dev )
     {
         dev = plugin_->allocate_new_device(addr);
         plugin_->devices().push_back(dev);
-        connectionhandler_.connect_device(*dev);
     }
+    connectionhandler_.connect_device(*dev);
+    //if(state_ == STATE_POWERED_ON) connectionhandler_.connect_device(*dev);
+    //else tmp_store_.push_back(dev);
 }
 
 /**
@@ -258,7 +261,7 @@ void collector::read_characteristic_value(device& dev, const uuid& uid)
         }
         throw btle::exceptions::attribute_not_found("device does not contain this uuid");
     }
-    throw btle::exceptions::device_not_connected("device not connected");
+    throw btle::exceptions::device_not_connected("device not connected device is in state: " + dev.state_string());
 }
 
 /**
@@ -284,7 +287,7 @@ void collector::read_characteristic_value(device& dev, const uuid_pair& pair)
         }
         throw btle::exceptions::attribute_not_found("device does not contain this uuid");
     }
-    throw btle::exceptions::device_not_connected("device not connected");
+    throw btle::exceptions::device_not_connected("device not connected device is in state: " + dev.state_string());
 }
 
 /**
@@ -320,7 +323,7 @@ void collector::write_characteristic_value(device& dev, const uuid& uid, const s
         }
         throw btle::exceptions::attribute_not_found("device does not contain this uuid");
     }
-    throw btle::exceptions::device_not_connected("device not connected");
+    throw btle::exceptions::device_not_connected("device not connected device is in state: " + dev.state_string());
 }
 
 /**
@@ -356,7 +359,7 @@ void collector::write_characteristic_value(device& dev, const uuid_pair& pair, c
         }
         throw btle::exceptions::attribute_not_found("device does not contain this uuid");
     }
-    throw btle::exceptions::device_not_connected("device not connected");
+    throw btle::exceptions::device_not_connected("device not connected device is in state: " + dev.state_string());
 }
 
 /**
@@ -386,7 +389,7 @@ void collector::set_characteristic_notify(device& dev, const uuid& uid, bool not
         }
         throw btle::exceptions::attribute_not_found("device does not contain this uuid");
     }
-    throw btle::exceptions::device_not_connected("device not connected");
+    throw btle::exceptions::device_not_connected("device not connected device is in state: " + dev.state_string());
 }
 
 /**
@@ -413,7 +416,7 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
         }
         throw btle::exceptions::attribute_not_found("device does not contain this uuid");
     }
-    throw btle::exceptions::device_not_connected("device not connected");
+    throw btle::exceptions::device_not_connected("device not connected device is in state: " + dev.state_string());
 }
 
 void collector::device_state_changed(btle::device& dev)
@@ -423,12 +426,17 @@ void collector::device_state_changed(btle::device& dev)
 
 void collector::plugin_state_changed(central_plugin_state state)
 {
+    state_ = state;
     switch (state) {
         case STATE_POWERED_ON:
         {
             if( flags_ & CLIENT_SCAN )
             {
                 plugin_->start_scan();
+                if( tmp_store_.size() )
+                {
+                    // TODO
+                }
             }
             break;
         }
@@ -572,6 +580,11 @@ void collector::device_characteristic_notify_data_updated(device& dev, const ser
             device_service_value_updated_cb(dev,gatt_service);
         }
     }
+}
+
+void collector::device_rssi_read(device& dev, int rssi)
+{
+    // TODO
 }
 
 /**

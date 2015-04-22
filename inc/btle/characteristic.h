@@ -55,6 +55,10 @@ namespace btle {
         bool contains_descriptor_type(uint16_t type) const;
         descriptor* descriptor_by_type(uint16_t type);
         
+    public: // from base
+        
+        std::string to_string() const;
+        
     private:
 
         btle::uuid    uuid_;

@@ -35,50 +35,9 @@ advertisementfields& advertisementfields::operator << (const std::map<btle::adve
                 }
                 break;
             }
-            /*case GAP_ADTYPE_16BIT_COMPLETE:
-            {
-                break;
-            }
-            case GAP_ADTYPE_16BIT_MORE:
-            {
-                break;
-            }
-            case GAP_ADTYPE_128BIT_COMPLETE:
-            {
-                break;
-            }
-            case GAP_ADTYPE_128BIT_MORE:
-            {
-                break;
-            }*/
             default:
                 break;
         }
-        
-        /*
-         if(uid.is16bit())
-         {
-         if( advertisement_data_.find(btle::GAP_ADTYPE_16BIT_COMPLETE) == advertisement_data_.end() )
-         {
-         if( advertisement_data_.find(btle::GAP_ADTYPE_16BIT_MORE) != advertisement_data_.end() )
-         {
-         return uuid(advertisement_data_.find(btle::GAP_ADTYPE_16BIT_MORE)->second.string_value()) == uid;
-         }
-         }
-         //        else return advertisement_data_[btle::GAP_ADTYPE_16BIT_COMPLETE] == uid;
-         }
-         else
-         {
-         if( advertisement_data_.find(btle::GAP_ADTYPE_128BIT_COMPLETE) == advertisement_data_.end() )
-         {
-         if( advertisement_data_.find(btle::GAP_ADTYPE_128BIT_MORE) != advertisement_data_.end() )
-         {
-         //                return advertisement_data_[btle::GAP_ADTYPE_128BIT_MORE] == uid;
-         }
-         }
-         //        else return advertisement_data_[btle::GAP_ADTYPE_128BIT_COMPLETE] == uid;
-         }
-         */
     }
     return *this;
 }

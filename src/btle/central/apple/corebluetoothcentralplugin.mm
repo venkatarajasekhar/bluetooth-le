@@ -234,8 +234,18 @@ namespace {
     }
 }
 
-- (void)peripheralDidUpdateRSSI:(CBPeripheral *)aPeripheral error:(NSError *)error
+- (void)peripheral:(CBPeripheral *)peripheral didReadRSSI:(NSNumber *)RSSI error:(NSError *)error
 {
+    func_log
+    
+    corebluetoothperipheraldevice* dev(parent_->find_device(peripheral));
+    assert(dev);
+    if( error == nil ){
+        parent_->observer().device_rssi_read(*dev, (int)[RSSI integerValue]);
+    }
+    else{
+        _log_error("Rssi read failed code : %i",[error code]);
+    }
 }
 
 - (void)peripheral:(CBPeripheral *)aPeripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
@@ -251,24 +261,72 @@ namespace {
     assert( srv && chr );
     assert( chr->contains_descriptor_type(CLIENT_CHARACTERISTIC_CONFIGURATION) );
     descriptor* desc = chr->descriptor_by_type(CLIENT_CHARACTERISTIC_CONFIGURATION);
-    
+    if( error == nil ){
+        desc->set_notifying([characteristic isNotifying]);
+    }
+    else{
+        desc->set_notifying(false); // ?
+        err = btle::error((int)[error code],"Unknown CoreBluetooth error");
+    }
+    parent_->observer().device_descriptor_written(*dev,*srv,*chr,*desc,err);
 }
 
 - (void)peripheral:(CBPeripheral *)aPeripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
+    func_log
+    
+    corebluetoothperipheraldevice* dev(parent_->find_device(aPeripheral));
+    assert(dev);
+    btle::error err(0);
+    btle::service* srv = NULL;
+    btle::characteristic* chr = NULL;
+    dev->fetch_service_and_characteristic(characteristic, srv, chr);
+    assert( srv && chr );
+    if( error ){
+        err = btle::error((int)[error code],"Unknown CoreBluetooth error");
+    }
+    parent_->observer().device_characteristic_written(*dev,*srv,*chr,err);
 }
 
 -(void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
+    // this extra, e.g. for Server Characteristic Conf...
+    
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForDescriptor:(CBDescriptor *)descriptor error:(NSError *)error
 {
+    func_log
+    
+    corebluetoothperipheraldevice* dev(parent_->find_device(peripheral));
+    assert(dev);
+    btle::error err(0);
+    btle::service* srv = NULL;
+    btle::characteristic* chr = NULL;
+    dev->fetch_service_and_characteristic(descriptor, srv, chr);
+    assert( srv && chr );
+    // TODO
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForDescriptor:(CBDescriptor *)descriptor error:(NSError *)error
 {
+    func_log
+    
+    corebluetoothperipheraldevice* dev(parent_->find_device(peripheral));
+    assert(dev);
+    btle::error err(0);
+    btle::service* srv = NULL;
+    btle::characteristic* chr = NULL;
+    dev->fetch_service_and_characteristic(descriptor, srv, chr);
+    assert( srv && chr );
+    // TODO
 }
+
+- (void)peripheral:(CBPeripheral *)peripheral didModifyServices:(NSArray *)invalidatedServices
+{
+    // TODO inform collector,
+}
+
 
 @end
 
@@ -347,16 +405,25 @@ void corebluetoothcentralplugin::discover_characteristics(device& dev, const ser
 
 void corebluetoothcentralplugin::read_characteristic_value(device& dev,const service& srv, const characteristic& chr)
 {
-
+    corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
+    CBService* service = core_dev.fetch_service(srv);
+    CBCharacteristic* aChr = core_dev.fetch_characteristic(chr);
+    assert(service && aChr);
+    [core_dev.peripheral_ readValueForCharacteristic:aChr];
 }
 
 void corebluetoothcentralplugin::write_characteristic_value(device& dev,const service& srv, const characteristic& chr, const std::string& data, characteristic_properties type)
 {
-
+    corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
+    CBService* service = core_dev.fetch_service(srv);
+    CBCharacteristic* aChr = core_dev.fetch_characteristic(chr);
+    assert(service && aChr);
+    [core_dev.peripheral_ writeValue:[NSData dataWithBytes:data.c_str() length:data.size()] forCharacteristic:aChr type:type == GATT_WRITE ? CBCharacteristicWriteWithResponse : CBCharacteristicWriteWithoutResponse];
 }
 
 void corebluetoothcentralplugin::set_characteristic_notify(device& dev,const service& srv, const characteristic& chr, bool notify)
 {
+    // will be deprecated
     corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
     CBCharacteristic* aChr = core_dev.fetch_characteristic(chr);
     assert(aChr);
@@ -365,7 +432,18 @@ void corebluetoothcentralplugin::set_characteristic_notify(device& dev,const ser
 
 void corebluetoothcentralplugin::write_descriptor(device& dev, const service& srv, const characteristic& chr, descriptor& desc, bool notify)
 {
-
+    corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
+    CBCharacteristic* aChr = core_dev.fetch_characteristic(chr);
+    assert(aChr);
+    switch (desc.type()) {
+        case CLIENT_CHARACTERISTIC_CONFIGURATION:
+        {
+            [core_dev.peripheral_ setNotifyValue:notify forCharacteristic:aChr];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 centralpluginobserver& corebluetoothcentralplugin::observer()

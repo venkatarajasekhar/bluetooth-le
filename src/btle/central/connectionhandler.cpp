@@ -1,6 +1,7 @@
 
 #include <assert.h>
 #include "btle/central/connectionhandler.h"
+#include "btle/log.h"
 
 using namespace btle::central;
 
@@ -28,7 +29,8 @@ connectionhandler::connectionhandler()
   central_(NULL),
   reconnectiontryes_(0),
   options_(),
-  observers_()
+  observers_(),
+  timer_()
 {
 }
 
@@ -112,6 +114,8 @@ void connectionhandler::change_device_state(
 
 void connectionhandler::free( device& dev, int action )
 {
+    func_log
+    
     switch( action )
     {
         case Entry:
@@ -202,6 +206,8 @@ void connectionhandler::free( device& dev, int action )
 
 void connectionhandler::connecting( device& dev, int action )
 {
+    func_log
+
     switch( action )
     {
         case Entry:
@@ -209,7 +215,10 @@ void connectionhandler::connecting( device& dev, int action )
             current_device_ = &dev;
             central_->connect_device(dev);
             change_device_state(dev,btle::DEVICE_CONNECTING);
-            // TODO start timer
+            if( options_.find(CONNECTION_TIMEOUT) != options_.end() )
+            {
+                timer_.start(options_.find(CONNECTION_TIMEOUT)->second, this);
+            }
             break;
         }
         case device_connected_action:
@@ -310,14 +319,18 @@ void connectionhandler::connecting( device& dev, int action )
         }
         case timer_timeout_action:
         {
-            //
-            assert( current_device_ != NULL );
-
+            assert( current_device_ && &dev == current_device_);
+            central_->cancel_pending_connection(dev);
+            if( is_reconnection_needed(dev) ){
+                change_device_state(dev, DEVICE_CONNECTION_PARK);
+            }
+            // TODO if setting is direct connection
+            change_state(free_, dev);
             break;
         }
         case Exit:
         {
-            //stop_timer();
+            timer_.stop();
             break;
         }
         default:
@@ -330,6 +343,8 @@ void connectionhandler::connecting( device& dev, int action )
 
 void connectionhandler::disconnecting(device& dev, int action )
 {
+    func_log
+
     switch( action )
     {
         case Entry:
@@ -337,6 +352,10 @@ void connectionhandler::disconnecting(device& dev, int action )
             current_device_ = &dev;
             central_->disconnect_device(dev);
             change_device_state(dev,btle::DEVICE_DISCONNECTING);
+            if( options_.find(DISCONNECTION_TIMEOUT) != options_.end() )
+            {
+                timer_.start(options_.find(DISCONNECTION_TIMEOUT)->second, this);
+            }
             break;
         }
         case connect_device_action:
@@ -407,11 +426,14 @@ void connectionhandler::disconnecting(device& dev, int action )
         }
         case timer_timeout_action:
         {
-            assert( current_device_ != NULL );
+            assert( current_device_ && &dev == current_device_);
+            change_device_state(dev, DEVICE_DISCONNECTED);
+            change_state(free_, dev);
             break;
         }
         case Exit:
         {
+            timer_.stop();
             break;
         }
         default:
@@ -427,6 +449,11 @@ void connectionhandler::change_state(kConnectionHndlrState state, device& dev)
     (this->*current_)(dev,Exit);
     current_ = state;
     (this->*current_)(dev,Entry);
+}
+
+void connectionhandler::timer_expired(timer* t)
+{
+    (this->*current_)(*current_device_,timer_timeout_action);
 }
 
 bool connectionhandler::is_reconnection_needed(device& dev)

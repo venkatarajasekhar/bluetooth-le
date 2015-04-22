@@ -22,6 +22,8 @@ namespace btle {
                 btle::service* process_characteristics_discovered(CBService* service);
 
                 void fetch_service_and_characteristic(CBCharacteristic* aChr,btle::service*& service, btle::characteristic*& chr);
+                void fetch_service_and_characteristic(CBDescriptor* aDesc,btle::service*& service, btle::characteristic*& chr);
+            
                 CBService* fetch_service(const btle::service& srv);
                 CBCharacteristic* fetch_characteristic(const btle::characteristic& srv);
                 

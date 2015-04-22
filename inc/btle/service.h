@@ -31,6 +31,10 @@ namespace btle {
         uint16_t start_handle() const;
         uint16_t end_handle() const;
         long int instance_id() const;
+
+    public:
+        
+        std::string to_string() const;
         
     private:
 

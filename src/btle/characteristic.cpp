@@ -148,3 +148,8 @@ descriptor* characteristic::descriptor_by_type(uint16_t type)
     return NULL;
 }
 
+std::string characteristic::to_string() const
+{
+    return uuid_.to_string();
+}
+

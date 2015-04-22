@@ -123,4 +123,7 @@ long int service::instance_id() const
     return instance_id_;
 }
 
-
+std::string service::to_string() const
+{
+    return uuid_.to_string();
+}
