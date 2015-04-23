@@ -38,7 +38,8 @@ uuid::uuid(const std::string& uuid_str)
     {
         case 2:
         {
-            memcpy(&uuid16_,uuid_str.c_str(),sizeof(uuid16_));
+            uuid16_  = (uint8_t)*uuid_str.c_str() << 8;
+            uuid16_ |= (uint8_t)*(uuid_str.c_str()+1);
             //value_ = "";
             break;
         }
@@ -157,7 +158,6 @@ std::string uuid::to_string() const
                << (unsigned int)(unsigned char)(uuid16_);
         
         return ss_hex.str();
-        //return utility::to_hex_string((const uint8_t*)&uuid16_,2,NULL);
     }
     else return value_;
 }

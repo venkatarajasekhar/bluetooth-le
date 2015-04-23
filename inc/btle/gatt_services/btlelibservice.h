@@ -52,7 +52,7 @@ namespace btle {
             
         public: // API
             
-            std::string last_message() const;
+            std::string take_last_message() const;
             
         private:
             

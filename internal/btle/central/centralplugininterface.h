@@ -13,17 +13,21 @@ namespace btle {
         enum central_plugin_extras
         {
             /**
-             * Plugin can update connection parameters
+             * Plugin can update/inform connection parameters
              */
             PLUGIN_CONNECTION_PARAMETER_CAPABILITY = 0x01,
             /**
              * Plugin has caps. for security manager controlling for 3rd party
              */
-            PLUGIN_SMP_FULL_CAPABILITY = 0x02,
+            PLUGIN_SMP_FULL_CAPABILITY             = 0x02,
             /**
              * Plugin has caps. for Gatt server i.e. 3rd party can optionally add an service
              */
-            PLUGIN_GATT_SERVER_CAPABILITY = 0x04
+            PLUGIN_GATT_SERVER_CAPABILITY          = 0x04,
+            /**
+             * Plugin has caps. for setting different kind of scan parameters ( (window and interval) or preset )
+             */
+            PLUGIN_SCAN_PARAMTERS_CAPABILITY       = 0x08
         };
 
         enum central_plugin_state
@@ -33,6 +37,22 @@ namespace btle {
             STATE_POWERED_RESETTING,
             STATE_POWERED_UNKNOWN,
             STATE_POWERED_NON_SUPPORTED
+        };
+        
+        enum central_scan_parameters
+        {
+            /**
+             * High duty scan should be atleast 80 % duty cycle
+             */
+            SCAN_HIGH_DUTY,
+            /**
+             * Medium duty should be around 50-80% duty cycle
+             */
+            SCAN_MEDIUM_DUTY,
+            /**
+             * Low duty should < 50% duty cycle
+             */
+            SCAN_LOW_DUTY
         };
         
         class centralplugininterface{
@@ -134,7 +154,7 @@ namespace btle {
             virtual void write_characteristic_value(device& dev,const service& srv, const characteristic& chr, const std::string& data, characteristic_properties type) = 0;
 
             /**
-             * @brief set_characteristic_notify
+             * @brief set_characteristic_notify, WILL be deprecated
              * @param dev
              * @param srv
              * @param chr

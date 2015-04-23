@@ -22,7 +22,11 @@ namespace btle {
             
         public: // plugin start/stop etc...
             
+            const std::vector<std::string>& plugins_available() const;
+
+            int start(const std::string& plugin_name);
             int auto_start();
+            void stop();
             
         public: // scannning
 
@@ -68,14 +72,15 @@ namespace btle {
             void device_discovered(device& dev, adv_fields& fields, int rssi);
             void device_connected(device& dev);
             void device_disconnected(device& dev);
-            void device_services_discovered(device& dev, const service_list& services, const error& err);
-            void device_characteristics_discovered(device& dev, const service& srv, const chr_list& chrs, const error& err);
-            void device_characteristic_read(device& dev, const service& srv, const characteristic& chr, const std::string& data, const error& err);
-            void device_characteristic_written(device& dev, const service& srv, const characteristic& chr, const error& err);
-            void device_characteristic_nofication_state_changed(device& dev, const service& srv, const characteristic& chr, bool notify, const error& err);
-            void device_descriptor_written(device& dev, const service& srv, const characteristic& chr, const descriptor& desc, const error& err);
-            void device_characteristic_notify_data_updated(device& dev, const service& srv, const characteristic& chr, const std::string &data);
+            void device_services_discovered(device& dev, service_list& services, const error& err);
+            void device_characteristics_discovered(device& dev, service& srv, chr_list& chrs, const error& err);
+            void device_characteristic_read(device& dev, service& srv, characteristic& chr, std::string& data, const error& err);
+            void device_characteristic_written(device& dev, service& srv, characteristic& chr, const error& err);
+            void device_characteristic_nofication_state_changed(device& dev, service& srv, characteristic& chr, bool notify, const error& err);
+            void device_descriptor_written(device& dev, service& srv, characteristic& chr, descriptor& desc, const error& err);
+            void device_characteristic_notify_data_updated(device& dev, service& srv, characteristic& chr, std::string &data);
             void device_rssi_read(device& dev, int rssi);
+            void device_services_invalidated(device& dev);
 
         public: // callbacks
 
@@ -136,6 +141,7 @@ namespace btle {
             scan_filters filters_;
             central_plugin_state state_;
             std::vector<device*> tmp_store_;
+            std::vector<std::string> plugins_available_;
         };
     }
 }

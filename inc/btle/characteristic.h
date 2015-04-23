@@ -39,7 +39,7 @@ namespace btle {
         characteristic(const btle::uuid& uid,
                        uint8_t properties,
                        uint16_t attribute_handle,
-                       uint16_t characteristic_properties);
+                       uint16_t characteristic_value_handle);
         characteristic(const characteristic& other);
 
     public:
@@ -54,6 +54,7 @@ namespace btle {
         bool operator == (const characteristic& other) const;
         bool contains_descriptor_type(uint16_t type) const;
         descriptor* descriptor_by_type(uint16_t type);
+        std::vector<descriptor>& descriptors();
         
     public: // from base
         

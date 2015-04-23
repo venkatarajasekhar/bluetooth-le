@@ -1,9 +1,23 @@
-#include "bda.h"
+#include "btle/bda.h"
+#include "btle/utility.h"
 
 #include <sstream>
 #include <iomanip>
 
 using namespace btle;
+
+namespace {
+    inline static const char* type2string( address_type type )
+    {
+        switch (type) {
+            case btle::ADDR_PRIVATE_NONRESOLVE: return "PRIVATE_NONRESOLVE";
+            case btle::ADDR_PRIVATE_RESOLVE:    return "PRIVATE_RESOLVE";
+            case btle::ADDR_PUBLIC:             return "PUBLIC";
+            case btle::ADDR_STATIC:             return "STATIC";
+            default:                            return "UNKNOWN";
+        }
+    }
+}
 
 bda::bda()
 : base(),
@@ -16,24 +30,25 @@ bda::~bda()
 }
 
 bda::bda(const std::string& bda_str)
-: base(bda_str,"")
+: base(bda_str,"BDA string: " + bda_str),
+  type_(ADDR_PUBLIC)
 {
 }
 
 bda::bda(const std::string& bda_str, address_type type)
-: base(bda_str,""),
+: base(bda_str,"BDA string: " + bda_str + " type: " + type2string(type)),
   type_(type)
 {
 }
 
 bda::bda(const char bda_strc[BDA_BIN_LENGTH] , address_type type)
-: base(std::string(bda_strc,BDA_BIN_LENGTH),""),
+: base(std::string(bda_strc,BDA_BIN_LENGTH),"BDA string: " + utility::to_hex_string((const uint8_t*)bda_strc, BDA_BIN_LENGTH) + " type: " + type2string(type)),
   type_(type)
 {
 }
 
 bda::bda(const bda& other)
-: base(other.string_value(),""),
+: base(other),
   type_(other.type())
 {
 }

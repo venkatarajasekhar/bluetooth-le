@@ -24,6 +24,10 @@ namespace btle {
         const service* fetch_service(const uuid& uid) const;
         const service* fetch_service_by_chr_uuid(const uuid& uid) const;
 
+        void update_characteristic_data(const service& srv, const characteristic& chr, const std::string& data);
+        void update_descriptor(const service& srv, const characteristic& chr, const descriptor& desc, bool notifying);
+        void update_service_chrs(const service& srv, const chr_list& chrs);
+        
     private:
 
         std::vector<service> services_;

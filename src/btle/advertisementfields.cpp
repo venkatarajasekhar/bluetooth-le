@@ -21,7 +21,6 @@ advertisementfields::advertisementfields(const advertisementfields& other)
 
 advertisementfields& advertisementfields::operator << (const std::map<btle::advertisement_data_type,btle::advertisementdata>& fields)
 {
-    // process
     for( adv_fields::const_iterator it = fields.begin(); it != fields.end(); ++it )
     {
         fields_[it->first] = it->second;
@@ -47,7 +46,6 @@ const advertisementdata* advertisementfields::operator[](btle::advertisement_dat
     return fields_.find(key) != fields_.end() ? (const advertisementdata*)&fields_.find(key)->second : NULL;
 }
 
-// get
 const std::string& advertisementfields::name() const
 {
     return name_;

@@ -26,12 +26,13 @@ rssifilter& rssifilter::operator << (int rssi)
         if( rssis_.size() >= RSSI_MEDIAN_LIMIT )
         {
             if( rssis_.size() > RSSI_MEDIAN_LIMIT ) rssis_.pop_front();
-            std::sort(rssis_.begin(),rssis_.end());
-            median_ = rssis_[3];
+            rssis_sorted_ = rssis_;
+            std::sort(rssis_sorted_.begin(),rssis_sorted_.end());
+            median_ = rssis_sorted_[3];
             medians_.push_back(median_);
             if( medians_.size() >= 2 )
             {
-                if( medians_.size() > 3 ) medians_.pop_front();
+                if( medians_.size() > 2 ) medians_.pop_front();
                 int msize( (int)medians_.size() );
                 mean_median_ = (medians_[msize-1] + medians_[msize-2])/2.0;
             }

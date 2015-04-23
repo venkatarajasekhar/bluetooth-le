@@ -8,7 +8,7 @@ advertisementdata::advertisementdata()
 }
 
 advertisementdata::advertisementdata(const std::string& data)
-: base(data,"")
+: base(data,"advertisement data with content: " + data)
 {
 }
 

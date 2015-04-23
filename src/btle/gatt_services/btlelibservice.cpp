@@ -11,7 +11,8 @@ namespace {
 }
 
 btlelibservice::btlelibservice()
-: out_(),
+: gattservicebase(),
+  out_(),
   in_()
 {
     service_ = uuid(BTLE_SERVICE);
@@ -35,7 +36,7 @@ void btlelibservice::reset()
     
 }
 
-std::string btlelibservice::last_message() const
+std::string btlelibservice::take_last_message() const
 {
     return "";
 }

@@ -27,6 +27,7 @@ namespace btle {
     private:
 
         std::deque<int> rssis_;
+        std::deque<int> rssis_sorted_;
         std::deque<int> medians_;
         int median_;
         int current_;

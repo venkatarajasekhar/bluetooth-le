@@ -1,10 +1,11 @@
 
 #include "btle/bdascanfilter.h"
+#include "btle/utility.h"
 
 using namespace btle;
 
 bdascanfilter::bdascanfilter(const bda_list& bdas)
-: scanfilterbase("BDA based scan filer"),
+: scanfilterbase("BDA based scan filer bdas: " + utility::to_string((unsigned int)bdas.size())),
   bdas_(bdas)
 {
 }

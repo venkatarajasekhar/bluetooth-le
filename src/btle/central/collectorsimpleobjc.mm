@@ -128,6 +128,12 @@ public:
     return self;
 }
 
+-(void) dealloc
+{
+    collector_->stop();
+    delete collector_;
+}
+
 -(void) connect_device:(NSString *)addr
 {
     collector_->connect_device(bda([addr UTF8String]));

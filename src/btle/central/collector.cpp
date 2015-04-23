@@ -21,7 +21,7 @@ namespace {
         INTERNAL_SCAN = 0x02
     };
 
-    // allways enable notification ?
+    // allways enable service changed notification ?
     #define SERVICE_CHANGED                             0x2A05
 
     // commonly read these chrs
@@ -48,9 +48,14 @@ collector::collector()
   flags_(0),
   filters_(),
   state_(STATE_POWERED_UNKNOWN),
-  tmp_store_()
+  tmp_store_(),
+  plugins_available_()
 {
     centralpluginfactory::instance().populate(plugins_, *this);
+    for( std::vector<centralplugininterface*>::const_iterator it = plugins_.begin(); it != plugins_.end(); ++it )
+    {
+        plugins_available_.push_back((*it)->name());
+    }
     _log("Central plugins count: %i",plugins_.size());
     gatt_service_list services;
     gattservicefactory::instance().populate(services);
@@ -82,18 +87,53 @@ collector::collector()
 
 collector::~collector()
 {
+    stop();
     for( scan_filters::iterator it = filters_.begin(); it != filters_.end(); ++it )
     {
         delete (*it);
     }
 }
 
+const std::vector<std::string>& collector::plugins_available() const
+{
+    return plugins_available_;
+}
+
+int collector::start(const std::string& plugin_name)
+{
+    stop();
+    for( std::vector<centralplugininterface*>::iterator it = plugins_.begin(); it != plugins_.end(); ++it )
+    {
+        if( (*it)->name().compare(plugin_name) != std::string::npos )
+        {
+            plugin_ = (*it);
+            if( plugin_->start() )
+            {
+                plugin_ = NULL;
+            }
+            break;
+        }
+    }
+    return -1;
+}
+
 int collector::auto_start()
 {
+    stop();
     plugin_ = plugins_[0];
     connectionhandler_.setup(plugin_);
     return plugin_->start();
 }
+
+void collector::stop()
+{
+    if(plugin_)
+    {
+        plugin_->stop();
+        plugin_ = NULL;
+    }
+}
+
 
 /**
  * @brief collector::add_scan_filter,
@@ -174,7 +214,8 @@ void collector::set_auto_read_values(const uuid_list& list)
 
 /**
  * @brief collector::set_auto_notify_values, setup notification/indications to be enabled automatically
- *                                           note this overrides default set , which has been loaded from gatt service factory, use this functionality with
+ *                                           note this overrides default set , which has been loaded from gatt service                   
+ *                                           factory, use this functionality with
  *                                           extra care
  * @param list
  */
@@ -480,7 +521,7 @@ void collector::device_disconnected(device& dev)
     connectionhandler_.device_disconnected(dev);
 }
 
-void collector::device_services_discovered(device& dev, const service_list& services, const error& err)
+void collector::device_services_discovered(device& dev, service_list& services, const error& err)
 {
     if( err.code() == 0 )
     {
@@ -499,7 +540,7 @@ void collector::device_services_discovered(device& dev, const service_list& serv
     else device_service_discovery_failed_cb(dev,services,err);
 }
 
-void collector::device_characteristics_discovered(device& dev, const service& srv, const chr_list& chrs, const error& err)
+void collector::device_characteristics_discovered(device& dev, service& srv, chr_list& chrs, const error& err)
 {
     if( err.code() == 0 )
     {
@@ -534,9 +575,9 @@ void collector::device_characteristics_discovered(device& dev, const service& sr
 
 void collector::device_characteristic_read(
     device& dev,
-    const service& srv,
-    const characteristic& chr,
-    const std::string& data,
+    service& srv,
+    characteristic& chr,
+    std::string& data,
     const error& err)
 {
     if( gattservicebase* gatt_service = dev.gatt_service(srv.uuid()) )
@@ -551,12 +592,12 @@ void collector::device_characteristic_read(
     device_characteristic_read_cb(dev,srv,chr,data,err);
 }
 
-void collector::device_characteristic_written(device& dev, const service& srv, const characteristic& chr, const error& err)
+void collector::device_characteristic_written(device& dev, service& srv, characteristic& chr, const error& err)
 {
     // TODO
 }
 
-void collector::device_characteristic_nofication_state_changed(device& dev, const service& srv, const characteristic& chr, bool notify, const error& err)
+void collector::device_characteristic_nofication_state_changed(device& dev, service& srv, characteristic& chr, bool notify, const error& err)
 {
     if( gattservicebase* gatt_service = dev.gatt_service(srv.uuid()) )
     {
@@ -564,12 +605,16 @@ void collector::device_characteristic_nofication_state_changed(device& dev, cons
     }
 }
 
-void collector::device_descriptor_written(device& dev, const service& srv, const characteristic& chr, const descriptor& desc, const error& err)
+void collector::device_descriptor_written(device& dev, service& srv, characteristic& chr, descriptor& desc, const error& err)
 {
     // TODO, NOTE device_characteristic_nofication_state_changed will be removed
+    if( gattservicebase* gatt_service = dev.gatt_service(srv.uuid()) )
+    {
+        gatt_service->set_active(chr.uuid(),desc.is_notifying());
+    }
 }
 
-void collector::device_characteristic_notify_data_updated(device& dev, const service& srv, const characteristic& chr, const std::string& data)
+void collector::device_characteristic_notify_data_updated(device& dev, service& srv, characteristic& chr, std::string& data)
 {
     // notification or indication has been received
     if( gattservicebase* gatt_service = dev.gatt_service(srv.uuid()) )
@@ -583,6 +628,11 @@ void collector::device_characteristic_notify_data_updated(device& dev, const ser
 }
 
 void collector::device_rssi_read(device& dev, int rssi)
+{
+    dev.rssi_filter() << rssi;
+}
+
+void collector::device_services_invalidated(device& dev)
 {
     // TODO
 }

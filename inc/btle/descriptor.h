@@ -1,6 +1,7 @@
 #ifndef DESCRIPTOR_H
 #define DESCRIPTOR_H
 
+#include <vector>
 #include "btle/base.h"
 
 namespace btle {
@@ -29,12 +30,16 @@ namespace btle {
         uint16_t handle() const;
         bool is_notifying() const;
         void set_notifying(bool notifying);
-
+        // operators
+        bool operator == (const descriptor& other) const;
+        
     private:
         uint16_t type_;
         uint16_t handle_;
         bool is_notifying_;
     };
+    
+    typedef std::vector<descriptor> descriptors;
 }
 
 #endif // DESCRIPTOR_H

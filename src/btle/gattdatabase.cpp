@@ -91,3 +91,56 @@ const service* gattdatabase::fetch_service_by_chr_uuid(const uuid& uid) const
     return NULL;
 }
 
+void gattdatabase::update_characteristic_data(const service& srv, const characteristic& chr, const std::string& data)
+{
+    for( std::vector<service>::iterator it_srv = services_.begin(); it_srv != services_.end(); ++it_srv )
+    {
+        if(srv == (*it_srv))
+        {
+            for(chr_iterator it_chr = it_srv->characteristics().begin(); it_chr != it_srv->characteristics().end(); ++it_chr )
+            {
+                if( chr == (*it_chr) )
+                {
+                    it_chr->set_string_value(data);
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void gattdatabase::update_descriptor(const service& srv, const characteristic& chr, const descriptor& desc, bool notifying)
+{
+    for( std::vector<service>::iterator it_srv = services_.begin(); it_srv != services_.end(); ++it_srv )
+    {
+        if(srv == (*it_srv))
+        {
+            for(chr_iterator it_chr = it_srv->characteristics().begin(); it_chr != it_srv->characteristics().end(); ++it_chr )
+            {
+                if( chr == (*it_chr) )
+                {
+                    for( descriptors::iterator it_desc = it_chr->descriptors().begin(); it_desc != it_chr->descriptors().end(); ++ it_desc)
+                    {
+                        if( desc == (*it_desc) )
+                        {
+                            it_desc->set_notifying(notifying);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void gattdatabase::update_service_chrs(const service& srv, const chr_list& chrs)
+{
+    for( std::vector<service>::iterator it_srv = services_.begin(); it_srv != services_.end(); ++it_srv )
+    {
+        if(srv == (*it_srv))
+        {
+            (*it_srv) << chrs;
+        }
+    }
+}
+

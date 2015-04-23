@@ -1,4 +1,5 @@
-#include "characteristic.h"
+#include "btle/characteristic.h"
+#include "btle/utility.h"
 
 using namespace btle;
 
@@ -16,7 +17,7 @@ characteristic::characteristic()
 characteristic::characteristic(
     const std::string& data,
     const btle::uuid& uid)
-: base(data),
+: base(data,"characteristic with data: " + data + " UUID: " + uid.to_string()),
   uuid_(uid),
   attribute_handle_(0),
   characteristic_value_handle_(0),
@@ -28,7 +29,7 @@ characteristic::characteristic(
 
 characteristic::characteristic(
     const btle::uuid& uid)
-: base(),
+: base("","characteristic with UUID: " + uid.to_string()),
   uuid_(uid),
   attribute_handle_(0),
   characteristic_value_handle_(0),
@@ -41,7 +42,7 @@ characteristic::characteristic(
 characteristic::characteristic(
     const btle::uuid& uid,
     uint8_t properties)
-: base(),
+: base("","characteristic with UUID: " + uid.to_string() + " properties: " + utility::to_string(properties)),
   uuid_(uid),
   attribute_handle_(0),
   characteristic_value_handle_(0),
@@ -55,7 +56,7 @@ characteristic::characteristic(
     const btle::uuid& uid,
     uint8_t properties,
     long int instance_id)
-: base(),
+: base("","characteristic with UUID: " + uid.to_string() + " properties: " + utility::to_string(properties)),
   uuid_(uid),
   attribute_handle_(0),
   characteristic_value_handle_(0),
@@ -69,12 +70,12 @@ characteristic::characteristic(
     const btle::uuid& uid,
     uint8_t properties,
     uint16_t attribute_handle,
-    uint16_t characteristic_properties)
-: base(),
+    uint16_t characteristic_value_handle)
+: base("","characteristic with UUID: " + uid.to_string() + " properties: " + utility::to_string(properties)),
   uuid_(uid),
   attribute_handle_(attribute_handle),
-  characteristic_value_handle_(0),
-  characteristic_properties_(characteristic_properties),
+  characteristic_value_handle_(characteristic_value_handle),
+  characteristic_properties_(properties),
   instance_id_(0),
   descriptors_()
 {
@@ -146,6 +147,11 @@ descriptor* characteristic::descriptor_by_type(uint16_t type)
         }
     }
     return NULL;
+}
+
+std::vector<descriptor>& characteristic::descriptors()
+{
+    return descriptors_;
 }
 
 std::string characteristic::to_string() const
