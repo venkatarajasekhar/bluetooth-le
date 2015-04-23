@@ -20,11 +20,6 @@ simple example in ios using high level Api:
 
 // HEADER START
 
-
-#import <UIKit/UIKit.h>
-
-#include "btle/central/collectorsimpleobjc.h"
-
 @interface ViewController : UIViewController<collectorsimpleobjc_delegate>
 
 @property (nonatomic) collectorsimpleobjc* simple_;
@@ -34,8 +29,6 @@ simple example in ios using high level Api:
 // HEADER END
 
 // *.m
-
-#import "ViewController.h"
 
 @interface ViewController ()
 {
