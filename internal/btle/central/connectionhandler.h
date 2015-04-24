@@ -14,18 +14,14 @@ namespace btle {
 
         enum connectionhandler_options{
             /**
-             * default connection handler behaviour, and recommemded one,
-             * trigger connection from advertisement head
-             */
-            CONNECTION_FROM_ADVERTISEMENT_HEAD = 0x01,
-            /**
+             * if connection direct is not set connection will be triggred from advertisement head
              * connection is direct ie will suspend connection handler
              * if no timeout has been set
              */
-            CONNECTION_DIRECT                  = 0x02,
-            CONNECTION_TIMEOUT                 = 0x04,
-            DISCONNECTION_TIMEOUT              = 0x08,
-            RECONNECTION_TRYES                 = 0x10
+            CONNECTION_DIRECT                  = 0x01,
+            CONNECTION_TIMEOUT                 = 0x02,
+            DISCONNECTION_TIMEOUT              = 0x04,
+            RECONNECTION_TRYES                 = 0x08
         };
 
         class connectionhandler;
@@ -66,7 +62,9 @@ namespace btle {
         protected:
 
             void change_device_state( device& dev, btle::connection_state state );
-
+            device* any_in_state(btle::connection_state state);
+            device* oldest_in_connection_park();
+            
         private: // states
 
             void free( device& dev, int action );

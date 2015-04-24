@@ -50,7 +50,7 @@ namespace btle {
              */
             SCAN_MEDIUM_DUTY,
             /**
-             * Low duty should < 50% duty cycle
+             * Low duty should be < 50% duty cycle
              */
             SCAN_LOW_DUTY
         };

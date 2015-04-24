@@ -324,7 +324,11 @@ namespace {
 
 - (void)peripheral:(CBPeripheral *)peripheral didModifyServices:(NSArray *)invalidatedServices
 {
-    // TODO inform collector,
+    func_log
+    
+    corebluetoothperipheraldevice* dev(parent_->find_device(peripheral));
+    assert(dev);
+    parent_->observer().device_services_invalidated(*dev);
 }
 
 

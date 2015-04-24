@@ -106,10 +106,34 @@ void connectionhandler::change_device_state(
     {
         (*it)->device_state_changed(dev);
     }
-    if( state == DEVICE_DISCONNECTED )
+}
+
+btle::device* connectionhandler::any_in_state(btle::connection_state state)
+{
+    for( device_list::const_iterator it = central_->devices().begin(); it != central_->devices().end(); ++it )
     {
-        // call reset
+        if( (*it)->state() == state )
+        {
+            return (*it);
+        }
     }
+    return NULL;
+}
+
+btle::device* connectionhandler::oldest_in_connection_park()
+{
+    btle::device* ret (NULL);
+    for( device_list::const_iterator it = central_->devices().begin(); it != central_->devices().end(); ++it )
+    {
+        if( (*it)->state() == DEVICE_CONNECTION_PARK )
+        {
+            if( ret == NULL || (*it)->reconnections_ < ret->reconnections_ )
+            {
+                ret = (*it);
+            }
+        }
+    }
+    return ret;
 }
 
 void connectionhandler::free( device& dev, int action )
@@ -120,7 +144,20 @@ void connectionhandler::free( device& dev, int action )
     {
         case Entry:
         {
-            // TODO check pending disconnections or connections if setting is direct connection
+            if( btle::device* it = any_in_state(btle::DEVICE_DISCONNECTION_PARK) )
+            {
+                change_state(disconnecting_, *it);
+            }
+            else
+            {
+                if( options_.find(CONNECTION_DIRECT) != options_.end() )
+                {
+                    if( btle::device* it = oldest_in_connection_park() )
+                    {
+                        change_state(connecting_, *it);
+                    }
+                }
+            }
             break;
         }
         case advertisement_head_received_action:
@@ -137,7 +174,15 @@ void connectionhandler::free( device& dev, int action )
             switch (dev.state()) {
                 case btle::DEVICE_DISCONNECTED:
                 {
-                    change_device_state(dev,btle::DEVICE_CONNECTION_PARK);
+                    if( options_.find(CONNECTION_DIRECT) == options_.end() )
+                    {
+                        change_device_state(dev,btle::DEVICE_CONNECTION_PARK);
+                    }
+                    else
+                    {
+                        // direct connection
+                        change_state(connecting_, dev);
+                    }
                     break;
                 }
                 case btle::DEVICE_DISCONNECTION_PARK:
@@ -183,7 +228,14 @@ void connectionhandler::free( device& dev, int action )
             // unsolicted disconnection
             if( is_reconnection_needed(dev) )
             {
-                change_device_state(dev,btle::DEVICE_CONNECTION_PARK);
+                if( options_.find(CONNECTION_DIRECT) == options_.end() )
+                {
+                    change_device_state(dev,btle::DEVICE_CONNECTION_PARK);
+                }
+                else
+                {
+                    change_state(connecting_, dev);
+                }
             }
             else
             {
@@ -212,6 +264,8 @@ void connectionhandler::connecting( device& dev, int action )
     {
         case Entry:
         {
+            // stop scan for connection attempt moment
+            central_->stop_scan();
             current_device_ = &dev;
             central_->connect_device(dev);
             change_device_state(dev,btle::DEVICE_CONNECTING);
@@ -331,6 +385,8 @@ void connectionhandler::connecting( device& dev, int action )
         case Exit:
         {
             timer_.stop();
+            // TODO
+            central_->start_scan();
             break;
         }
         default:
