@@ -49,6 +49,7 @@ namespace btle {
             void process_service_notify_data(const uuid& chr, const uint8_t* data, size_t size);
             void process_service_value_read(const uuid& chr, const uint8_t* data, size_t size, const error& err);
             void reset();
+            int write_service_value(const uuid& chr, const std::string& data);
             
         public: // API
             
@@ -58,7 +59,7 @@ namespace btle {
             
             std::vector<std::string> out_;
             std::vector<std::string> in_;
-            
+            int status_;
         };
     }
 }

@@ -16,6 +16,11 @@ void gattservicebase::set_active(const uuid& uid, bool notifying)
 
 }
 
+int gattservicebase::write_service_value(const uuid& chr, const std::string& data)
+{
+    return -1;
+}
+
 bool gattservicebase::is_active() const
 {
     return false;

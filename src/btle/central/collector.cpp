@@ -35,6 +35,12 @@ namespace {
     #define SOFTWARE_REVISION                           0x2A28
     #define MANUFACTURER_NAME                           0x2A29
 
+    bool compare_ascent(btle::device* a, btle::device* b){
+        return a->rssi_filter().mean_median() > b->rssi_filter().mean_median();
+    }
+    bool compare_descent(btle::device* a, btle::device* b){
+        return a->rssi_filter().mean_median() < b->rssi_filter().mean_median();
+    }
 }
 
 using namespace btle::central;
@@ -119,9 +125,10 @@ int collector::start(const std::string& plugin_name)
 
 int collector::auto_start()
 {
+    assert(plugins_.size());
     stop();
     plugin_ = plugins_[0];
-    connectionhandler_.setup(plugin_);
+    connectionhandler_.setup(&plugin_->devices(),this,this);
     return plugin_->start();
 }
 
@@ -202,7 +209,24 @@ connectionhandler& collector::connection_handler()
 }
 
 /**
- * @brief collector::set_auto_read_values, 
+ *
+ */
+btle::device_list collector::devices_in_order(int rssi_limit,bool ascent) const
+{
+    verify(plugin_)
+    device_list list;
+    for ( device_list::const_iterator it = plugin_->devices().begin(); it != plugin_->devices().end(); ++it )
+    {
+        if( (*it)->rssi_filter().mean_median() >= rssi_limit  )
+            list.push_back(*it);
+    }
+    std::sort(list.begin(), list.end(), ascent ? ::compare_ascent : ::compare_descent);
+    return list;
+}
+
+
+/**
+ * @brief collector::set_auto_read_values,
  *        setup characteristic uuids to be read if found,
  *        NOTE this will override the default set!
  * @param list
@@ -463,7 +487,47 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
 void collector::device_state_changed(btle::device& dev)
 {
     device_state_changed_cb(dev);
+    if( dev.state() == DEVICE_DISCONNECTED )
+    {
+        dev.clear();
+    }
 }
+
+void collector::aquire_start_scan()
+{
+    verify(plugin_)
+    if( state_ == STATE_POWERED_ON ) plugin_->start_scan();
+    else _log_error("BT NOT POWERED!");
+}
+
+void collector::aquire_stop_scan()
+{
+    verify(plugin_)
+    if( state_ == STATE_POWERED_ON ) plugin_->stop_scan();
+    else _log_error("BT NOT POWERED!");
+}
+
+void collector::aquire_connect_device(btle::device& dev)
+{
+    verify(plugin_)
+    if( state_ ==STATE_POWERED_ON ) plugin_->connect_device(dev);
+    else _log_error("BT NOT POWERED");
+}
+
+void collector::aquire_disconnect_device(btle::device& dev)
+{
+    verify(plugin_)
+    if( state_ ==STATE_POWERED_ON ) plugin_->disconnect_device(dev);
+    else _log_error("BT NOT POWERED");
+}
+
+void collector::aquire_cancel_pending_connection(btle::device& dev)
+{
+    verify(plugin_)
+    if( state_ ==STATE_POWERED_ON ) plugin_->cancel_pending_connection(dev);
+    else _log_error("BT NOT POWERED");
+}
+
 
 void collector::plugin_state_changed(central_plugin_state state)
 {

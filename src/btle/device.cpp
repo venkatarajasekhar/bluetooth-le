@@ -124,6 +124,18 @@ btle::advertisement_type device::advertisement_type() const
     return advertisement_type_;
 }
 
+void device::clear(bool verbose)
+{
+    for( gatt_service_iterator it = gatt_services_.begin(); it != gatt_services_.end(); ++it )
+    {
+        (*it)->reset();
+    }
+    if( verbose )
+    {
+        advertisement_fields_.clear();
+    }
+}
+
 std::string device::description() const
 {
     std::stringstream ss;

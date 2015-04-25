@@ -188,6 +188,8 @@
 		0DC73A7D1ADD690B005F7BC0 /* btlelibservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = btlelibservice.cpp; sourceTree = "<group>"; };
 		0DC73A7F1AE68E94005F7BC0 /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 		0DC73A801AE68ED1005F7BC0 /* timer_darwin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = timer_darwin.mm; sourceTree = "<group>"; };
+		0DDE7EDD1AEC5326004D100C /* connectionhandlerscanctrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = connectionhandlerscanctrl.h; sourceTree = "<group>"; };
+		0DDE7EDE1AEC561B004D100C /* connectionhandlerlinkctrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = connectionhandlerlinkctrl.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +362,8 @@
 				0DC739D41ACDDF56005F7BC0 /* centralpluginregisterer.hpp */,
 				0DC739D51ACDDF56005F7BC0 /* connectionhandler.h */,
 				0DC739D61ACDDF56005F7BC0 /* connectionhandlerobserver.h */,
+				0DDE7EDD1AEC5326004D100C /* connectionhandlerscanctrl.h */,
+				0DDE7EDE1AEC561B004D100C /* connectionhandlerlinkctrl.h */,
 			);
 			path = central;
 			sourceTree = "<group>";

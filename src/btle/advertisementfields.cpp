@@ -78,3 +78,10 @@ bool advertisementfields::is_service_advertiset( const btle::uuid& uid ) const
     return false;
 }
 
+void advertisementfields::clear()
+{
+    fields_.clear();
+    name_ = "";
+}
+
+

@@ -62,6 +62,8 @@ namespace btle {
         bool operator == (const device& other) const;
         btle::advertisement_type advertisement_type() const;
 
+        void clear(bool verbose=false);
+        
     public: // from base
 
         std::string description() const;

@@ -26,17 +26,26 @@ connectionhandler::connectionhandler()
   connecting_(&connectionhandler::connecting),
   disconnecting_(&connectionhandler::disconnecting),
   current_device_(NULL),
-  central_(NULL),
   reconnectiontryes_(0),
   options_(),
   observers_(),
-  timer_()
+  timer_(),
+  scan_ctrl_(NULL),
+  link_ctrl_(NULL),
+  devices_(NULL)
 {
 }
 
-void connectionhandler::setup(centralplugininterface* central)
+void connectionhandler::setup( device_list* list,
+                               connectionhandlerscanctrl* ctrl,
+                               connectionhandlerlinkctrl* link_ctrl )
 {
-    central_ = central;
+    scan_ctrl_ = ctrl;
+    link_ctrl_ = link_ctrl;
+    devices_ = list;
+    current_ = free_;
+    current_device_ = NULL;
+    timer_.stop();
 }
 
 void connectionhandler::advertisement_head_received(device& dev)
@@ -110,7 +119,7 @@ void connectionhandler::change_device_state(
 
 btle::device* connectionhandler::any_in_state(btle::connection_state state)
 {
-    for( device_list::const_iterator it = central_->devices().begin(); it != central_->devices().end(); ++it )
+    for( device_list::const_iterator it = devices_->begin(); it != devices_->end(); ++it )
     {
         if( (*it)->state() == state )
         {
@@ -123,7 +132,7 @@ btle::device* connectionhandler::any_in_state(btle::connection_state state)
 btle::device* connectionhandler::oldest_in_connection_park()
 {
     btle::device* ret (NULL);
-    for( device_list::const_iterator it = central_->devices().begin(); it != central_->devices().end(); ++it )
+    for( device_list::const_iterator it = devices_->begin(); it != devices_->end(); ++it )
     {
         if( (*it)->state() == DEVICE_CONNECTION_PARK )
         {
@@ -265,9 +274,9 @@ void connectionhandler::connecting( device& dev, int action )
         case Entry:
         {
             // stop scan for connection attempt moment
-            central_->stop_scan();
+            scan_ctrl_->aquire_stop_scan();
             current_device_ = &dev;
-            central_->connect_device(dev);
+            link_ctrl_->aquire_connect_device(dev);
             change_device_state(dev,btle::DEVICE_CONNECTING);
             if( options_.find(CONNECTION_TIMEOUT) != options_.end() )
             {
@@ -304,13 +313,12 @@ void connectionhandler::connecting( device& dev, int action )
                 if( is_reconnection_needed(dev) )
                 {
                     change_device_state( dev, btle::DEVICE_CONNECTION_PARK );
-                    //observer_->scan_devices();
+                    scan_ctrl_->aquire_start_scan();
                 }
                 else
                 {
                     //just propagate state change event
                     change_device_state( dev, btle::DEVICE_DISCONNECTED );
-                    // dev.reset();
                 }
             }
             break;
@@ -344,7 +352,7 @@ void connectionhandler::connecting( device& dev, int action )
         {
             if( current_device_ == &dev )
             {
-                central_->cancel_pending_connection(dev);
+                link_ctrl_->aquire_cancel_pending_connection(dev);
                 change_device_state(dev,btle::DEVICE_DISCONNECTED);
                 change_state(free_,dev);
             }
@@ -374,7 +382,7 @@ void connectionhandler::connecting( device& dev, int action )
         case timer_timeout_action:
         {
             assert( current_device_ && &dev == current_device_);
-            central_->cancel_pending_connection(dev);
+            link_ctrl_->aquire_cancel_pending_connection(dev);
             if( is_reconnection_needed(dev) ){
                 change_device_state(dev, DEVICE_CONNECTION_PARK);
             }
@@ -385,8 +393,7 @@ void connectionhandler::connecting( device& dev, int action )
         case Exit:
         {
             timer_.stop();
-            // TODO
-            central_->start_scan();
+            scan_ctrl_->aquire_start_scan();
             break;
         }
         default:
@@ -406,7 +413,7 @@ void connectionhandler::disconnecting(device& dev, int action )
         case Entry:
         {
             current_device_ = &dev;
-            central_->disconnect_device(dev);
+            link_ctrl_->aquire_disconnect_device(dev);
             change_device_state(dev,btle::DEVICE_DISCONNECTING);
             if( options_.find(DISCONNECTION_TIMEOUT) != options_.end() )
             {

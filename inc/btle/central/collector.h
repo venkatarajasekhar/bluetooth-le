@@ -14,7 +14,11 @@ namespace btle {
         /**
          * @brief The collector class, main interface class for lib central usage
          */
-        class BTLE_API collector: public centralpluginobserver, private connectionhandlerobserver{
+        class BTLE_API collector: public centralpluginobserver,
+                                  private connectionhandlerobserver,
+                                  private connectionhandlerscanctrl,
+                                  private connectionhandlerlinkctrl
+        {
         public:
 
             collector();
@@ -23,7 +27,6 @@ namespace btle {
         public: // plugin start/stop etc...
             
             const std::vector<std::string>& plugins_available() const;
-
             int start(const std::string& plugin_name);
             int auto_start();
             void stop();
@@ -41,6 +44,10 @@ namespace btle {
 
             connectionhandler& connection_handler();
 
+        public:
+            
+            device_list devices_in_order(int rssi_limit,bool ascent=false) const;
+            
         public:
 
             void set_auto_read_values(const uuid_list& list);
@@ -65,7 +72,18 @@ namespace btle {
         private: // from connectionhandler
 
             void device_state_changed(btle::device& dev);
+                                      
+        private: // scan controller
+                                      
+            void aquire_start_scan();
+            void aquire_stop_scan();
 
+        private: //
+            
+            void aquire_connect_device(btle::device& dev);
+            void aquire_disconnect_device(btle::device& dev);
+            void aquire_cancel_pending_connection(btle::device& dev);
+            
         private: // from observer
 
             void plugin_state_changed(central_plugin_state state);

@@ -1,8 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2015-02-08T00:14:41
-#
-#-------------------------------------------------
 
 QT       -= gui
 
@@ -46,9 +41,7 @@ SOURCES += \
     src/btle/gatt_services/cyclingpowerservice.cpp \
     src/btle/log.cpp \
     src/btle/utility.cpp \
-    src/btle/central/win8/win8centralplugin.cpp \
     src/btle/connectionparameters.cpp \
-    src/btle/central/win8/win8peripheraldevice.cpp \
     src/btle/gatt_services/glucoseservice.cpp \
     src/btle/scanfilterbase.cpp \
     src/btle/uuidscanfilter.cpp \
@@ -105,9 +98,7 @@ HEADERS += \
     inc/btle/utility.h \
     internal/btle/central/centralpluginregisterer.h \
     internal/btle/central/centralpluginregisterer.hpp \
-    internal/btle/central/win8/win8centralplugin.h \
     inc/btle/connectionparameters.h \
-    internal/btle/central/win8/win8peripheraldevice.h \
     inc/btle/gatt_services/glucoseservice.h \
     inc/btle/scanfilterbase.h \
     inc/btle/uuidscanfilter.h \
@@ -117,15 +108,21 @@ HEADERS += \
     inc/btle/central/collectorqt.h \
     inc/btle/central/collectorsimpleqt.h \
     inc/btle/gatt_services/btlelibservice.h \
-    inc/btle/smpkeys.h
+    inc/btle/smpkeys.h \
+    internal/btle/timer.h \
+    internal/btle/timercallback.h
+
 
 ios{
     LIBS += -framework Foundation \
             -framework CoreFoundation \
             -framework CoreBluetooth
 
-    OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h
-    OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm
+    OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h \
+                         internal/btle/central/apple/corebluetoothperipheraldevice.h
+    OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm \
+                         src/btle/central/apple/corebluetoothperipheraldevice.mm \
+                         src/btle/timer_darwin.mm
 }
 
 macx{
@@ -133,14 +130,24 @@ macx{
             -framework CoreFoundation \
             -framework IOBluetooth
 
-    OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h
-    OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm
+    OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h \
+                         internal/btle/central/apple/corebluetoothperipheraldevice.h
+    OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm \
+                         src/btle/central/apple/corebluetoothperipheraldevice.mm \
+                         src/btle/timer_darwin.mm
 }
 
 android{
 }
 
 win{
+    SOURCES += \
+        src/btle/central/win8/win8centralplugin.cpp \
+        src/btle/central/win8/win8peripheraldevice.cpp
+
+    HEADERS += \
+        internal/btle/central/win8/win8centralplugin.h \
+        internal/btle/central/win8/win8peripheraldevice.h \
 }
 
 linux{
@@ -150,6 +157,3 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
-
-OBJECTIVE_SOURCES += \
-    src/btle/central/apple/corebluetoothcentralplugin.mm

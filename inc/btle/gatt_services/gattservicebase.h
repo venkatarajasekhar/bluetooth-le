@@ -30,7 +30,7 @@ namespace btle {
              *               typically after device has been disconnected
              */
             virtual void reset() = 0;
-            //virtual void write_value();
+            virtual int write_service_value(const uuid& chr, const std::string& data);
             virtual void set_active(const uuid& uid, bool notifying);
             virtual bool is_active() const;
             virtual std::string json(const uuid& uid) const;

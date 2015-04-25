@@ -2,6 +2,8 @@
 #define CONNECTIONHANDLER_H
 
 #include "btle/central/connectionhandlerobserver.h"
+#include "btle/central/connectionhandlerscanctrl.h"
+#include "btle/central/connectionhandlerlinkctrl.h"
 #include "btle/central/centralplugininterface.h"
 #include "btle/device.h"
 #include "btle/timer.h"
@@ -37,7 +39,9 @@ namespace btle {
         public:
             
             connectionhandler();
-            void setup(centralplugininterface* central);
+            void setup(device_list* list,
+                       connectionhandlerscanctrl* ctrl,
+                       connectionhandlerlinkctrl* link_ctrl);
             
         private:
 
@@ -88,11 +92,13 @@ namespace btle {
             kConnectionHndlrState disconnecting_;
 
             device* current_device_;
-            centralplugininterface* central_;
             int reconnectiontryes_;
             std::map<connectionhandler_options,int> options_;
             std::vector<connectionhandlerobserver*> observers_;
             timer timer_;
+            connectionhandlerscanctrl* scan_ctrl_;
+            connectionhandlerlinkctrl* link_ctrl_;
+            device_list* devices_;
             
             friend class collector;
         };
