@@ -158,7 +158,6 @@ namespace btle {
             unsigned int flags_;
             scan_filters filters_;
             central_plugin_state state_;
-            std::vector<device*> tmp_store_;
             std::vector<std::string> plugins_available_;
         };
     }

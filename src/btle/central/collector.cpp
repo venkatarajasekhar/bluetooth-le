@@ -18,7 +18,8 @@
 namespace {
     enum collector_flags{
         CLIENT_SCAN   = 0x01,
-        INTERNAL_SCAN = 0x02
+        INTERNAL_SCAN = 0x02,
+        
     };
 
     // allways enable service changed notification ?
@@ -54,7 +55,6 @@ collector::collector()
   flags_(0),
   filters_(),
   state_(STATE_POWERED_UNKNOWN),
-  tmp_store_(),
   plugins_available_()
 {
     centralpluginfactory::instance().populate(plugins_, *this);
@@ -100,11 +100,20 @@ collector::~collector()
     }
 }
 
+/**
+ * @brief collector::plugins_available
+ * @return string list of plugins available, hopefully all plugins has unique names
+ */
 const std::vector<std::string>& collector::plugins_available() const
 {
     return plugins_available_;
 }
 
+/**
+ * @brief collector::start
+ * @param plugin_name
+ * @return 0 plugin started succesfully or plugin error code
+ */
 int collector::start(const std::string& plugin_name)
 {
     stop();
@@ -123,6 +132,10 @@ int collector::start(const std::string& plugin_name)
     return -1;
 }
 
+/**
+ * @brief collector::auto_start, auto start takes first plugin from the list
+ * @return 0 or plugin error code
+ */
 int collector::auto_start()
 {
     assert(plugins_.size());
@@ -132,6 +145,9 @@ int collector::auto_start()
     return plugin_->start();
 }
 
+/**
+ * @brief collector::stop, stops current plugin this may take time, varies by plugin
+ */
 void collector::stop()
 {
     if(plugin_)
@@ -209,7 +225,10 @@ connectionhandler& collector::connection_handler()
 }
 
 /**
- *
+ * @brief collector::devices_in_order, device list in ordered order
+ * @param rssi_limit
+ * @param ascent
+ * @return
  */
 btle::device_list collector::devices_in_order(int rssi_limit,bool ascent) const
 {
@@ -261,11 +280,10 @@ void collector::connect_device(const bda& addr)
     if( !dev )
     {
         dev = plugin_->allocate_new_device(addr);
+        assert(dev);
         plugin_->devices().push_back(dev);
     }
     connectionhandler_.connect_device(*dev);
-    //if(state_ == STATE_POWERED_ON) connectionhandler_.connect_device(*dev);
-    //else tmp_store_.push_back(dev);
 }
 
 /**
@@ -496,6 +514,7 @@ void collector::device_state_changed(btle::device& dev)
 void collector::aquire_start_scan()
 {
     verify(plugin_)
+    flags_ |= INTERNAL_SCAN;
     if( state_ == STATE_POWERED_ON ) plugin_->start_scan();
     else _log_error("BT NOT POWERED!");
 }
@@ -503,6 +522,7 @@ void collector::aquire_start_scan()
 void collector::aquire_stop_scan()
 {
     verify(plugin_)
+    flags_ &= ~INTERNAL_SCAN;
     if( state_ == STATE_POWERED_ON ) plugin_->stop_scan();
     else _log_error("BT NOT POWERED!");
 }
@@ -535,13 +555,10 @@ void collector::plugin_state_changed(central_plugin_state state)
     switch (state) {
         case STATE_POWERED_ON:
         {
-            if( flags_ & CLIENT_SCAN )
+            if( flags_ & CLIENT_SCAN ||
+                flags_ & INTERNAL_SCAN )
             {
                 plugin_->start_scan();
-                if( tmp_store_.size() )
-                {
-                    // TODO
-                }
             }
             break;
         }

@@ -110,7 +110,9 @@ HEADERS += \
     inc/btle/gatt_services/btlelibservice.h \
     inc/btle/smpkeys.h \
     internal/btle/timer.h \
-    internal/btle/timercallback.h
+    internal/btle/timercallback.h \
+    internal/btle/central/connectionhandlerlinkctrl.h \
+    internal/btle/central/connectionhandlerscanctrl.h
 
 
 ios{

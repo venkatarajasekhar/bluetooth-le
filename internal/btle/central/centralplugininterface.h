@@ -21,13 +21,17 @@ namespace btle {
              */
             PLUGIN_SMP_FULL_CAPABILITY             = 0x02,
             /**
+             * Plugin has caps. for security manager, pin code input
+             */
+            PLUGIN_SMP_PIN_CODE_INPUT_CAPABILITY   = 0x04,
+            /**
              * Plugin has caps. for Gatt server i.e. 3rd party can optionally add an service
              */
-            PLUGIN_GATT_SERVER_CAPABILITY          = 0x04,
+            PLUGIN_GATT_SERVER_CAPABILITY          = 0x08,
             /**
              * Plugin has caps. for setting different kind of scan parameters ( (window and interval) or preset )
              */
-            PLUGIN_SCAN_PARAMTERS_CAPABILITY       = 0x08
+            PLUGIN_SCAN_PARAMTERS_CAPABILITY       = 0x10
         };
 
         enum central_plugin_state
@@ -154,7 +158,7 @@ namespace btle {
             virtual void write_characteristic_value(device& dev,const service& srv, const characteristic& chr, const std::string& data, characteristic_properties type) = 0;
 
             /**
-             * @brief set_characteristic_notify, WILL be deprecated
+             * @brief set_characteristic_notify, WILL BE DEPRECATED
              * @param dev
              * @param srv
              * @param chr

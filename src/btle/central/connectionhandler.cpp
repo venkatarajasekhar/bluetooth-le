@@ -185,6 +185,7 @@ void connectionhandler::free( device& dev, int action )
                 {
                     if( options_.find(CONNECTION_DIRECT) == options_.end() )
                     {
+                        scan_ctrl_->aquire_start_scan();
                         change_device_state(dev,btle::DEVICE_CONNECTION_PARK);
                     }
                     else
@@ -470,7 +471,6 @@ void connectionhandler::disconnecting(device& dev, int action )
             }
             else
             {
-                // unsolicted disconnection to some other device
                 if( is_reconnection_needed(dev) )
                 {
                     change_device_state(dev,btle::DEVICE_CONNECTION_PARK);

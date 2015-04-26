@@ -117,10 +117,10 @@ namespace {
 #ifdef DESKTOP_BUILD
         [aPeripheral retain];
 #endif
-        dev->peripheral_ = aPeripheral;
         [dev->peripheral_ setDelegate:self];
         parent_->devices().push_back(dev);
     }
+    dev->peripheral_ = aPeripheral;
     adv_fields fields;
     process_advertisement_fields(advertisementData, fields);
     parent_->observer().device_discovered(*dev,fields,[RSSI intValue]);
@@ -353,7 +353,7 @@ std::vector<device*>& corebluetoothcentralplugin::devices()
 
 device* corebluetoothcentralplugin::allocate_new_device(const bda& addr)
 {
-    return NULL;
+    return new corebluetoothperipheraldevice(addr);
 }
 
 int corebluetoothcentralplugin::start()
