@@ -52,7 +52,8 @@ SOURCES += \
     src/btle/central/collectorqt.cpp \
     src/btle/central/collectorsimpleqt.cpp \
     src/btle/gatt_services/btlelibservice.cpp \
-    src/btle/smpkeys.cpp
+    src/btle/smpkeys.cpp \
+    src/btle/timer_win32.cpp
 
 HEADERS += \
     inc/btle/btle.h\

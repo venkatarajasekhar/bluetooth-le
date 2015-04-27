@@ -1,3 +1,4 @@
+#include <algorithm>
 
 #include "btle/exceptions/attribute_not_found.h"
 #include "btle/exceptions/attribute_not_readable.h"
@@ -10,7 +11,6 @@
 #include "btle/gatt_services/gattservicefactory.h"
 #include "btle/verify.h"
 #include "btle/log.h"
-
 
 #include "btle/bdascanfilter.h"
 #include "btle/uuidscanfilter.h"
