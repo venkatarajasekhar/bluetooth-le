@@ -117,10 +117,10 @@ namespace {
 #ifdef DESKTOP_BUILD
         [aPeripheral retain];
 #endif
-        [dev->peripheral_ setDelegate:self];
         parent_->devices().push_back(dev);
     }
     dev->peripheral_ = aPeripheral;
+    [dev->peripheral_ setDelegate:self];
     adv_fields fields;
     process_advertisement_fields(advertisementData, fields);
     parent_->observer().device_discovered(*dev,fields,[RSSI intValue]);

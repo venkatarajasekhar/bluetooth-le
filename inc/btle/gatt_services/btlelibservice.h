@@ -19,7 +19,7 @@ namespace btle {
          * message out packet, 
          * more = true/false, true = more is coming , false = last packet end of transfer
          * first = true, start of transfer
-         * rc = upwards counting ring counter
+         * rc = UPWARDS ( it is stupid to do downwards rc! ) counting ring counter
          * payload
          */
         struct msg_payload{

@@ -36,7 +36,7 @@ int hrservice::hr_value() const
  */
 bool hrservice::sensor_contact() const
 {
-    return flags_.sensor_contact_bit_ == 0x2;
+    return flags_.sensor_contact_bit_ == 0x3;
 }
 
 /**
