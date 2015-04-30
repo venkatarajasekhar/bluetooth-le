@@ -13,6 +13,8 @@ Note for ios users you need to add "Other linker flags" --> -all_load
 Goals:
 
 Version 1.x.x : First "Beta" version, only ios/mac xcode/qt support (sorry no linux support for the first version) 
+
 Version 2.x.x : Core functionality should be stable, linux support (and maybe windows too), 
+
 Version 3.x.x : 
 
