@@ -55,6 +55,7 @@
 		0DC73A7B1ADD6421005F7BC0 /* smpkeys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A7A1ADD6421005F7BC0 /* smpkeys.cpp */; };
 		0DC73A7E1ADD690B005F7BC0 /* btlelibservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A7D1ADD690B005F7BC0 /* btlelibservice.cpp */; };
 		0DC73A811AE68ED1005F7BC0 /* timer_darwin.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DC73A801AE68ED1005F7BC0 /* timer_darwin.mm */; };
+		0DDE7EE11AF2BA69004D100C /* btlelibscanfilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DDE7EE01AF2BA69004D100C /* btlelibscanfilter.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,6 +191,9 @@
 		0DC73A801AE68ED1005F7BC0 /* timer_darwin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = timer_darwin.mm; sourceTree = "<group>"; };
 		0DDE7EDD1AEC5326004D100C /* connectionhandlerscanctrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = connectionhandlerscanctrl.h; sourceTree = "<group>"; };
 		0DDE7EDE1AEC561B004D100C /* connectionhandlerlinkctrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = connectionhandlerlinkctrl.h; sourceTree = "<group>"; };
+		0DDE7EDF1AF2BA4C004D100C /* btlelibscanfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btlelibscanfilter.h; sourceTree = "<group>"; };
+		0DDE7EE01AF2BA69004D100C /* btlelibscanfilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = btlelibscanfilter.cpp; sourceTree = "<group>"; };
+		0DDE7EE21AF2BB69004D100C /* btle_objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = btle_objc.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +255,7 @@
 			children = (
 				0DC7399E1ACDDF56005F7BC0 /* btle */,
 				0DC73A681ACDEB2D005F7BC0 /* btle_core.h */,
+				0DDE7EE21AF2BB69004D100C /* btle_objc.h */,
 			);
 			path = inc;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 				0DC739A01ACDDF56005F7BC0 /* base.h */,
 				0DC739A11ACDDF56005F7BC0 /* bda.h */,
 				0DC739A21ACDDF56005F7BC0 /* bdascanfilter.h */,
+				0DDE7EDF1AF2BA4C004D100C /* btlelibscanfilter.h */,
 				0DC739A31ACDDF56005F7BC0 /* btle.h */,
 				0DC739A41ACDDF56005F7BC0 /* btle_global.h */,
 				0DC739A71ACDDF56005F7BC0 /* characteristic.h */,
@@ -396,6 +402,7 @@
 				0DC739DE1ACDDF56005F7BC0 /* bda.cpp */,
 				0DC739DF1ACDDF56005F7BC0 /* bdascanfilter.cpp */,
 				0DC73A741AD9B6CE005F7BC0 /* rssiscanfilter.cpp */,
+				0DDE7EE01AF2BA69004D100C /* btlelibscanfilter.cpp */,
 				0DC739E01ACDDF56005F7BC0 /* btle.cpp */,
 				0DC739EB1ACDDF56005F7BC0 /* characteristic.cpp */,
 				0DC739EC1ACDDF56005F7BC0 /* connectionparameters.cpp */,
@@ -590,6 +597,7 @@
 				0DC73A171ACDDF56005F7BC0 /* connectionparameters.cpp in Sources */,
 				0DC73A191ACDDF56005F7BC0 /* device.cpp in Sources */,
 				0DC73A211ACDDF56005F7BC0 /* not_implemented.cpp in Sources */,
+				0DDE7EE11AF2BA69004D100C /* btlelibscanfilter.cpp in Sources */,
 				0DC73A1D1ACDDF56005F7BC0 /* attribute_not_readable.cpp in Sources */,
 				0DC73A251ACDDF56005F7BC0 /* gattservicebase.cpp in Sources */,
 				0DC73A2A1ACDDF56005F7BC0 /* gattdatabase.cpp in Sources */,

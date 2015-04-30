@@ -122,11 +122,12 @@ int collector::start(const std::string& plugin_name)
         if( (*it)->name().compare(plugin_name) != std::string::npos )
         {
             plugin_ = (*it);
-            if( plugin_->start() )
+            if( int err = plugin_->start() )
             {
                 plugin_ = NULL;
+                return err;
             }
-            break;
+            return 0;
         }
     }
     return -1;
@@ -142,7 +143,12 @@ int collector::auto_start()
     stop();
     plugin_ = plugins_[0];
     connectionhandler_.setup(&plugin_->devices(),this,this);
-    return plugin_->start();
+    if( int err = plugin_->start() )
+    {
+        plugin_ = NULL;
+        return err;
+    }
+    return 0;
 }
 
 /**
@@ -162,7 +168,7 @@ void collector::stop()
  * @brief collector::add_scan_filter,
  * adds abstract scan filter, library has build-in filters which can be used @see uuidscanfilter ,
  * @see bdascanfilter and @see rssiscanfilter
- * @param filter, takes owner ship
+ * @param filter, collector takes ownership
  */
 void collector::add_scan_filter(scanfilterbase* filter)
 {
@@ -212,7 +218,8 @@ void collector::stop_scan()
 {
     verify(plugin_)
     flags_ &= ~CLIENT_SCAN;
-    plugin_->stop_scan(); // should be safe to call stop even if not powered
+    // should be safe to call stop even if not powered
+    plugin_->stop_scan();
 }
 
 /**
@@ -228,7 +235,7 @@ connectionhandler& collector::connection_handler()
  * @brief collector::devices_in_order, device list in ordered order
  * @param rssi_limit
  * @param ascent
- * @return
+ * @return device list in requested order, device ownership is not transferred
  */
 btle::device_list collector::devices_in_order(int rssi_limit,bool ascent) const
 {
@@ -562,6 +569,11 @@ void collector::plugin_state_changed(central_plugin_state state)
             }
             break;
         }
+        case STATE_POWERED_RESETTING:
+        {
+            // TODO invalidate all devices, propagate disconnected callbacks
+            break;
+        }
         default:
             break;
     }
@@ -579,7 +591,7 @@ void collector::device_discovered(device& dev, adv_fields& fields, int rssi)
         {
             for( std::vector<scanfilterbase*>::iterator it = filters_.begin(); it != filters_.end(); ++it )
             {
-                if( (*it)->process(dev) )
+                if( (*it)->process(dev,fields,rssi) )
                 {
                     // propagate callback
                     device_discovered_cb(dev);

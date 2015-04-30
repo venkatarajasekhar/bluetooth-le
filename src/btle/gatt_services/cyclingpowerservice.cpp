@@ -10,7 +10,10 @@ namespace {
 }
 
 cyclingpowerservice::cyclingpowerservice()
+: cscservice()
 {
+    mandatory_notifications_.clear();
+    included_characteristics_.clear();
     service_ = uuid(CYCLING_POWER_SERVICE);
     mandatory_notifications_.push_back(uuid(CYCLING_POWER_MEASUREMENT));
     included_characteristics_.push_back(uuid(CYCLING_POWER_MEASUREMENT));
@@ -43,11 +46,11 @@ void cyclingpowerservice::process_service_notify_data(const uuid &chr, const uin
             }
             if( flags_.wheel_revolution_data_present_ )
             {
-                // TODO
+                offset += cscservice::process_speed_measurement(data,offset);
             }
             if( flags_.crank_revolution_data_present_ )
             {
-                // TODO
+                offset += cscservice::process_cadence_measurement(data,offset);
             }
             if( flags_.extreme_force_magnitudes_present_ )
             {

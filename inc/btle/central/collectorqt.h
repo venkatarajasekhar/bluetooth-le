@@ -2,7 +2,7 @@
 #define COLLECTORQT_H
 
 #include <QObject>
-
+#include <QVector>
 #include "btle/central/collector.h"
 
 namespace btle {

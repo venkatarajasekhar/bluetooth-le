@@ -2,7 +2,7 @@
 #define CYCLINGPOWERSERVICE_H
 
 
-#include "btle/gatt_services/gattservicebase.h"
+#include "btle/gatt_services/cscservice.h"
 
 
 namespace btle {
@@ -58,7 +58,7 @@ namespace btle {
             uint8_t reserved_:2;
         };
 
-        class BTLE_API cyclingpowerservice: public gattservicebase{
+        class BTLE_API cyclingpowerservice: public cscservice{
         public:
             cyclingpowerservice();
 

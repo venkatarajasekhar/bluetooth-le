@@ -16,7 +16,7 @@ bdascanfilter::bdascanfilter(const bdascanfilter& other)
 {
 }
 
-bool bdascanfilter::process(device &dev)
+bool bdascanfilter::process(device &dev, adv_fields &fields, int rssi)
 {
     for( bda_iterator_const it = bdas_.begin(); it != bdas_.end(); ++it )
     {

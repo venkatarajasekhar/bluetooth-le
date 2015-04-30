@@ -43,11 +43,7 @@ void collectorsimpleqt::device_service_value_updated_cb(device& dev, const gatt_
         case HEART_RATE_SERVICE:
         {
             const hrservice* hr = (const hrservice*)srv;
-            QList<int> rrs;
-            for( std::vector<int>::const_iterator it = hr->rr_values().begin(); it != hr->rr_values().end(); ++it)
-            {
-                rrs.append(*it);
-            }
+            QVector<int> rrs = QVector<int>::fromStdVector(hr->rr_values());
             emit signal_device_hr_value_updated(QString::fromStdString(dev.addr().to_string()),
                                                 QString::fromStdString(dev.name()),
                                                 hr->hr_value(),

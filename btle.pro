@@ -4,7 +4,7 @@ QT       -= gui
 TARGET = btle
 TEMPLATE = lib
 
-DEFINES += BTLE_LIBRARY DESKTOP_BUILD
+DEFINES += BTLE_LIBRARY BTLE_EXPORT_IMPORT BTLE_EXPORTS DESKTOP_BUILD
 INCLUDEPATH += inc inc/btle internal internal/btle internal/btle/central
 
 QMAKE_LIBDIR += "$$DESTDIR"
@@ -53,7 +53,7 @@ SOURCES += \
     src/btle/central/collectorsimpleqt.cpp \
     src/btle/gatt_services/btlelibservice.cpp \
     src/btle/smpkeys.cpp \
-    src/btle/timer_win32.cpp
+    src/btle/btlelibscanfilter.cpp
 
 HEADERS += \
     inc/btle/btle.h\
@@ -113,7 +113,8 @@ HEADERS += \
     internal/btle/timer.h \
     internal/btle/timercallback.h \
     internal/btle/central/connectionhandlerlinkctrl.h \
-    internal/btle/central/connectionhandlerscanctrl.h
+    internal/btle/central/connectionhandlerscanctrl.h \
+    inc/btle/btlelibscanfilter.h
 
 
 ios{
@@ -146,7 +147,8 @@ android{
 win{
     SOURCES += \
         src/btle/central/win8/win8centralplugin.cpp \
-        src/btle/central/win8/win8peripheraldevice.cpp
+        src/btle/central/win8/win8peripheraldevice.cpp\
+        src/btle/timer_win32.cpp
 
     HEADERS += \
         internal/btle/central/win8/win8centralplugin.h \

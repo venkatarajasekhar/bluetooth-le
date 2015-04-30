@@ -2,7 +2,7 @@
 #define COLLECTORSIMPLEQT_H
 
 #include <QObject>
-
+#include <QVector>
 #include "btle/central/collector.h"
 
 namespace btle {
@@ -38,7 +38,7 @@ namespace btle {
 
             void signal_device_discovered(const QString& addr, const QString& name);
             void signal_device_service_value_updated(const QString& addr, const QString& name,const QString& srv, const QString& json);
-            void signal_device_hr_value_updated(const QString& addr, const QString& name, int hr, const QList<int>& rrs, bool contact, int energy);
+            void signal_device_hr_value_updated(const QString& addr, const QString& name, int hr, const QVector<int>& rrs, bool contact, int energy);
             void signal_device_rsc_value_updated(const QString& addr, const QString& name, double speed, bool walking, int cadence, int stride_length, double distance);
             void signal_device_csc_value_updated(const QString& addr, const QString& name, double speed, int cadence, bool speed_present, bool cadence_present);
             void signal_device_characteristic_read(const QString& addr, const QString& name,const QString& srv, const QString& chr, const QString& data, int err);

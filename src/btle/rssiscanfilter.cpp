@@ -16,7 +16,7 @@ rssiscanfilter::rssiscanfilter(const rssiscanfilter& other)
 {
 }
 
-bool rssiscanfilter::process(device &dev)
+bool rssiscanfilter::process(device &dev, adv_fields &fields, int rssi)
 {
     return dev.rssi_filter().mean_median() >= rssi_limit_;
 }
