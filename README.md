@@ -2,8 +2,12 @@
 C++ bluetooth le library
 
 There is two main purposes where this library is intended for.
+
 1. To provide easy to use interface to receive sensor Heart rate etc..., the library offers a set of apis to use low level, medium level and high level api
+
 2. To provide easy to use data transfer link between two devices, without client to consern about attribute protocol max payload etc...
+
+3. To provide same interface for all platforms
 
 The library is allso highly configurable, for scanning filtering there is a simple abstract interface which needs to be implemented
 for new gatt service implementation see Heart rate service for exsample
