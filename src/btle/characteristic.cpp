@@ -121,7 +121,7 @@ characteristic& characteristic::operator << (const descriptor& desc)
 
 bool characteristic::operator == (const characteristic& other) const
 {
-    return uuid_ == other.uuid() &&
+    return uuid_             == other.uuid() &&
            attribute_handle_ == other.attribute_handle();
 }
 

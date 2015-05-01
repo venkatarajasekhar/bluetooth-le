@@ -10,7 +10,7 @@ namespace btle {
         uuidscanfilter(const uuidscanfilter& other);
 
     public:// from base
-        bool process(device &dev);
+        bool process(device &dev,adv_fields& fields,int rssi);
 
     private:
         uuid_list uuids_;

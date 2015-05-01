@@ -59,7 +59,7 @@ const std::string& advertisementfields::name() const
  * @brief advertisementfields::is_service_advertiset
  * @param uid
  * @return true is uuid is found from advertisement fields, NOTE
- *         this function returns true is the service has been adrvertiset at some point and
+ *         this function returns true if the service has been adrvertiset at some point and
  *         device data has not been invalidated at any time
  */
 bool advertisementfields::is_service_advertiset( const btle::uuid& uid ) const
@@ -82,10 +82,10 @@ bool advertisementfields::is_service_advertiset( const btle::uuid& uid ) const
         {
             if( fields_.find(btle::GAP_ADTYPE_128BIT_MORE) != fields_.end() )
             {
-                //                return advertisement_data_[btle::GAP_ADTYPE_128BIT_MORE] == uid;
+                return uuid(fields_.find(btle::GAP_ADTYPE_128BIT_MORE)->second.string_value()) == uid;
             }
         }
-        //        else return advertisement_data_[btle::GAP_ADTYPE_128BIT_COMPLETE] == uid;
+        else return uuid(fields_.find(btle::GAP_ADTYPE_128BIT_COMPLETE)->second.string_value()) == uid;
     }
     return false;
 }

@@ -101,5 +101,8 @@ void hrservice::process_service_value_read(const uuid &chr, const uint8_t *data,
 
 void hrservice::reset()
 {
-
+    hr_value_ = 0;
+    rrs_.clear();
+    energy_expended_ = 0;
+    memset(&flags_,0,sizeof(flags_));
 }

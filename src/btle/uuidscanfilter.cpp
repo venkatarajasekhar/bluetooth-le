@@ -15,7 +15,7 @@ uuidscanfilter::uuidscanfilter(const uuidscanfilter& other)
 {
 }
 
-bool uuidscanfilter::process(device &dev)
+bool uuidscanfilter::process(device &dev,adv_fields& fields,int rssi)
 {
     for( uuid_iterator_const it = uuids_.begin(); it != uuids_.end(); ++it )
     {

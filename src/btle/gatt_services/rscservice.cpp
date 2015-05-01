@@ -113,7 +113,14 @@ void rscservice::process_service_value_read(const uuid &chr, const uint8_t *data
 
 void rscservice::reset()
 {
-
+    speed_ = 0;
+    cadence_ = 0;
+    stride_length_ = 0;
+    distance_ = 0;
+    pending_operation_ = RSC_CS_NONE;
+    completed_operation_ = RSC_CS_NONE;
+    slocations_.clear();
+    sensor_location_ = 0;
 }
 
 

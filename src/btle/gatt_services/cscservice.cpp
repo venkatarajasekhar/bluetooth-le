@@ -83,6 +83,20 @@ void cscservice::reset()
 {
     speed_ = CSC_SPEED_UNINIT;
     cadence_ = CSC_CADENCE_UNINT;
+    curr_wheel_revs_ = 0;
+    curr_crank_revs_ = 0;
+    distance_ = 0;
+    total_distance_ = 0;
+    prev_wheel_event_ = 0;
+    curr_wheel_event_ = 0;
+    curr_crank_event_ = 0;
+    prev_crank_event_ = 0;
+    prev_wheel_revs_ = 0;
+    prev_crank_revs_ = 0;
+    exer_wheel_revs_ = 0;
+    wheel_rounds_ = 0;
+    wheel_event_  = 0;
+    crank_event_  = 0;
 }
 
 int cscservice::process_speed_measurement(const uint8_t* msg, int offset)

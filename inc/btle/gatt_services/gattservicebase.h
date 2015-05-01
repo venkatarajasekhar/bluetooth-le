@@ -23,6 +23,13 @@ namespace btle {
              */
             virtual void process_service_notify_data(const uuid& chr, const uint8_t* data, size_t size) = 0;
 
+            /**
+             * @brief process_service_value_read
+             * @param chr
+             * @param data
+             * @param size
+             * @param err
+             */
             virtual void process_service_value_read(const uuid& chr, const uint8_t* data, size_t size, const error& err) = 0;
 
             /**

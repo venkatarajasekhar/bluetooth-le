@@ -114,7 +114,8 @@ HEADERS += \
     internal/btle/timercallback.h \
     internal/btle/central/connectionhandlerlinkctrl.h \
     internal/btle/central/connectionhandlerscanctrl.h \
-    inc/btle/btlelibscanfilter.h
+    inc/btle/btlelibscanfilter.h \
+    internal/btle/peripheral/peripheralplugininterface.h
 
 
 ios{

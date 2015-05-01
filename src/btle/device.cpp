@@ -31,7 +31,7 @@ device::device(const bda &addr)
   bda_(addr),
   rssifilter_(),
   gatt_services_(),
-  advertisement_type_(DEVICE_ADVERTISEMENT_CONNECTABLE_UNDIRECTED)
+  advertisement_type_(ADV_IND)
 {
     gattservicefactory::instance().populate(gatt_services_);
 }

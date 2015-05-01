@@ -26,9 +26,11 @@ namespace btle {
     
     enum advertisement_type
     {
-        DEVICE_ADVERTISEMENT_CONNECTABLE_UNDIRECTED,
-        DEVICE_ADVERTISEMENT_NON_CONNECTABLE,
-        DEVICE_ADVERTISEMENT_DIRECTED
+        ADV_IND         = 0x00, // Connectable undirected advertising
+        ADV_DIRECT_IND  = 0x01, // Connectable directed advertising
+        ADV_SCAN_IND    = 0x02, // Scannable undirected advertising
+        ADV_NONCONN_IND = 0x03, // Non connectable undirected advertising
+        SCAN_RSP        = 0x04  // Scan Response
     };
 
     class BTLE_API device: public base

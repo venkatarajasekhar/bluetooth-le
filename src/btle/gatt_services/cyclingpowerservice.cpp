@@ -10,7 +10,22 @@ namespace {
 }
 
 cyclingpowerservice::cyclingpowerservice()
-: cscservice()
+: cscservice(),
+  inst_power_(0),
+  accumulated_torque_(0),
+  maximum_force_(0),
+  minimum_force_(0),
+  maximum_torque_(0),
+  minimum_torque_(0),
+  maximum_angle_(0),
+  minimum_angle_(0),
+  top_dead_spot_angle_(0),
+  bottom_dead_spot_angle_(0),
+  accumulated_energy_(0),
+  response_value_(0),
+  first_cranck_measurement_angle_(0),
+  inst_force_magnitude_array_(),
+  inst_torque_magnitude_array_()
 {
     mandatory_notifications_.clear();
     included_characteristics_.clear();
@@ -107,7 +122,24 @@ void cyclingpowerservice::process_service_value_read(const uuid& chr, const uint
 
 void cyclingpowerservice::reset()
 {
-
+    offset_compensation_indicator_ = 0;
+    memset(&flags_,0,sizeof(flags_));
+    memset(&vector_flags_,0,sizeof(vector_flags_));
+    inst_power_ = 0;
+    accumulated_torque_ = 0;
+    maximum_force_ = 0;
+    minimum_force_ = 0;
+    maximum_torque_ = 0;
+    minimum_torque_ = 0;
+    maximum_angle_ = 0;
+    minimum_angle_ = 0;
+    top_dead_spot_angle_ = 0;
+    bottom_dead_spot_angle_ = 0;
+    accumulated_energy_ = 0;
+    response_value_ = 0;
+    first_cranck_measurement_angle_ = 0;
+    inst_force_magnitude_array_.clear();
+    inst_torque_magnitude_array_.clear();
 }
 
 int16_t cyclingpowerservice::instantaneous_power() const
