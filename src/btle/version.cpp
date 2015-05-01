@@ -15,7 +15,7 @@ namespace {
  */
 const std::string& version::version_string()
 {
-    static std::string version_str = "0.0.0";
+    static std::string version_str = "1.0.0";
     return version_str;
 }
 
