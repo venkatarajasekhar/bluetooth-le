@@ -157,6 +157,8 @@ win{
 }
 
 linux{
+    SOURCES += \
+        src/btle/timer_posix.cpp
 }
 
 unix {

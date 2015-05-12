@@ -1,5 +1,6 @@
 
 #include "btle/smpkeys.h"
+#include <cstring>
 
 using namespace btle;
 
