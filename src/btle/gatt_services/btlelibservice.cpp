@@ -2,6 +2,8 @@
 #include "btle/gatt_services/btlelibservice.h"
 #include "btle/gatt_services/gattserviceregisterer.h"
 
+#include <assert.h>
+
 using namespace btle::gatt_services;
 
 namespace {
@@ -12,7 +14,9 @@ namespace {
     enum transfer_status
     {
         idle,
-        
+        first_air_packet,
+        streaming_in,
+        streaming_out
     };
 }
 
@@ -31,7 +35,7 @@ void btlelibservice::process_service_notify_data(const uuid& chr, const uint8_t*
 {
     if( chr == BTLE_MTU )
     {
-        switch(status_)
+        /*switch(status_)
         {
             msg_payload payload = {0};
             memcpy(&payload, data, size);
@@ -43,7 +47,7 @@ void btlelibservice::process_service_notify_data(const uuid& chr, const uint8_t*
             {
                 // more = false, check all payload received
             }
-        }
+        }*/
     }
 }
 
@@ -62,8 +66,16 @@ void btlelibservice::reset()
 
 int btlelibservice::write_service_value(const uuid& chr, const std::string& data)
 {
+    assert(chr == BTLE_MTU);
     out_.push_back(data);
-    
+    if(status_ == idle)
+    {
+        // ok to start new transfer
+        first_air_packet sof = {0};
+        sof.more = true;
+        sof.first = true;
+        sof.rc = 0;
+    }
     return 0;
 }
 

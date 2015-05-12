@@ -15,6 +15,14 @@ namespace btle {
         #define BTLE_MTU     "\x42\x54\x4c\x45\x20\x43\x48\x52\x20\x4d\x54\x55\x20\x31\x32\x38"
         #define BTLE_VERSION "\x42\x54\x4c\x45\x20\x43\x48\x52\x20\x46\x45\x41\x54\x55\x52\x45"
         
+        struct first_air_packet{
+            uint8_t more:1; // true more to come, false, first and last air packet
+            uint8_t first:1; // true
+            uint8_t rc:6; // zero
+            uint16_t file_size; // upcoming file size
+            uint8_t payload[17]; // payload
+        };
+        
         /**
          * message out packet, 
          * more = true/false, true = more is coming , false = last packet end of transfer
@@ -31,7 +39,7 @@ namespace btle {
         
         /**
          * message ack packet, after
-         * ack = true ok to send send more
+         * ack = true ok to send send more, false stream cancel
          * retransmit = true send last frame again
          */
         struct msg_ack{
