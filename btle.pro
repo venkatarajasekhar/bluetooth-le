@@ -158,7 +158,13 @@ win{
 
 linux{
     SOURCES += \
-        src/btle/timer_posix.cpp
+        src/btle/timer_posix.cpp \
+        src/btle/central/linux/bluezcentralplugin.cpp \
+        src/btle/central/linux/bluezperipheraldevice.cpp
+
+    HEADERS += \
+        internal/btle/central/linux/bluezcentralplugin.h \
+        internal/btle/central/linux/bluezperipheraldevice.h
 }
 
 unix {
