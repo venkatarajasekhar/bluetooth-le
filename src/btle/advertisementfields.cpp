@@ -77,7 +77,6 @@ bool advertisementfields::is_service_advertiset( const btle::uuid& uid ) const
     }
     else
     {
-        // TODO impelemt
         if( fields_.find(btle::GAP_ADTYPE_128BIT_COMPLETE) == fields_.end() )
         {
             if( fields_.find(btle::GAP_ADTYPE_128BIT_MORE) != fields_.end() )

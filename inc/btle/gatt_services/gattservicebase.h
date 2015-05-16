@@ -4,6 +4,7 @@
 #include "btle/base.h"
 #include "btle/uuid.h"
 #include "btle/error.h"
+#include "btle/service.h"
 
 namespace btle {
     namespace gatt_services {
@@ -41,6 +42,7 @@ namespace btle {
             virtual void set_active(const uuid& uid, bool notifying);
             virtual bool is_active() const;
             virtual std::string json(const uuid& uid) const;
+            virtual void attach_service_resource(const service& srv);
 
         public:
 
@@ -54,6 +56,7 @@ namespace btle {
             uuid_list included_characteristics_;
             uuid_list mandatory_notifications_;
             uuid service_;
+            service service_resource_;
         };
 
         typedef std::vector<gattservicebase*> gatt_service_list;

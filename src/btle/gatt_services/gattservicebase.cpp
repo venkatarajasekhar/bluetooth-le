@@ -38,6 +38,11 @@ std::string gattservicebase::json(const uuid& uid) const
     return "";
 }
 
+void gattservicebase::attach_service_resource(const service& srv)
+{
+    service_resource_ = srv;
+}
+
 const btle::uuid_list& gattservicebase::included_characteristics() const
 {
     return included_characteristics_;

@@ -115,7 +115,8 @@ HEADERS += \
     internal/btle/central/connectionhandlerlinkctrl.h \
     internal/btle/central/connectionhandlerscanctrl.h \
     inc/btle/btlelibscanfilter.h \
-    internal/btle/peripheral/peripheralplugininterface.h
+    internal/btle/peripheral/peripheralplugininterface.h \
+    inc/btle/gatt_services/gattservicetx.h
 
 
 ios{

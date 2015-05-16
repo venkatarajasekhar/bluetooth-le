@@ -1,6 +1,8 @@
 #ifndef COLLECTOR_H
 #define COLLECTOR_H
 
+#include <sstream>
+
 #include "btle/uuid.h"
 #include "btle/device.h"
 #include "btle/bda.h"
@@ -68,6 +70,10 @@ namespace btle {
             void write_characteristic_value(device& dev, const uuid_pair& pair, const std::string& data, bool write_with_out_resp = false);
             void set_characteristic_notify(device& dev, const uuid& uid, bool notify);
             void set_characteristic_notify(device& dev, const uuid_pair& pair, bool notify);
+
+        public: // device out stream operations
+
+            void write_file(btle::device& dev, std::ostream& stream, int id=0);
 
         private: // from connectionhandler
 
@@ -143,6 +149,8 @@ namespace btle {
             virtual void device_service_discovery_failed_cb(device& dev, const service_list& services, const error& err);
             virtual void device_characteristic_discovery_failed_cb(device& dev, const service& srv, const chr_list& chrs, const error& err);
             virtual void plugin_state_changed_cb(central_plugin_state state);
+            virtual void device_btle_ftp_in_progress(device& dev, double progress, int id);
+            virtual void device_btle_ftp_out_progress(device& dev, double progress, int id);
 
         private:
 

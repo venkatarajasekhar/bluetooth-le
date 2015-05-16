@@ -25,6 +25,9 @@ timer::timer()
 : object_(NULL)
 {
     object_ = new win32_timer_object;
+    ((win32_timer_object*)object_)->handle_ = NULL;
+    ((win32_timer_object*)object_)->back_pointer_ = NULL;
+    ((win32_timer_object*)object_)->callback_ = NULL;
 }
 
 timer::~timer()

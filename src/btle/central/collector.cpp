@@ -15,6 +15,8 @@
 #include "btle/bdascanfilter.h"
 #include "btle/uuidscanfilter.h"
 
+#include "btle/gatt_services/btlelibservice.h"
+
 namespace {
     enum collector_flags{
         CLIENT_SCAN   = 0x01,
@@ -509,6 +511,31 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
     throw btle::exceptions::device_not_connected("device not connected device is in state: " + dev.state_string());
 }
 
+/**
+ * @brief collector::write_file, write an single file over btle lib service
+ * @param dev
+ * @param stream file or message etc..
+ * @param id unique id of the file to be written, default 0, but it's a good practise to have somw unique id, it's for stram canceltation etc...
+ */
+void collector::write_file(btle::device& dev, std::ostream& stream, int id)
+{
+    verify(plugin_)
+    if( dev.state() == btle::DEVICE_CONNECTED )
+    {
+        if( const service* srv = dev.db().fetch_service(uuid(BTLE_SERVICE)) )
+        {
+            if( const characteristic* chr = dev.db().fetch_characteristic(uuid(BTLE_MTU)) )
+            {
+
+                return;
+            }
+            throw btle::exceptions::attribute_not_found("device does not contain btle characteristic mtu");
+        }
+        throw btle::exceptions::attribute_not_found("device does not contain btle service");
+    }
+    throw btle::exceptions::device_not_connected("device not connected device is in state: " + dev.state_string());
+}
+
 void collector::device_state_changed(btle::device& dev)
 {
     device_state_changed_cb(dev);
@@ -662,6 +689,11 @@ void collector::device_characteristics_discovered(device& dev, service& srv, chr
                 }
             }
         }
+        // run gatt service config
+        /*if( gattservicebase* gatt_srv = dev.gatt_service(it->uuid()) )
+        {
+
+        }*/
     }
     else device_characteristic_discovery_failed_cb(dev,srv,chrs,err);
 }
@@ -770,6 +802,28 @@ void collector::device_characteristic_discovery_failed_cb(device& dev, const ser
 void collector::plugin_state_changed_cb(central_plugin_state state)
 {
     _log_warning("plugin state: %i",state);
+}
+
+/**
+ * @brief collector::device_btle_ftp_in_progress
+ * @param dev remote device
+ * @param progress progress in procentage 0-100%
+ * @param id unique file identifier 0 = not specified
+ */
+void collector::device_btle_ftp_in_progress(device& dev, double progress, int id)
+{
+    _log("File progress procentage: %d file identifier: %i",progress,id);
+}
+
+/**
+ * @brief collector::device_btle_ftp_out_progress
+ * @param dev remote device
+ * @param progress progress in procentage 0-100%
+ * @param id unique file identifier 0 = not specified
+ */
+void collector::device_btle_ftp_out_progress(device& dev, double progress, int id)
+{
+    _log("File progress procentage: %d file identifier: %i",progress,id);
 }
 
 btle::device* collector::fetch_device(const bda& addr)

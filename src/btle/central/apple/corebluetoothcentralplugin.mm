@@ -331,7 +331,6 @@ namespace {
     parent_->observer().device_services_invalidated(*dev);
 }
 
-
 @end
 
 corebluetoothcentralplugin::corebluetoothcentralplugin(centralpluginobserver &observer)
