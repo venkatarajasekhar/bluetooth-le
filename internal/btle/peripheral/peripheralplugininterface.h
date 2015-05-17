@@ -6,12 +6,48 @@
 namespace btle {
     class service;
     class gattdatabase;
+    class device;
+    class service;
+    class characteristic;
+    class descriptor;
     namespace peripheral {
+
+        class peripheralpluginobserver;
+
+        enum peripheral_plugin_extras
+        {
+            PLUGIN_CENTRAL_GATT_DISCOVERY_CAPABILITY = 0x01,
+            PLUGIN_CENTRAL_
+        };
+
         class peripheralplugininterface{
         public:
             peripheralplugininterface();
 
         public:
+
+            /**
+             * @brief features
+             * @return @see central_plugin_extras, returns bit mask of extra features if any
+             */
+            virtual unsigned int features();
+
+            /**
+             * @brief name
+             * @return
+             */
+            virtual const std::string& name() = 0;
+
+            /**
+             * @brief start
+             * @return
+             */
+            virtual int start() = 0;
+
+            /**
+             * @brief stop
+             */
+            virtual void stop() = 0;
 
             /**
              * @brief operator <<
@@ -37,6 +73,51 @@ namespace btle {
              * @return
              */
             virtual std::vector<advertisement_data_type> supported_adtypes() = 0;
+
+            /**
+             * @brief read_characteristic
+             * @param central
+             * @param chr
+             * @return
+             */
+            virtual std::string read_characteristic(device& central, characteristic& chr) = 0;
+
+            /**
+             * @brief characteristic_written
+             * @param central
+             * @param chr
+             */
+            virtual void characteristic_written(device& central, characteristic& chr) = 0;
+
+            /**
+             * @brief read_descriptor
+             * @param central
+             * @param chr
+             * @param desc
+             */
+            virtual std::string read_descriptor(device& central, characteristic& chr, descriptor& desc) = 0;
+
+            /**
+             * @brief descriptor_written
+             * @param central
+             * @param chr
+             * @param desc
+             * @return
+             */
+            virtual std::string descriptor_written(device& central, characteristic& chr, descriptor& desc) = 0;
+
+            /**
+             * @brief did_subscribe_to_characteristic
+             * @param central
+             * @param srv
+             */
+            virtual void characteristic_notify_changed(device& central, characteristic& srv, bool notify) = 0;
+
+            /**
+             * @brief discover_services, optional service discovery, for discovering services of central device
+             * @param central
+             */
+            virtual void discover_services(device& central);
         };
     }
 }

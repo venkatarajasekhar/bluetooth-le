@@ -53,7 +53,9 @@ SOURCES += \
     src/btle/central/collectorsimpleqt.cpp \
     src/btle/gatt_services/btlelibservice.cpp \
     src/btle/smpkeys.cpp \
-    src/btle/btlelibscanfilter.cpp
+    src/btle/btlelibscanfilter.cpp \
+    src/btle/peripheral/peripheralplugininterface.cpp \
+    src/btle/peripheral/peripheralpluginfactory.cpp
 
 HEADERS += \
     inc/btle/btle.h\
@@ -116,7 +118,11 @@ HEADERS += \
     internal/btle/central/connectionhandlerscanctrl.h \
     inc/btle/btlelibscanfilter.h \
     internal/btle/peripheral/peripheralplugininterface.h \
-    inc/btle/gatt_services/gattservicetx.h
+    inc/btle/gatt_services/gattservicetx.h \
+    internal/btle/peripheral/peripheralpluginregisterer.h \
+    internal/btle/peripheral/peripheralpluginregisterer.hpp \
+    internal/btle/peripheral/peripheralpluginfactory.h \
+    internal/btle/peripheral/peripheralpluginobserver.h
 
 
 ios{

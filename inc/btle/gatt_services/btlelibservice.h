@@ -3,6 +3,7 @@
 #define btle_btlelibservice_h
 
 #include "btle/gatt_services/gattservicebase.h"
+#include "btle/gatt_services/gattservicetx.h"
 
 namespace btle {
     namespace gatt_services{
@@ -57,7 +58,7 @@ namespace btle {
             void process_service_notify_data(const uuid& chr, const uint8_t* data, size_t size);
             void process_service_value_read(const uuid& chr, const uint8_t* data, size_t size, const error& err);
             void reset();
-            int write_service_value(const uuid& chr, const std::string& data);
+            int write_service_value(const uuid& chr, const std::string& data, gattservicetx *tx);
             
         public: // API
             

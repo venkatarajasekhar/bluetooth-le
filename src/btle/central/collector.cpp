@@ -807,7 +807,7 @@ void collector::plugin_state_changed_cb(central_plugin_state state)
 /**
  * @brief collector::device_btle_ftp_in_progress
  * @param dev remote device
- * @param progress progress in procentage 0-100%
+ * @param progress in procentage 0-100%
  * @param id unique file identifier 0 = not specified
  */
 void collector::device_btle_ftp_in_progress(device& dev, double progress, int id)
@@ -818,7 +818,7 @@ void collector::device_btle_ftp_in_progress(device& dev, double progress, int id
 /**
  * @brief collector::device_btle_ftp_out_progress
  * @param dev remote device
- * @param progress progress in procentage 0-100%
+ * @param progress in procentage 0-100%
  * @param id unique file identifier 0 = not specified
  */
 void collector::device_btle_ftp_out_progress(device& dev, double progress, int id)

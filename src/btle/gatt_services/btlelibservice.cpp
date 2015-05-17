@@ -3,6 +3,7 @@
 #include "btle/gatt_services/gattserviceregisterer.h"
 
 #include <assert.h>
+#include <sstream>
 
 using namespace btle::gatt_services;
 
@@ -38,7 +39,7 @@ void btlelibservice::process_service_notify_data(const uuid& chr, const uint8_t*
         /*switch(status_)
         {
             msg_payload payload = {0};
-            memcpy(&payload, data, size);
+            memcpy(&payload, data, sizeof(payload));
             if( payload.more )
             {
                 
@@ -64,17 +65,22 @@ void btlelibservice::reset()
     
 }
 
-int btlelibservice::write_service_value(const uuid& chr, const std::string& data)
+int btlelibservice::write_service_value(const uuid& chr, const std::string& data, gattservicetx* tx)
 {
     assert(chr == BTLE_MTU);
     out_.push_back(data);
     if(status_ == idle)
     {
+        std::stringstream ss(data);
+
+        status_ = streaming_out;
         // ok to start new transfer
         first_air_packet sof = {0};
         sof.more = true;
         sof.first = true;
         sof.rc = 0;
+        sof.file_size = data.size();
+        ss.read((char*)sof.payload[0],17);
     }
     return 0;
 }
