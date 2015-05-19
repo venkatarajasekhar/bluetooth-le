@@ -515,7 +515,7 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
  * @brief collector::write_file, write an single file over btle lib service
  * @param dev
  * @param stream file or message etc..
- * @param id unique id of the file to be written, default 0, but it's a good practise to have somw unique id, it's for stram canceltation etc...
+ * @param id unique id of the file to be written, default 0, but it's a good practise to have some unique id, it's for stream cancelation etc...
  */
 void collector::write_file(btle::device& dev, std::ostream& stream, int id)
 {

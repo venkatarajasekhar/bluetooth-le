@@ -16,8 +16,7 @@ namespace btle {
 
         enum peripheral_plugin_extras
         {
-            PLUGIN_CENTRAL_GATT_DISCOVERY_CAPABILITY = 0x01,
-            PLUGIN_CENTRAL_
+            PLUGIN_CENTRAL_GATT_DISCOVERY_CAPABILITY = 0x01
         };
 
         class peripheralplugininterface{
@@ -70,7 +69,8 @@ namespace btle {
 
             /**
              * @brief supported_adtypes
-             * @return
+             * @return plugin supported ad types, it is common that not all ad types are supported, it depends on platform or
+             *         hw etc...
              */
             virtual std::vector<advertisement_data_type> supported_adtypes() = 0;
 

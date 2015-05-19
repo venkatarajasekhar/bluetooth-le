@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D3B3E011B0BC739003D6DAD /* peripheral.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3B3DFE1B0BC739003D6DAD /* peripheral.cpp */; };
+		0D3B3E021B0BC739003D6DAD /* peripheralpluginfactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3B3DFF1B0BC739003D6DAD /* peripheralpluginfactory.cpp */; };
+		0D3B3E031B0BC739003D6DAD /* peripheralplugininterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3B3E001B0BC739003D6DAD /* peripheralplugininterface.cpp */; };
 		0DC7398F1ACDDEF7005F7BC0 /* libbtle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC739831ACDDEF7005F7BC0 /* libbtle.a */; };
 		0DC73A0A1ACDDF56005F7BC0 /* advertisementdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DC1ACDDF56005F7BC0 /* advertisementdata.cpp */; };
 		0DC73A0B1ACDDF56005F7BC0 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DD1ACDDF56005F7BC0 /* base.cpp */; };
@@ -81,6 +84,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0D3B3DF81B0BC729003D6DAD /* peripheralpluginfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peripheralpluginfactory.h; sourceTree = "<group>"; };
+		0D3B3DF91B0BC729003D6DAD /* peripheralplugininterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peripheralplugininterface.h; sourceTree = "<group>"; };
+		0D3B3DFA1B0BC729003D6DAD /* peripheralpluginobserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peripheralpluginobserver.h; sourceTree = "<group>"; };
+		0D3B3DFB1B0BC729003D6DAD /* peripheralpluginregisterer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peripheralpluginregisterer.h; sourceTree = "<group>"; };
+		0D3B3DFC1B0BC729003D6DAD /* peripheralpluginregisterer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = peripheralpluginregisterer.hpp; sourceTree = "<group>"; };
+		0D3B3DFE1B0BC739003D6DAD /* peripheral.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = peripheral.cpp; sourceTree = "<group>"; };
+		0D3B3DFF1B0BC739003D6DAD /* peripheralpluginfactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = peripheralpluginfactory.cpp; sourceTree = "<group>"; };
+		0D3B3E001B0BC739003D6DAD /* peripheralplugininterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = peripheralplugininterface.cpp; sourceTree = "<group>"; };
+		0D3B3E051B0BC748003D6DAD /* peripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peripheral.h; sourceTree = "<group>"; };
 		0D4F08491AE6D68700F4A1A4 /* timercallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timercallback.h; sourceTree = "<group>"; };
 		0DC739831ACDDEF7005F7BC0 /* libbtle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtle.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DC7398E1ACDDEF7005F7BC0 /* btleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = btleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,6 +227,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D3B3DF71B0BC729003D6DAD /* peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				0D3B3DF81B0BC729003D6DAD /* peripheralpluginfactory.h */,
+				0D3B3DF91B0BC729003D6DAD /* peripheralplugininterface.h */,
+				0D3B3DFA1B0BC729003D6DAD /* peripheralpluginobserver.h */,
+				0D3B3DFB1B0BC729003D6DAD /* peripheralpluginregisterer.h */,
+				0D3B3DFC1B0BC729003D6DAD /* peripheralpluginregisterer.hpp */,
+			);
+			path = peripheral;
+			sourceTree = "<group>";
+		};
+		0D3B3DFD1B0BC739003D6DAD /* peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				0D3B3DFE1B0BC739003D6DAD /* peripheral.cpp */,
+				0D3B3DFF1B0BC739003D6DAD /* peripheralpluginfactory.cpp */,
+				0D3B3E001B0BC739003D6DAD /* peripheralplugininterface.cpp */,
+			);
+			path = peripheral;
+			sourceTree = "<group>";
+		};
+		0D3B3E041B0BC748003D6DAD /* peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				0D3B3E051B0BC748003D6DAD /* peripheral.h */,
+			);
+			path = peripheral;
+			sourceTree = "<group>";
+		};
 		0DC7397A1ACDDEF7005F7BC0 = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +305,7 @@
 		0DC7399E1ACDDF56005F7BC0 /* btle */ = {
 			isa = PBXGroup;
 			children = (
+				0D3B3E041B0BC748003D6DAD /* peripheral */,
 				0DC739A51ACDDF56005F7BC0 /* central */,
 				0DC739AC1ACDDF56005F7BC0 /* exceptions */,
 				0DC739B51ACDDF56005F7BC0 /* gatt_services */,
@@ -350,6 +393,7 @@
 		0DC739CC1ACDDF56005F7BC0 /* btle */ = {
 			isa = PBXGroup;
 			children = (
+				0D3B3DF71B0BC729003D6DAD /* peripheral */,
 				0DC739CD1ACDDF56005F7BC0 /* central */,
 				0DC73A7F1AE68E94005F7BC0 /* timer.h */,
 				0D4F08491AE6D68700F4A1A4 /* timercallback.h */,
@@ -394,6 +438,7 @@
 		0DC739DB1ACDDF56005F7BC0 /* btle */ = {
 			isa = PBXGroup;
 			children = (
+				0D3B3DFD1B0BC739003D6DAD /* peripheral */,
 				0DC739E11ACDDF56005F7BC0 /* central */,
 				0DC739F01ACDDF56005F7BC0 /* exceptions */,
 				0DC739F91ACDDF56005F7BC0 /* gatt_services */,
@@ -581,7 +626,9 @@
 				0DC73A0C1ACDDF56005F7BC0 /* bda.cpp in Sources */,
 				0DC73A161ACDDF56005F7BC0 /* characteristic.cpp in Sources */,
 				0DC73A261ACDDF56005F7BC0 /* gattservicefactory.cpp in Sources */,
+				0D3B3E011B0BC739003D6DAD /* peripheral.cpp in Sources */,
 				0DC73A1B1ACDDF56005F7BC0 /* attribute_not_found.cpp in Sources */,
+				0D3B3E021B0BC739003D6DAD /* peripheralpluginfactory.cpp in Sources */,
 				0DC73A351ACDE258005F7BC0 /* corebluetoothperipheraldevice.mm in Sources */,
 				0DC73A0B1ACDDF56005F7BC0 /* base.cpp in Sources */,
 				0DC73A301ACDDF56005F7BC0 /* uuid.cpp in Sources */,
@@ -591,6 +638,7 @@
 				0DC73A721AD12FE4005F7BC0 /* advertisementfields.cpp in Sources */,
 				0DC73A181ACDDF56005F7BC0 /* descriptor.cpp in Sources */,
 				0DC73A2D1ACDDF56005F7BC0 /* scanfilterbase.cpp in Sources */,
+				0D3B3E031B0BC739003D6DAD /* peripheralplugininterface.cpp in Sources */,
 				0DC73A131ACDDF56005F7BC0 /* connectionhandler.cpp in Sources */,
 				0DC73A281ACDDF56005F7BC0 /* hrservice.cpp in Sources */,
 				0DC73A231ACDDF56005F7BC0 /* cscservice.cpp in Sources */,
