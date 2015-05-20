@@ -17,7 +17,7 @@ namespace btle {
                 device* allocate_new_device(const bda& addr);
                 int start();
                 void stop();
-                void start_scan( const uuid_list* services = NULL );
+                void start_scan( central_scan_parameters param = SCAN_HIGH_DUTY, const uuid_list* services = NULL );
                 void stop_scan();
                 void connect_device(device& dev);
                 void disconnect_device(device& dev);

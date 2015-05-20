@@ -104,8 +104,10 @@ namespace btle {
 
             /**
              * @brief start_scan
+             * @param param
+             * @param services
              */
-            virtual void start_scan( const uuid_list* services = NULL ) = 0;
+            virtual void start_scan( central_scan_parameters param = SCAN_HIGH_DUTY, const uuid_list* services = NULL ) = 0;
 
             /**
              * @brief stop_scan
@@ -174,6 +176,13 @@ namespace btle {
              * @param notify
              */
             virtual void write_descriptor(device& dev, const service& srv, const characteristic& chr, descriptor& desc, bool notify) = 0;
+
+            /**
+             * @brief update_parameters
+             * @param dev
+             * @param params
+             */
+            virtual void update_parameters(device& dev, const connectionparameters& params);
 
         protected:
 

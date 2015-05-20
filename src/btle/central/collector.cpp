@@ -5,6 +5,7 @@
 #include "btle/exceptions/attribute_not_writable.h"
 #include "btle/exceptions/device_not_connected.h"
 #include "btle/exceptions/service_not_found.h"
+#include "btle/exceptions/not_supported.h"
 
 #include "btle/central/collector.h"
 #include "btle/central/centralpluginfactory.h"
@@ -512,6 +513,26 @@ void collector::set_characteristic_notify(device& dev, const uuid_pair& pair, bo
 }
 
 /**
+ * @brief update_connection_parameters
+ * @param dev
+ * @param params
+ */
+void collector::update_connection_parameters(btle::device& dev, const connectionparameters& params)
+{
+    verify(plugin_)
+    if( dev.state() == btle::DEVICE_CONNECTED )
+    {
+        if( plugin_->features() & btle::central::PLUGIN_CONNECTION_PARAMETER_CAPABILITY )
+        {
+            plugin_->update_parameters(dev,params);
+            return;
+        }
+        throw btle::exceptions::not_supported("plugin does not support connection paramter update");
+    }
+    throw btle::exceptions::device_not_connected("device not connected device is in state: " + dev.state_string());
+}
+
+/**
  * @brief collector::write_file, write an single file over btle lib service
  * @param dev
  * @param stream file or message etc..
@@ -824,6 +845,11 @@ void collector::device_btle_ftp_in_progress(device& dev, double progress, int id
 void collector::device_btle_ftp_out_progress(device& dev, double progress, int id)
 {
     _log("File progress procentage: %d file identifier: %i",progress,id);
+}
+
+void collector::device_connection_parameters_updated(device& dev)
+{
+    _log("device connection paramters updated: %s",dev.parameters().description().c_str());
 }
 
 btle::device* collector::fetch_device(const bda& addr)

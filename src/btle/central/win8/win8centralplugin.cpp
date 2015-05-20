@@ -42,7 +42,7 @@ void win8centralplugin::stop()
 
 }
 
-void win8centralplugin::start_scan( const uuid_list* services )
+void win8centralplugin::start_scan(central_scan_parameters param, const uuid_list* services )
 {
 
 }

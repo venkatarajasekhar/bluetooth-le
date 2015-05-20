@@ -61,7 +61,7 @@ void bluezcentralplugin::stop()
 
 }
 
-void bluezcentralplugin::start_scan( const uuid_list* services )
+void bluezcentralplugin::start_scan(central_scan_parameters param, const uuid_list* services )
 {
     // TODO change from full window to approx. 80%
     int err(0);

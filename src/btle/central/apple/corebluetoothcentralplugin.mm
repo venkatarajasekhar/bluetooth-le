@@ -366,7 +366,7 @@ void corebluetoothcentralplugin::stop()
     privateimpl_= nil;
 }
 
-void corebluetoothcentralplugin::start_scan( const uuid_list* services )
+void corebluetoothcentralplugin::start_scan( central_scan_parameters param, const uuid_list* services )
 {
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber  numberWithBool:YES], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
 
