@@ -4,6 +4,7 @@
 #include "btle/central/centralplugininterface.h"
 
 #include <bluetooth/bluetooth.h>
+#include <thread>
 
 namespace btle {
     namespace central {
@@ -35,6 +36,7 @@ namespace btle {
 
                 int id_;
                 int handle_;
+                thread main_;
             };
         }
     }

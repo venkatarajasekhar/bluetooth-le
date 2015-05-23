@@ -4,6 +4,7 @@
 #include <vector>
 #include <deque>
 
+#include "btle/base.h"
 #include "btle_global.h"
 
 namespace btle {
@@ -12,7 +13,7 @@ namespace btle {
      * @brief The rssifilter class, general purpose rssi filter, for list view etc.. for sorting device
      * based on rssi please prefer median or mean median rssi values for stability reasons
      */
-    class BTLE_API rssifilter{
+    class BTLE_API rssifilter: public base{
     public:
         rssifilter();
 
@@ -23,6 +24,10 @@ namespace btle {
         int current() const;
         int median() const;
         double mean_median() const;
+
+    public: // from base
+
+        void invalidate();
 
     private:
 

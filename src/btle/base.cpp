@@ -47,6 +47,13 @@ int base::to_int(int base)
     return 0;
 }
 
+void base::invalidate()
+{
+    value_ = "";
+    description_ = "";
+}
+
+
 const std::string& base::string_value() const
 {
     return value_;

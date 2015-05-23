@@ -562,7 +562,7 @@ void collector::device_state_changed(btle::device& dev)
     device_state_changed_cb(dev);
     if( dev.state() == DEVICE_DISCONNECTED )
     {
-        dev.clear();
+        dev.clear_device_data();
     }
 }
 

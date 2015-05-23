@@ -24,7 +24,10 @@ namespace btle {
         // get
         const std::string& name() const;
         bool is_service_advertiset( const btle::uuid& uid ) const;
-        void clear();
+
+    public: // from base
+
+        void invalidate();
         
     private:
         std::map<btle::advertisement_data_type,btle::advertisementdata> fields_;

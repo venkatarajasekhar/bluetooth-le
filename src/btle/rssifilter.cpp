@@ -69,3 +69,14 @@ double rssifilter::mean_median() const
 {
     return mean_median_;
 }
+
+void rssifilter::invalidate()
+{
+    rssis_.clear();
+    rssis_sorted_.clear();
+    medians_.clear();
+    median_ = 0;
+    current_ = 0;
+    mean_median_ = 0;
+}
+

@@ -35,6 +35,7 @@ namespace btle {
     public:
         
         std::string to_string() const;
+        void invalidate();
         
     private:
 

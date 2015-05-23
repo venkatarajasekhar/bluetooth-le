@@ -28,6 +28,10 @@ namespace btle {
         void update_descriptor(const service& srv, const characteristic& chr, const descriptor& desc, bool notifying);
         void update_service_chrs(const service& srv, const chr_list& chrs);
         
+    public: // from base
+
+        void invalidate();
+
     private:
 
         std::vector<service> services_;

@@ -159,3 +159,13 @@ std::string characteristic::to_string() const
     return uuid_.to_string();
 }
 
+void characteristic::invalidate()
+{
+    descriptors_.clear();
+    attribute_handle_ = 0;
+    characteristic_value_handle_ = 0;
+    characteristic_properties_ = 0;
+    instance_id_ = 0;
+}
+
+

@@ -23,6 +23,7 @@ namespace btle {
         //virtual bool operator == (const base& other);
         virtual std::string to_string() const;
         virtual int to_int(int base = 10);
+        virtual void invalidate();
 
     public:
 

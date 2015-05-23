@@ -57,7 +57,8 @@ SOURCES += \
     src/btle/peripheral/peripheralplugininterface.cpp \
     src/btle/peripheral/peripheralpluginfactory.cpp \
     src/btle/peripheral/peripheral.cpp \
-    src/btle/exceptions/not_supported.cpp
+    src/btle/exceptions/not_supported.cpp \
+    src/btle/statistics.cpp
 
 HEADERS += \
     inc/btle/btle.h\
@@ -126,7 +127,8 @@ HEADERS += \
     internal/btle/peripheral/peripheralpluginfactory.h \
     internal/btle/peripheral/peripheralpluginobserver.h \
     inc/btle/peripheral/peripheral.h \
-    inc/btle/exceptions/not_supported.h
+    inc/btle/exceptions/not_supported.h \
+    inc/btle/statistics.h
 
 
 ios{

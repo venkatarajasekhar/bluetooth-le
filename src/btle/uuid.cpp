@@ -162,3 +162,9 @@ std::string uuid::to_string() const
     else return value_;
 }
 
+void uuid::invalidate()
+{
+    base::invalidate();
+    uuid16_ = 0;
+}
+

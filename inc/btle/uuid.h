@@ -40,6 +40,7 @@ namespace btle {
     public: // from base
 
         std::string to_string() const;
+        void invalidate();
 
     private:
         uint16_t uuid16_;

@@ -33,6 +33,10 @@ namespace btle {
         // operators
         bool operator == (const descriptor& other) const;
         
+    public: // from base
+
+        void invalidate();
+
     private:
         uint16_t type_;
         uint16_t handle_;

@@ -144,3 +144,9 @@ void gattdatabase::update_service_chrs(const service& srv, const chr_list& chrs)
     }
 }
 
+void gattdatabase::invalidate()
+{
+    base::invalidate();
+    services_.clear();
+}
+

@@ -29,3 +29,10 @@ connectionparameters::connectionparameters(
   connection_timeout_(connection_timeout)
 {
 }
+
+void connectionparameters::invalidate()
+{
+    connection_interval_=0;
+    connection_latency_=0;
+    connection_timeout_=0;
+}

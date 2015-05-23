@@ -127,3 +127,10 @@ std::string service::to_string() const
 {
     return uuid_.to_string();
 }
+
+void service::invalidate()
+{
+    characteristics_.clear();
+    start_handle_ = 0;
+    end_handle_ = 0;
+}

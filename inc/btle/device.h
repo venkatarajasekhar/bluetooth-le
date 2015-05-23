@@ -9,8 +9,7 @@
 #include "btle/gatt_services/gattservicebase.h"
 #include "btle/connectionparameters.h"
 #include "btle/advertisementfields.h"
-
-#include <map>
+#include "btle/statistics.h"
 
 namespace btle {
     // bluetooth le device presentation class, can be a peripheral or central device,
@@ -64,11 +63,12 @@ namespace btle {
         bool operator == (const device& other) const;
         btle::advertisement_type advertisement_type() const;
 
-        void clear(bool verbose=false);
+        void clear_device_data(bool verbose=false);
         
     public: // from base
 
         std::string description() const;
+        void invalidate();
 
     public:
 
@@ -87,6 +87,7 @@ namespace btle {
         gatt_services::gatt_service_list gatt_services_;
         connectionparameters parameters_;
         btle::advertisement_type advertisement_type_;
+        statistics statistics_;
     };
 
     typedef std::vector<device*> device_list;

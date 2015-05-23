@@ -65,4 +65,9 @@ bool descriptor::operator == (const descriptor& other) const
     return type_ == other.type() && handle_ == other.handle();
 }
 
-
+void descriptor::invalidate()
+{
+    is_notifying_ = false;
+    type_ = 0;
+    handle_ = 0;
+}

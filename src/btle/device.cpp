@@ -31,7 +31,8 @@ device::device(const bda &addr)
   bda_(addr),
   rssifilter_(),
   gatt_services_(),
-  advertisement_type_(ADV_IND)
+  advertisement_type_(ADV_IND),
+  statistics_()
 {
     gattservicefactory::instance().populate(gatt_services_);
 }
@@ -124,7 +125,7 @@ btle::advertisement_type device::advertisement_type() const
     return advertisement_type_;
 }
 
-void device::clear(bool verbose)
+void device::clear_device_data(bool verbose)
 {
     for( gatt_service_iterator it = gatt_services_.begin(); it != gatt_services_.end(); ++it )
     {
@@ -132,7 +133,7 @@ void device::clear(bool verbose)
     }
     if( verbose )
     {
-        advertisement_fields_.clear();
+        device::invalidate();
     }
 }
 
@@ -146,5 +147,14 @@ std::string device::description() const
 void device::set_state(connection_state state)
 {
     state_ = state;
+}
+
+void device::invalidate()
+{
+    base::invalidate();
+    bda_.invalidate();
+    parameters_.invalidate();
+    advertisement_fields_.invalidate();
+    db_.invalidate();
 }
 
