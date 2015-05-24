@@ -4,6 +4,7 @@
 #include "btle/log.h"
 
 #include <assert.h>
+#include <cstring>
 #include <sstream>
 
 using namespace btle::gatt_services;

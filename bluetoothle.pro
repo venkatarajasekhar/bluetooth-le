@@ -12,6 +12,9 @@ QMAKE_LIBDIR += "$$DESTDIR"
 # for whom will compile a solution "multi projects" use these in project settings DESTDIR="$PWD/debug" DESTDIR="$PWD/release"
 
 # c++ 11 required sources/headers
+#QMAKE_CXXFLAGS += -std=c++11
+#QMAKE_CXXFLAGS += -stdlib=libc++
+LIBS += -stdlib=libc++
 CONFIG += c++11
 HEADERS += \
     inc/btle/atomiclist.h \
@@ -195,13 +198,13 @@ win{
 
 linux{
     SOURCES += \
-        src/btle/timer_posix.cpp \
-        src/btle/central/linux/bluezcentralplugin.cpp \
-        src/btle/central/linux/bluezperipheraldevice.cpp
+        src/btle/timer_posix.cpp# \
+#        src/btle/central/linux/bluezcentralplugin.cpp \
+#        src/btle/central/linux/bluezperipheraldevice.cpp
 
-    HEADERS += \
-        internal/btle/central/linux/bluezcentralplugin.h \
-        internal/btle/central/linux/bluezperipheraldevice.h
+#    HEADERS += \
+#        internal/btle/central/linux/bluezcentralplugin.h \
+#        internal/btle/central/linux/bluezperipheraldevice.h
 }
 
 unix {
