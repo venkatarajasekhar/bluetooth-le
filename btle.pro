@@ -137,10 +137,12 @@ ios{
             -framework CoreBluetooth
 
     OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h \
-                         internal/btle/central/apple/corebluetoothperipheraldevice.h
+                         internal/btle/central/apple/corebluetoothperipheraldevice.h\
+                         internal/btle/peripheral/apple/corebluetoothperipheralplugin.h
     OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm \
                          src/btle/central/apple/corebluetoothperipheraldevice.mm \
-                         src/btle/timer_darwin.mm
+                         src/btle/timer_darwin.mm \
+                         src/btle/peripheral/apple/corebluetoothperipheralplugin.mm
 }
 
 macx{
@@ -149,10 +151,12 @@ macx{
             -framework IOBluetooth
 
     OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h \
-                         internal/btle/central/apple/corebluetoothperipheraldevice.h
+                         internal/btle/central/apple/corebluetoothperipheraldevice.h\
+                         internal/btle/peripheral/apple/corebluetoothperipheralplugin.h
     OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm \
                          src/btle/central/apple/corebluetoothperipheraldevice.mm \
-                         src/btle/timer_darwin.mm
+                         src/btle/timer_darwin.mm \
+                         src/btle/peripheral/apple/corebluetoothperipheralplugin.mm
 }
 
 android{

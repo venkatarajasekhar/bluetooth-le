@@ -13,6 +13,12 @@
 
 namespace btle {
     namespace central {
+
+        enum collector_mode{
+            COLLECTOR_POWER_SAVE_OFF = 0x00,
+            COLLECTOR_POWER_SAVE_ON  = 0x01
+        };
+
         /**
          * @brief The collector class, main interface class for lib central usage
          */
@@ -61,6 +67,10 @@ namespace btle {
             void connect_device(device& dev);
             void disconnect_device(device& dev);
             void disconnect_device(const bda& addr);
+
+        public:
+
+            void set_mode(collector_mode mode);
 
         public: // device gatt operations
 

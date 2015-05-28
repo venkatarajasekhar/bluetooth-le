@@ -1,6 +1,7 @@
 
 #include "btle/peripheral/peripheral.h"
 #include "btle/peripheral/peripheralpluginfactory.h"
+#include "btle/gatt_services/btlelibservice.h"
 
 #include <assert.h>
 
@@ -41,6 +42,8 @@ int peripheral::start(const std::string& plugin_name)
                 plugin_ = NULL;
                 return err;
             }
+            // by default add library service
+            db_ << (service(uuid(BTLE_SERVICE)) << characteristic(uuid(BTLE_MTU)) << characteristic(uuid(BTLE_VERSION)));
             return 0;
         }
     }

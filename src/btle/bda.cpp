@@ -9,7 +9,8 @@ using namespace btle;
 namespace {
     inline static const char* type2string( address_type type )
     {
-        switch (type) {
+        switch (type)
+        {
             case btle::ADDR_PRIVATE_NONRESOLVE: return "PRIVATE_NONRESOLVE";
             case btle::ADDR_PRIVATE_RESOLVE:    return "PRIVATE_RESOLVE";
             case btle::ADDR_PUBLIC:             return "PUBLIC";

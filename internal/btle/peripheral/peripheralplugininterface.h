@@ -118,6 +118,19 @@ namespace btle {
              * @param central
              */
             virtual void discover_services(device& central);
+
+            /**
+             * @brief discover_characteristics
+             * @param dev
+             * @param srv
+             */
+            virtual void discover_characteristics(device& central, const service& srv);
+
+            /**
+             * @brief read_characteristic_value
+             */
+            virtual void read_characteristic_value(device& central, const service& srv, const characteristic& chr);
+
         };
     }
 }

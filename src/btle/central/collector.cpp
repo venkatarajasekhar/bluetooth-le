@@ -330,6 +330,23 @@ void collector::disconnect_device(const bda& addr)
     }
 }
 
+void collector::set_mode(collector_mode mode)
+{
+    switch(mode)
+    {
+        case COLLECTOR_POWER_SAVE_OFF:
+        {
+            // TODO
+            break;
+        }
+        case COLLECTOR_POWER_SAVE_ON:
+        {
+            // TODO
+            break;
+        }
+    }
+}
+
 /**
  * @brief collector::read_characteristic_value
  * @param dev
