@@ -5,6 +5,13 @@
 #include "btle/gatt_services/gattservicebase.h"
 #include "btle/gatt_services/gattservicetx.h"
 
+#include <deque>
+
+// c++ 11
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
 namespace btle {
     namespace gatt_services{
         /**
@@ -34,7 +41,8 @@ namespace btle {
         struct msg_payload{
             uint8_t more:1;
             uint8_t first:1;
-            uint8_t rc:6;
+            uint8_t reserved:2;
+            uint8_t rc:4;
             uint8_t payload[19];
         };
         
@@ -58,17 +66,31 @@ namespace btle {
             void process_service_notify_data(const uuid& chr, const uint8_t* data, size_t size);
             void process_service_value_read(const uuid& chr, const uint8_t* data, size_t size, const error& err);
             void reset();
-            int write_service_value(const uuid& chr, const std::string& data, gattservicetx *tx);
+
+            int write_service_value(const uuid& chr, const std::string& data, device* dev, gattservicetx *tx);
             
         public: // API
             
             std::string take_last_message() const;
-            
+
+        private: //
+
+            void out_queue();
+            void in_queue();
+
         private:
             
-            std::vector<std::string> out_;
-            std::vector<std::string> in_;
+            std::deque<std::string> out_;
+            std::deque<std::string> in_;
             int status_;
+            std::thread in_ctx_;
+            std::thread out_ctx_;
+            std::mutex in_mutex_;
+            std::mutex out_mutex_;
+            std::condition_variable in_cond_;
+            std::condition_variable out_cond_;
+            gattservicetx* tx_;
+            device* origin_;
         };
     }
 }

@@ -24,7 +24,13 @@ namespace {
 btlelibservice::btlelibservice()
 : gattservicebase(),
   out_(),
-  in_()
+  in_(),
+  in_ctx_(),
+  out_ctx_(),
+  in_mutex_(),
+  out_mutex_(),
+  in_cond_(),
+  out_cond_()
 {
     service_ = uuid(BTLE_SERVICE);
     mandatory_notifications_.push_back(uuid(BTLE_MTU));
@@ -65,23 +71,15 @@ void btlelibservice::reset()
     
 }
 
-int btlelibservice::write_service_value(const uuid& chr, const std::string& data, gattservicetx* tx)
+int btlelibservice::write_service_value(const uuid& chr, const std::string& data, device *dev, gattservicetx* tx)
 {
     assert(chr == BTLE_MTU);
-    out_.push_back(data);
-    if(status_ == idle)
-    {
-        std::stringstream ss(data);
 
-        status_ = streaming_out;
-        // ok to start new transfer
-        first_air_packet sof = {0};
-        sof.more = true;
-        sof.first = true;
-        sof.rc = 0;
-        sof.file_size = data.size();
-        ss.read((char*)sof.payload[0],17);
-    }
+    out_mutex_.lock();
+    out_.push_back(data);
+    out_cond_.notify_all();
+    out_mutex_.unlock();
+
     return 0;
 }
 
@@ -89,3 +87,54 @@ std::string btlelibservice::take_last_message() const
 {
     return "";
 }
+
+void btlelibservice::out_queue()
+{
+    do{
+        std::unique_lock<std::mutex> lock(out_mutex_);
+        out_cond_.wait(lock);
+        if( out_.size() ){
+            uint8_t rc(0);
+            std::string message(out_.front());
+            size_t total_size(message.size());
+            out_.pop_front();
+            std::stringstream ss(message);
+
+            first_air_packet sof = {0};
+            sof.more = true;
+            sof.first = true;
+            sof.rc = rc++;
+            sof.file_size = message.size();
+            ss.read((char*)sof.payload[0],17);
+
+            if( int err = tx_->write_value(std::string((const char*)&sof,ss.gcount()+3),*origin_) ){
+                // TODO log
+                continue;
+            }
+            if(!ss.eof())
+            {
+                do{
+                    // ok to start pump packets
+                    msg_payload payload={0};
+                    payload.first=false;
+                    payload.rc= rc == 0x0F ? rc=0 : rc++;
+                    ss.read((char*)&payload.payload[0],19);
+                    if( int err = tx_->write_value(std::string((const char*)&payload,ss.gcount()+1),*origin_) ){
+                        // TODO log
+                        continue;
+                    }
+                    if(!ss.eof())
+                    {
+
+                    }else break;
+                }while(true);
+            }
+        }
+    }while (true);
+}
+
+void btlelibservice::in_queue()
+{
+
+}
+

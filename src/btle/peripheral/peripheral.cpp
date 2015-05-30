@@ -43,7 +43,8 @@ int peripheral::start(const std::string& plugin_name)
                 return err;
             }
             // by default add library service
-            db_ << (service(uuid(BTLE_SERVICE)) << characteristic(uuid(BTLE_MTU)) << characteristic(uuid(BTLE_VERSION)));
+            db_ << (service(uuid(BTLE_SERVICE)) << characteristic(uuid(BTLE_MTU),GATT_WRITE_WITHOUT_RESPONSE|GATT_NOTIFY)
+                    << characteristic(uuid(BTLE_VERSION),GATT_READ));
             return 0;
         }
     }

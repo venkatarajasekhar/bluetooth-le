@@ -12,7 +12,7 @@ namespace btle {
          */
         class gattservicetx{
         public:
-            virtual void write_value(const std::string& msg, device& dev) = 0;
+            virtual int write_value(const std::string& msg, device& dev) = 0;
         };
     }
 }
