@@ -31,8 +31,6 @@ namespace btle {
 namespace btle {
     namespace central {
         namespace apple {
-            
-            
             class corebluetoothcentralplugin: public centralplugininterface, public base{
             public:
                 corebluetoothcentralplugin(centralpluginobserver& observer);
@@ -55,6 +53,8 @@ namespace btle {
                 void write_characteristic_value(device& dev,const service& srv, const characteristic& chr, const std::string& data, characteristic_properties type);
                 void set_characteristic_notify(device& dev,const service& srv, const characteristic& chr, bool notify);
                 void write_descriptor(device& dev, const service& srv, const characteristic& chr, descriptor& desc, bool notify);
+                void write_btle_ftp(device& dev, const std::string& buffer);
+                int read_btle_ftp(device& dev, std::string& buffer);
 
                 centralpluginobserver& observer();
                 corebluetoothperipheraldevice* find_device(CBPeripheral* peripheral);
@@ -64,7 +64,6 @@ namespace btle {
                 corebluetoothcentralpluginprivate* privateimpl_;
 
             };
-
         }
     }
 }

@@ -3,6 +3,7 @@
 #include "btle/central/centralpluginregisterer.h"
 #include "btle/service.h"
 #include "btle/utility.h"
+#include "btle/gatt_services/btlelibservice.h"
 #include "btle/log.h"
 
 using namespace btle::central::apple;
@@ -341,65 +342,88 @@ corebluetoothcentralplugin::corebluetoothcentralplugin(centralpluginobserver &ob
 
 const std::string& corebluetoothcentralplugin::name()
 {
+    func_log
+
     static std::string name = "APPLE";
     return name;
 }
 
 std::vector<device*>& corebluetoothcentralplugin::devices()
 {
+    func_log
+
     return devices_;
 }
 
 device* corebluetoothcentralplugin::allocate_new_device(const bda& addr)
 {
+    func_log
+
     return new corebluetoothperipheraldevice(addr);
 }
 
 int corebluetoothcentralplugin::start()
 {
+    func_log
+
     privateimpl_ = [[corebluetoothcentralpluginprivate alloc] init: this];
     return 0;
 }
 
 void corebluetoothcentralplugin::stop()
 {
+    func_log
+
     privateimpl_= nil;
 }
 
 void corebluetoothcentralplugin::start_scan( central_scan_parameters param, const uuid_list* services )
 {
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber  numberWithBool:YES], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
+    func_log
 
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber  numberWithBool:YES], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
     [privateimpl_->manager_ scanForPeripheralsWithServices:nil options:options];
 }
 
 void corebluetoothcentralplugin::stop_scan()
 {
+    func_log
+
     [privateimpl_->manager_ stopScan];
 }
 
 void corebluetoothcentralplugin::connect_device(device& dev)
 {
+    func_log
+
     [privateimpl_->manager_ connectPeripheral:((corebluetoothperipheraldevice&)dev).peripheral_ options:nil];
 }
 
 void corebluetoothcentralplugin::disconnect_device(device& dev)
 {
+    func_log
+
     [privateimpl_->manager_ cancelPeripheralConnection:((corebluetoothperipheraldevice&)dev).peripheral_];
 }
 
 void corebluetoothcentralplugin::cancel_pending_connection(device& dev)
 {
+    func_log
+
     [privateimpl_->manager_ cancelPeripheralConnection:((corebluetoothperipheraldevice&)dev).peripheral_];
 }
 
 void corebluetoothcentralplugin::discover_services(device& dev)
 {
+    func_log
+
     [((corebluetoothperipheraldevice&)dev).peripheral_ discoverServices:nil];
 }
 
 void corebluetoothcentralplugin::discover_characteristics(device& dev, const service& srv)
 {
+    func_log
+
     corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
     CBService* service = core_dev.fetch_service(srv);
     assert(service);
@@ -408,6 +432,8 @@ void corebluetoothcentralplugin::discover_characteristics(device& dev, const ser
 
 void corebluetoothcentralplugin::read_characteristic_value(device& dev,const service& srv, const characteristic& chr)
 {
+    func_log
+
     corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
     CBService* service = core_dev.fetch_service(srv);
     CBCharacteristic* aChr = core_dev.fetch_characteristic(chr);
@@ -417,6 +443,8 @@ void corebluetoothcentralplugin::read_characteristic_value(device& dev,const ser
 
 void corebluetoothcentralplugin::write_characteristic_value(device& dev,const service& srv, const characteristic& chr, const std::string& data, characteristic_properties type)
 {
+    func_log
+
     corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
     CBService* service = core_dev.fetch_service(srv);
     CBCharacteristic* aChr = core_dev.fetch_characteristic(chr);
@@ -426,6 +454,8 @@ void corebluetoothcentralplugin::write_characteristic_value(device& dev,const se
 
 void corebluetoothcentralplugin::set_characteristic_notify(device& dev,const service& srv, const characteristic& chr, bool notify)
 {
+    func_log
+
     // will be deprecated
     corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
     CBCharacteristic* aChr = core_dev.fetch_characteristic(chr);
@@ -435,6 +465,8 @@ void corebluetoothcentralplugin::set_characteristic_notify(device& dev,const ser
 
 void corebluetoothcentralplugin::write_descriptor(device& dev, const service& srv, const characteristic& chr, descriptor& desc, bool notify)
 {
+    func_log
+
     corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
     CBCharacteristic* aChr = core_dev.fetch_characteristic(chr);
     assert(aChr);
@@ -447,6 +479,28 @@ void corebluetoothcentralplugin::write_descriptor(device& dev, const service& sr
         default:
             break;
     }
+}
+
+void corebluetoothcentralplugin::write_btle_ftp(device& dev, const std::string& buffer)
+{
+    func_log
+
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
+        CBCharacteristic* aChr = core_dev.fetch_characteristic(uuid(BTLE_MTU));
+        assert(aChr);
+        [core_dev.peripheral_ writeValue:[NSData dataWithBytes:buffer.c_str() length:buffer.size()]
+                  forCharacteristic:aChr type:CBCharacteristicWriteWithoutResponse];
+    });
+}
+
+int corebluetoothcentralplugin::read_btle_ftp(device& dev, std::string& buffer)
+{
+    func_log
+
+    // TODO
+
+    return 0;
 }
 
 centralpluginobserver& corebluetoothcentralplugin::observer()

@@ -132,7 +132,8 @@ HEADERS += \
     internal/btle/peripheral/peripheralpluginobserver.h \
     inc/btle/peripheral/peripheral.h \
     inc/btle/exceptions/not_supported.h \
-    inc/btle/statistics.h
+    inc/btle/statistics.h \
+    internal/btle/central/centralbtleftptransferinterface.h
 
 
 ios{

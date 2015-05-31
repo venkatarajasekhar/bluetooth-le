@@ -4,7 +4,7 @@
 using namespace btle::central::apple;
 
 namespace {
-    #define UUID_2_STRING(a) std::string([[[a UUID] UUIDString] UTF8String])
+    #define UUID_2_STRING(a) std::string([ [ [a UUID] UUIDString] UTF8String])
 }
 
 corebluetoothperipheraldevice::corebluetoothperipheraldevice(const bda& addr)
@@ -121,4 +121,17 @@ CBCharacteristic* corebluetoothperipheraldevice::fetch_characteristic(const btle
     return NULL;
 }
 
-
+CBCharacteristic* corebluetoothperipheraldevice::fetch_characteristic(const btle::uuid& uid)
+{
+    for( CBService* service in [peripheral_ services] )
+    {
+        for( CBCharacteristic* aChr in [service characteristics] )
+        {
+            if( uid == btle::uuid(UUID_2_STRING(aChr)) )
+            {
+                return aChr;
+            }
+        }
+    }
+    return NULL;
+}

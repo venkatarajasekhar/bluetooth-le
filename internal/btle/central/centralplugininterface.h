@@ -1,7 +1,7 @@
 #ifndef CENTRALPLUGININTERFACE_H
 #define CENTRALPLUGININTERFACE_H
 
-
+#include "btle/central/centralbtleftptransferinterface.h"
 #include "btle/device.h"
 
 namespace btle {
@@ -59,7 +59,7 @@ namespace btle {
             SCAN_LOW_DUTY
         };
         
-        class centralplugininterface{
+        class centralplugininterface: public centralbtleftptransferinterface{
         public:
 
             centralplugininterface(centralpluginobserver& observer);

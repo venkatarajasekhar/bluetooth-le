@@ -75,6 +75,10 @@ int btlelibservice::write_service_value(const uuid& chr, const std::string& data
 {
     assert(chr == BTLE_MTU);
 
+/*    std::thread::get_id();
+
+    std::this_thread::get_id();
+*/
     out_mutex_.lock();
     out_.push_back(data);
     out_cond_.notify_all();
@@ -116,17 +120,26 @@ void btlelibservice::out_queue()
                 do{
                     // ok to start pump packets
                     msg_payload payload={0};
-                    payload.first=false;
-                    payload.rc= rc == 0x0F ? rc=0 : rc++;
+                    payload.first = false;
+                    payload.more = true;
+                    payload.rc= rc > 0x0F ? rc=0 : rc++;
                     ss.read((char*)&payload.payload[0],19);
-                    if( int err = tx_->write_value(std::string((const char*)&payload,ss.gcount()+1),*origin_) ){
-                        // TODO log
-                        continue;
-                    }
                     if(!ss.eof())
                     {
+                        if( int err = tx_->write_value(std::string((const char*)&payload,ss.gcount()+1),*origin_) ){
+                            // TODO log
+                            continue;
+                        }
 
-                    }else break;
+                    }else{
+                        payload.more = false;
+                        if( int err = tx_->write_value(std::string((const char*)&payload,ss.gcount()+1),*origin_) ){
+                            // TODO log
+                            continue;
+                        }
+
+                        break;
+                    }
                 }while(true);
             }
         }

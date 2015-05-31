@@ -57,6 +57,11 @@ namespace btle {
             uint8_t reserved:6;
         };
         
+        class btlelibservicetransferlistener{
+        public:
+            virtual void out_progress(device* dev, int id, double progress)=0;
+        };
+
         class btlelibservice: public gattservicebase{
         public:
             btlelibservice();

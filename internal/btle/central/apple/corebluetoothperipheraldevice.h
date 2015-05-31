@@ -27,6 +27,8 @@ namespace btle {
                 CBService* fetch_service(const btle::service& srv);
                 CBCharacteristic* fetch_characteristic(const btle::characteristic& srv);
                 
+                CBCharacteristic* fetch_characteristic(const btle::uuid& uid);
+
             public: // data
                 CBPeripheral *peripheral_;
             };
