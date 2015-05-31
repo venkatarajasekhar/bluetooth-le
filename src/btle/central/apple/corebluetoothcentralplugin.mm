@@ -214,13 +214,22 @@ namespace {
     dev->fetch_service_and_characteristic(characteristic, srv, chr);
     assert( srv && chr );
     if( [characteristic isNotifying] ){
-        if( error == nil ){
+        if( srv->uuid() == btle::uuid(BTLE_SERVICE) &&
+            chr->uuid() == btle::uuid(BTLE_MTU) )
+        {
             std::string data((const char*)[[characteristic value] bytes],[[characteristic value] length]);
-//          NSLog(@"data hex: %s", utility::to_hex_string(data).c_str());
-            parent_->observer().device_characteristic_notify_data_updated(*dev, *srv, *chr, data);
+            dev->push(data);
         }
-        else{
-            _log_error("Unknown CoreBluetooth error");
+        else
+        {
+            if( error == nil ){
+                std::string data((const char*)[[characteristic value] bytes],[[characteristic value] length]);
+    //          NSLog(@"data hex: %s", utility::to_hex_string(data).c_str());
+                parent_->observer().device_characteristic_notify_data_updated(*dev, *srv, *chr, data);
+            }
+            else{
+                _log_error("Unknown CoreBluetooth error");
+            }
         }
     }
     else{
@@ -498,9 +507,8 @@ int corebluetoothcentralplugin::read_btle_ftp(device& dev, std::string& buffer)
 {
     func_log
 
-    // TODO
-
-    return 0;
+    corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
+    return core_dev.wait_for_packet(buffer,10); // 10 secs time to get the packet
 }
 
 centralpluginobserver& corebluetoothcentralplugin::observer()

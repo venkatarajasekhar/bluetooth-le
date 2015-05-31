@@ -10,6 +10,14 @@ namespace {
 corebluetoothperipheraldevice::corebluetoothperipheraldevice(const bda& addr)
 : device(addr)
 {
+    pthread_mutex_init(&mutex_,NULL);
+    pthread_cond_init(&condition_,NULL);
+}
+
+corebluetoothperipheraldevice::~corebluetoothperipheraldevice()
+{
+    pthread_mutex_destroy(&mutex_);
+    pthread_cond_destroy(&condition_);
 }
 
 void corebluetoothperipheraldevice::process_adv_data()
@@ -135,3 +143,46 @@ CBCharacteristic* corebluetoothperipheraldevice::fetch_characteristic(const btle
     }
     return NULL;
 }
+
+void corebluetoothperipheraldevice::push(const std::string& message)
+{
+    pthread_mutex_lock(&mutex_);
+    pftp_in_queue_.push_back(message);
+    pthread_cond_signal(&condition_);
+    pthread_mutex_unlock(&mutex_);
+}
+
+bool corebluetoothperipheraldevice::empty()
+{
+    bool empty(false);
+    pthread_mutex_lock(&mutex_);
+    empty = pftp_in_queue_.size() == 0;
+    pthread_mutex_unlock(&mutex_);
+    return empty;
+}
+
+std::string corebluetoothperipheraldevice::take()
+{
+    std::string ret;
+    pthread_mutex_lock(&mutex_);
+    ret = pftp_in_queue_.front();
+    pftp_in_queue_.pop_front();
+    pthread_mutex_unlock(&mutex_);
+    return ret;
+}
+
+int corebluetoothperipheraldevice::wait_for_packet(std::string& buffer, int timeout)
+{
+    pthread_mutex_lock(&mutex_);
+    switch(pthread_cond_timedwait(&condition_,&mutex_,NULL))
+    {
+        case 0:
+        {
+            buffer.assign(pftp_in_queue_.front());
+            pftp_in_queue_.pop_front();
+            break;
+        }
+    }
+    pthread_mutex_unlock(&mutex_);
+}
+
