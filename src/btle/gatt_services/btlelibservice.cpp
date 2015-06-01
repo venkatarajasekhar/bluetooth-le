@@ -75,16 +75,20 @@ int btlelibservice::write_service_value(const uuid& chr, const std::string& data
 {
     assert(chr == BTLE_MTU);
 
-/*    std::thread::get_id();
-
-    std::this_thread::get_id();
-*/
     out_mutex_.lock();
     out_.push_back(data);
     out_cond_.notify_all();
     out_mutex_.unlock();
 
     return 0;
+}
+
+void btlelibservice::packet_in(const std::string& data)
+{
+    in_mutex_.lock();
+    in_.push_back(data);
+    in_cond_.notify_all();
+    in_mutex_.unlock();
 }
 
 std::string btlelibservice::take_last_message() const
@@ -99,22 +103,22 @@ void btlelibservice::out_queue()
         out_cond_.wait(lock);
         if( out_.size() ){
             uint8_t rc(0);
+            out_mutex_.lock();
             std::string message(out_.front());
             size_t total_size(message.size());
             out_.pop_front();
+            out_mutex_.unlock();
             std::stringstream ss(message);
-
+            // make first air packet
             first_air_packet sof = {0};
             sof.more = true;
             sof.first = true;
             sof.rc = rc++;
             sof.file_size = message.size();
             ss.read((char*)sof.payload[0],17);
-
-            if( int err = tx_->write_value(std::string((const char*)&sof,ss.gcount()+3),*origin_) ){
-                // TODO log
-                continue;
-            }
+            size_t count(ss.gcount());
+            tx_->write_btle_ftp(*origin_,std::string((const char*)&sof,ss.gcount()+3));
+            listener_->out_progress(origin_,0,(count/total_size)*100.0);
             if(!ss.eof())
             {
                 do{
@@ -122,25 +126,37 @@ void btlelibservice::out_queue()
                     msg_payload payload={0};
                     payload.first = false;
                     payload.more = true;
-                    payload.rc= rc > 0x0F ? rc=0 : rc++;
+                    payload.rc = rc == 0x10 ? rc=0 : rc++;
                     ss.read((char*)&payload.payload[0],19);
+                    count += ss.gcount();
                     if(!ss.eof())
                     {
-                        if( int err = tx_->write_value(std::string((const char*)&payload,ss.gcount()+1),*origin_) ){
-                            // TODO log
-                            continue;
+                        tx_->write_btle_ftp(*origin_,std::string((const char*)&payload,ss.gcount()+1));
+                        listener_->out_progress(origin_,0,(count/total_size)*100.0);
+                        if( rc == 0x0F )
+                        {
+                            // read ack
                         }
-
-                    }else{
+                    }
+                    else
+                    {
                         payload.more = false;
-                        if( int err = tx_->write_value(std::string((const char*)&payload,ss.gcount()+1),*origin_) ){
-                            // TODO log
-                            continue;
-                        }
+                        tx_->write_btle_ftp(*origin_,std::string((const char*)&payload,ss.gcount()+1));
+                        listener_->out_progress(origin_,0,(count/total_size)*100.0);
 
+                        // read ack
+                        std::string ack;
+                        if( int err = tx_->read_btle_ftp(*origin_,ack) )
+                        {
+
+                        }
                         break;
                     }
                 }while(true);
+            }
+            else
+            {
+                // first and last packet
             }
         }
     }while (true);
@@ -148,6 +164,27 @@ void btlelibservice::out_queue()
 
 void btlelibservice::in_queue()
 {
+    do{
+        std::unique_lock<std::mutex> lock(in_mutex_);
+        in_cond_.wait(lock);
+        if(in_.size())
+        {
+            in_mutex_.lock();
+            std::string packet=in_.front();
+            in_.pop_front();
+            in_mutex_.unlock();
+            first_air_packet sof={0};
+            memcpy(&sof,packet.c_str(),packet.size());
+            assert(sof.first);
+            if(sof.more)
+            {
 
+            }
+            else
+            {
+                // first and last packet
+            }
+        }
+    }while(true);
 }
 

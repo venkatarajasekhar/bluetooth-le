@@ -506,7 +506,7 @@ void corebluetoothcentralplugin::write_btle_ftp(device& dev, const std::string& 
 int corebluetoothcentralplugin::read_btle_ftp(device& dev, std::string& buffer)
 {
     func_log
-
+    // we are not in main thread!
     corebluetoothperipheraldevice& core_dev = ((corebluetoothperipheraldevice&)dev);
     return core_dev.wait_for_packet(buffer,10); // 10 secs time to get the packet
 }

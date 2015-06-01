@@ -4,6 +4,8 @@
 
 #include "btle/gatt_services/gattservicebase.h"
 #include "btle/gatt_services/gattservicetx.h"
+#include "btle/central/centralbtleftptransferinterface.h"
+
 
 #include <deque>
 
@@ -14,6 +16,12 @@
 
 namespace btle {
     namespace gatt_services{
+
+        /**
+         * @brief message_pair,first unique identifier and message string
+         */
+        typedef std::pair<int,std::string> message_pair;
+
         /**
          * btle library service for data transfer between two devices running the library,
          * payload will be max 20 bytes, this is for backwards compatibility, NOTE this feature 
@@ -26,15 +34,18 @@ namespace btle {
         struct first_air_packet{
             uint8_t more:1; // true more to come, false, first and last air packet
             uint8_t first:1; // true
-            uint8_t rc:6; // zero
-            uint16_t file_size; // upcoming file size
+            uint8_t out:1;
+            uint8_t reserved:1;
+            uint8_t rc:4; // zero
+            uint16_t file_size; // upcoming/incoming file size
             uint8_t payload[17]; // payload
         };
         
         /**
          * message out packet, 
-         * more = true/false, true = more is coming , false = last packet end of transfer
-         * first = true, start of transfer
+         * more, true = more is coming , false = last packet eof
+         * first = false
+         * reserved = 0
          * rc = UPWARDS ( it is stupid to do downwards rc! ) counting ring counter
          * payload
          */
@@ -51,7 +62,8 @@ namespace btle {
          * ack = true ok to send send more, false stream cancel
          * retransmit = true send last frame again
          */
-        struct msg_ack{
+        struct msg_ack
+        {
             uint8_t ack:1;
             uint8_t retransmit:1;
             uint8_t reserved:6;
@@ -60,6 +72,7 @@ namespace btle {
         class btlelibservicetransferlistener{
         public:
             virtual void out_progress(device* dev, int id, double progress)=0;
+            virtual void in_progress(device* dev, double progress)=0;
         };
 
         class btlelibservice: public gattservicebase{
@@ -73,7 +86,8 @@ namespace btle {
             void reset();
 
             int write_service_value(const uuid& chr, const std::string& data, device* dev, gattservicetx *tx);
-            
+            void packet_in(const std::string& data);
+
         public: // API
             
             std::string take_last_message() const;
@@ -94,8 +108,10 @@ namespace btle {
             std::mutex out_mutex_;
             std::condition_variable in_cond_;
             std::condition_variable out_cond_;
-            gattservicetx* tx_;
+            //gattservicetx* tx_;
+            central::centralbtleftptransferinterface* tx_;
             device* origin_;
+            btlelibservicetransferlistener* listener_;
         };
     }
 }
