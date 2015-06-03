@@ -26,7 +26,7 @@ namespace btle {
              * @param dev
              * @param buffer
              */
-            virtual int read_btle_ftp(device& dev, std::string& buffer)=0;
+            virtual int read_btle_ftp(device& dev, std::string& buffer, bool ack)=0;
 
         };
     }

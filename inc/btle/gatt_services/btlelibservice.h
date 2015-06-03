@@ -34,7 +34,7 @@ namespace btle {
         struct first_air_packet{
             uint8_t more:1; // true more to come, false, first and last air packet
             uint8_t first:1; // true
-            uint8_t out:1;
+            uint8_t ack:1;
             uint8_t reserved:1;
             uint8_t rc:4; // zero
             uint16_t file_size; // upcoming/incoming file size
@@ -52,7 +52,8 @@ namespace btle {
         struct msg_payload{
             uint8_t more:1;
             uint8_t first:1;
-            uint8_t reserved:2;
+            uint8_t ack:1; // 0 for upstream
+            uint8_t reserved:1;
             uint8_t rc:4;
             uint8_t payload[19];
         };
@@ -64,9 +65,10 @@ namespace btle {
          */
         struct msg_ack
         {
-            uint8_t ack:1;
-            uint8_t retransmit:1;
-            uint8_t reserved:6;
+            uint8_t abort:1; // true = stop streaming
+            uint8_t retransmit:1; // true = retransmit previous frame
+            uint8_t ack:1; // true
+            uint8_t reserved:5;
         };
         
         class btlelibservicetransferlistener{
@@ -94,6 +96,9 @@ namespace btle {
 
         private: //
 
+            bool is_empty(std::deque<std::string> &array, std::mutex& mutex);
+            std::string take_front(std::deque<std::string>& array, std::mutex& mutex);
+
             void out_queue();
             void in_queue();
 
@@ -101,6 +106,7 @@ namespace btle {
             
             std::deque<std::string> out_;
             std::deque<std::string> in_;
+            std::deque<std::string> in_ack_;
             int status_;
             std::thread in_ctx_;
             std::thread out_ctx_;

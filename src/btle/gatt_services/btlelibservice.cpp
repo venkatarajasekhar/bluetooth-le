@@ -85,10 +85,32 @@ int btlelibservice::write_service_value(const uuid& chr, const std::string& data
 
 void btlelibservice::packet_in(const std::string& data)
 {
+    msg_ack type = {0};
+    memcpy(&type,data.c_str(),sizeof(type));
     in_mutex_.lock();
-    in_.push_back(data);
+    if(type.ack) in_ack_.push_back(data);
+    else         in_.push_back(data);
     in_cond_.notify_all();
     in_mutex_.unlock();
+}
+
+bool btlelibservice::is_empty(std::deque<std::string>& array, std::mutex& mutex)
+{
+    bool empty(false);
+    mutex.lock();
+    empty = array.size();
+    mutex.unlock();
+    return empty;
+}
+
+std::string btlelibservice::take_front(std::deque<std::string>& array, std::mutex& mutex)
+{
+    std::string msg;
+    mutex.lock();
+    msg = array.front();
+    array.pop_front();
+    mutex.unlock();
+    return msg;
 }
 
 std::string btlelibservice::take_last_message() const
@@ -136,6 +158,8 @@ void btlelibservice::out_queue()
                         if( rc == 0x0F )
                         {
                             // read ack
+                            msg_ack ack = {0};
+
                         }
                     }
                     else
@@ -146,7 +170,7 @@ void btlelibservice::out_queue()
 
                         // read ack
                         std::string ack;
-                        if( int err = tx_->read_btle_ftp(*origin_,ack) )
+                        if( int err = tx_->read_btle_ftp(*origin_,ack,true) )
                         {
 
                         }
@@ -165,24 +189,50 @@ void btlelibservice::out_queue()
 void btlelibservice::in_queue()
 {
     do{
-        std::unique_lock<std::mutex> lock(in_mutex_);
-        in_cond_.wait(lock);
+        {
+            std::unique_lock<std::mutex> lock(in_mutex_);
+            in_cond_.wait(lock);
+        }
         if(in_.size())
         {
-            in_mutex_.lock();
-            std::string packet=in_.front();
-            in_.pop_front();
-            in_mutex_.unlock();
+            std::string packet = take_front(in_,in_mutex_);
             first_air_packet sof={0};
             memcpy(&sof,packet.c_str(),packet.size());
+            listener_->in_progress(origin_,((packet.size()-3)/sof.file_size)*100.0);
             assert(sof.first);
             if(sof.more)
             {
-
+                msg_payload payload={0};
+                do{
+                    if(is_empty(in_,in_mutex_))
+                    {
+                        // TODO wait with timeout!
+                        std::unique_lock<std::mutex> lock(in_mutex_);
+                        in_cond_.wait(lock);
+                    }
+                    packet = take_front(in_,in_mutex_);
+                    memcpy(&payload,packet.c_str(),sizeof(payload));
+                    if(payload.rc == 0x0F )
+                    {
+                        //
+                        msg_ack ack={0};
+                        ack.abort=false;
+                        ack.ack=true;
+                        ack.retransmit=false;
+                        ack.reserved=0;
+                        tx_->write_btle_ftp(*origin_,std::string((const char*)&ack,sizeof(ack)));
+                    }
+                }while(payload.more);
             }
             else
             {
-                // first and last packet
+                // first and last packet respond with ack
+                msg_ack ack={0};
+                ack.abort=false;
+                ack.ack=true;
+                ack.retransmit=false;
+                ack.reserved=0;
+                tx_->write_btle_ftp(*origin_,std::string((const char*)&ack,sizeof(ack)));
             }
         }
     }while(true);

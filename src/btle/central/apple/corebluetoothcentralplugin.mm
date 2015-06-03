@@ -503,7 +503,7 @@ void corebluetoothcentralplugin::write_btle_ftp(device& dev, const std::string& 
     });
 }
 
-int corebluetoothcentralplugin::read_btle_ftp(device& dev, std::string& buffer)
+int corebluetoothcentralplugin::read_btle_ftp(device& dev, std::string& buffer, bool ack)
 {
     func_log
     // we are not in main thread!
