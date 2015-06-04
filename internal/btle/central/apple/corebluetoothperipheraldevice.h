@@ -33,21 +33,9 @@ namespace btle {
                 
                 CBCharacteristic* fetch_characteristic(const btle::uuid& uid);
 
-            public: // ftp stuff
-
-                void push(const std::string& message);
-                bool empty();
-                std::string take();
-                int wait_for_packet(std::string& buffer, int timeout);
-
             public: // data
                 CBPeripheral *peripheral_;
 
-            private:
-
-                pthread_mutex_t mutex_;
-                pthread_cond_t  condition_;
-                std::deque<std::string> pftp_in_queue_;
             };
         }
     }

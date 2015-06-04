@@ -10,6 +10,7 @@
 #include <deque>
 
 // c++ 11
+#include <atomic>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -75,6 +76,8 @@ namespace btle {
         public:
             virtual void out_progress(device* dev, int id, double progress)=0;
             virtual void in_progress(device* dev, double progress)=0;
+            virtual void out_complete(device* dev, btle::error& err)=0;
+            virtual void in_complete(device* dev, std::string& data, btle::error& err)=0;
         };
 
         class btlelibservice: public gattservicebase{
@@ -111,8 +114,10 @@ namespace btle {
             std::thread in_ctx_;
             std::thread out_ctx_;
             std::mutex in_mutex_;
+            std::mutex in_ack_mutex_;
             std::mutex out_mutex_;
             std::condition_variable in_cond_;
+            std::condition_variable in_ack_cond_;
             std::condition_variable out_cond_;
             //gattservicetx* tx_;
             central::centralbtleftptransferinterface* tx_;
