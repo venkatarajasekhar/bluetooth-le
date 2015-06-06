@@ -38,10 +38,13 @@ namespace btle {
             uint8_t ack:1;
             uint8_t reserved:1;
             uint8_t rc:4; // zero
+            uint8_t identifier; // unique identifier
             uint16_t file_size; // upcoming/incoming file size
-            uint8_t payload[17]; // payload
+            uint8_t payload[16]; // payload
         };
         
+        #define SOF_MAX_PAYLOAD 16
+
         /**
          * message out packet, 
          * more, true = more is coming , false = last packet eof
@@ -58,6 +61,8 @@ namespace btle {
             uint8_t rc:4;
             uint8_t payload[19];
         };
+
+        #define MSG_NAX_PAYLOAD 19
         
         /**
          * message ack packet, after
@@ -74,10 +79,10 @@ namespace btle {
         
         class btlelibservicetransferlistener{
         public:
-            virtual void out_progress(device* dev, int id, double progress)=0;
-            virtual void in_progress(device* dev, double progress)=0;
-            virtual void out_complete(device* dev, btle::error& err)=0;
-            virtual void in_complete(device* dev, std::string& data, btle::error& err)=0;
+            virtual void out_progress(device* dev, uint8_t id, double progress)=0;
+            virtual void in_progress(device* dev, uint8_t id, double progress)=0;
+            virtual void out_complete(device* dev, uint8_t id, btle::error& err)=0;
+            virtual void in_complete(device* dev, uint8_t id, std::string& data, btle::error& err)=0;
         };
 
         class btlelibservice: public gattservicebase{
@@ -90,7 +95,9 @@ namespace btle {
             void process_service_value_read(const uuid& chr, const uint8_t* data, size_t size, const error& err);
             void reset();
 
-            int write_service_value(const uuid& chr, const std::string& data, device* dev, gattservicetx *tx);
+        public: // ftp specific stuff
+
+            int write_service_value(const uuid& chr, uint8_t id, const std::string& data, device* dev, gattservicetx *tx);
             void packet_in(const std::string& data);
 
         public: // API
@@ -107,7 +114,7 @@ namespace btle {
 
         private:
             
-            std::deque<std::string> out_;
+            std::deque<std::pair<uint8_t,std::string> > out_;
             std::deque<std::string> in_;
             std::deque<std::string> in_ack_;
             int status_;

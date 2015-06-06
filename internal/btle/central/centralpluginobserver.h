@@ -9,6 +9,7 @@ namespace btle {
         class centralpluginobserver{
         public:
             virtual void plugin_state_changed(central_plugin_state state)=0;
+            virtual void new_device_discovered(device& dev,adv_fields& fields,int rssi)=0;
             virtual void device_discovered(device& dev,adv_fields& fields,int rssi) = 0;
             virtual void device_connected(device& dev)=0;
             virtual void device_disconnected(device& dev)=0;

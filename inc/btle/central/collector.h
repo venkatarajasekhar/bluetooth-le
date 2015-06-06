@@ -107,7 +107,13 @@ namespace btle {
         private: // from observer
 
             void plugin_state_changed(central_plugin_state state);
+            void new_device_discovered(device& dev,adv_fields& fields,int rssi);
             void device_discovered(device& dev, adv_fields& fields, int rssi);
+
+        private:
+            void process_device_discovered(device& dev, adv_fields& fields, int rssi, bool new_device=false);
+
+        private: // from observer
             void device_connected(device& dev);
             void device_disconnected(device& dev);
             void device_services_discovered(device& dev, service_list& services, const error& err);
@@ -122,11 +128,12 @@ namespace btle {
 
         public: // callbacks
 
+            virtual void new_device_discovered_cb(device& dev);
             /**
              * @brief device_discovered_cb, whenever a device has been discovered during scanning
              * @param dev
              */
-            virtual void device_discovered_cb(device& dev) = 0;
+            virtual void device_discovered_cb(device& dev);
 
             /**
              * @brief device_service_value_updated_cb, called upon whenever gatt service has been updated
@@ -158,7 +165,6 @@ namespace btle {
             virtual void device_service_value_updated_cb(device& dev, const service& srv, const characteristic& chr, const std::string& data) = 0;
             virtual void device_characteristic_read_cb(device& dev, const service& srv, const characteristic& chrs, const std::string& data, const error& err)=0;
             virtual void device_state_changed_cb(device& dev)=0;
-
             virtual void device_gatt_service_discovered_cb(device& dev, const gatt_services::gattservicebase *srv);
             virtual void device_service_discovery_failed_cb(device& dev, const service_list& services, const error& err);
             virtual void device_characteristic_discovery_failed_cb(device& dev, const service& srv, const chr_list& chrs, const error& err);

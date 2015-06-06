@@ -1,6 +1,7 @@
 
 #include "btle/gatt_services/btlelibservice.h"
 #include "btle/gatt_services/gattserviceregisterer.h"
+#include "btle/log.h"
 
 #include <assert.h>
 #include <sstream>
@@ -34,7 +35,6 @@ void btlelibservice::process_service_notify_data(const uuid& chr, const uint8_t*
 {
     if( chr == BTLE_MTU )
     {
-        //packet_in(std::string(data,size));
         msg_ack type = {0};
         memcpy(&type,data,sizeof(type));
         if(type.ack)
@@ -67,12 +67,12 @@ void btlelibservice::reset()
     
 }
 
-int btlelibservice::write_service_value(const uuid& chr, const std::string& data, device *dev, gattservicetx* tx)
+int btlelibservice::write_service_value(const uuid& chr, uint8_t id, const std::string& data, device *dev, gattservicetx* tx)
 {
     assert(chr == BTLE_MTU);
 
     out_mutex_.lock();
-    out_.push_back(data);
+    out_.push_back(std::make_pair(id,data));
     out_cond_.notify_all();
     out_mutex_.unlock();
 
@@ -116,30 +116,34 @@ std::string btlelibservice::take_last_message() const
 
 void btlelibservice::out_queue()
 {
+    func_log
+
     do{
+        size_t out_size(0);
         {
             std::unique_lock<std::mutex> lock(out_mutex_);
             out_cond_.wait(lock);
+            out_size = out_.size();
         }
-        if( out_.size() ){
+        if( out_size ){
             uint8_t rc(0);
             out_mutex_.lock();
-            std::string message(out_.front());
-            size_t total_size(message.size());
+            std::pair<uint8_t,std::string> message(out_.front());
+            size_t total_size(message.second.size());
             out_.pop_front();
             out_mutex_.unlock();
-            std::stringstream ss(message);
+            std::stringstream ss(message.second);
             // make first air packet
             first_air_packet sof = {0};
             sof.more = true;
             sof.first = true;
             sof.rc = rc++;
-            sof.file_size = message.size();
-            ss.read((char*)sof.payload[0],17);
+            sof.file_size = message.second.size();
+            ss.read((char*)sof.payload[0],SOF_MAX_PAYLOAD);
             size_t count(ss.gcount());
             tx_->write_btle_ftp(*origin_,std::string((const char*)&sof,ss.gcount()+3));
             // TODO inform in main context
-            listener_->out_progress(origin_,0,(count/total_size)*100.0);
+            listener_->out_progress(origin_,message.first,(count/total_size)*100.0);
             if(!ss.eof())
             {
                 do{
@@ -153,7 +157,7 @@ void btlelibservice::out_queue()
                     if(!ss.eof())
                     {
                         tx_->write_btle_ftp(*origin_,std::string((const char*)&payload,ss.gcount()+1));
-                        listener_->out_progress(origin_,0,(count/total_size)*100.0);
+                        listener_->out_progress(origin_,message.first,(count/total_size)*100.0);
                         if( rc == 0x0F )
                         {
                             // read ack
@@ -171,13 +175,9 @@ void btlelibservice::out_queue()
                             {
                                 // abort streaming
                                 btle::error err(-1);
-                                listener_->out_complete(origin_,err);
+                                listener_->out_complete(origin_,message.first,err);
                                 break;
                             }
-                            /*if(ack.retransmit)
-                            {
-                                // TODO
-                            }*/
                         }
                     }
                     else
@@ -185,9 +185,9 @@ void btlelibservice::out_queue()
                         // last packet
                         payload.more = false;
                         tx_->write_btle_ftp(*origin_,std::string((const char*)&payload,ss.gcount()+1));
-                        listener_->out_progress(origin_,0,(count/total_size)*100.0);
+                        listener_->out_progress(origin_,message.first,(count/total_size)*100.0);
                         btle::error err(0);
-                        listener_->out_complete(origin_,err);
+                        listener_->out_complete(origin_,message.first,err);
                         // read ack
                         if(is_empty(in_ack_,in_ack_mutex_))
                         {
@@ -213,6 +213,8 @@ void btlelibservice::out_queue()
 
 void btlelibservice::in_queue()
 {
+    func_log
+
     do{
         {
             std::unique_lock<std::mutex> lock(in_mutex_);
@@ -223,7 +225,7 @@ void btlelibservice::in_queue()
             std::string packet = take_front(in_,in_mutex_);
             first_air_packet sof={0};
             memcpy(&sof,packet.c_str(),packet.size());
-            listener_->in_progress(origin_,((packet.size()-3)/sof.file_size)*100.0);
+            listener_->in_progress(origin_,sof.identifier,((packet.size()-3)/sof.file_size)*100.0);
             assert(sof.first);
             if(sof.more)
             {

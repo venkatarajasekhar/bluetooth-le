@@ -13,6 +13,16 @@ QMAKE_LIBDIR += "$$DESTDIR"
 #QMAKE_CXXFLAGS += -std=c++11
 CONFIG += c++11
 
+# c++ 11 required sources/headers
+HEADERS += \
+    inc/btle/atomiclist.h \
+    inc/btle/atomiclist.hpp \
+    inc/btle/gatt_services/btlelibservice.h
+
+SOURCES += \
+    src/btle/gatt_services/btlelibservice.cpp
+# end
+
 SOURCES += \
     src/btle/base.cpp \
     src/btle/uuid.cpp \
@@ -55,7 +65,6 @@ SOURCES += \
     src/btle/advertisementfields.cpp \
     src/btle/central/collectorqt.cpp \
     src/btle/central/collectorsimpleqt.cpp \
-    src/btle/gatt_services/btlelibservice.cpp \
     src/btle/smpkeys.cpp \
     src/btle/btlelibscanfilter.cpp \
     src/btle/peripheral/peripheralplugininterface.cpp \
@@ -117,7 +126,6 @@ HEADERS += \
     inc/btle/advertisementfields.h \
     inc/btle/central/collectorqt.h \
     inc/btle/central/collectorsimpleqt.h \
-    inc/btle/gatt_services/btlelibservice.h \
     inc/btle/smpkeys.h \
     internal/btle/timer.h \
     internal/btle/timercallback.h \
@@ -165,6 +173,7 @@ macx{
 }
 
 android{
+    # shall be added later when the painfull android support will be done
 }
 
 win{

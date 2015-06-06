@@ -644,7 +644,19 @@ void collector::plugin_state_changed(central_plugin_state state)
     }
 }
 
+void collector::new_device_discovered(device& dev,adv_fields& fields,int rssi)
+{
+    func_log
+
+    process_device_discovered(dev,fields,rssi,true);
+}
+
 void collector::device_discovered(device& dev, adv_fields& fields, int rssi)
+{
+    process_device_discovered(dev,fields,rssi);
+}
+
+void collector::process_device_discovered(device& dev, adv_fields& fields, int rssi, bool new_device)
 {
     dev.advertisement_fields() << fields;
     dev.rssi_filter() << rssi;
@@ -659,12 +671,17 @@ void collector::device_discovered(device& dev, adv_fields& fields, int rssi)
                 if( (*it)->process(dev,fields,rssi) )
                 {
                     // propagate callback
-                    device_discovered_cb(dev);
+                    if(!new_device) device_discovered_cb(dev);
+                    else new_device_discovered_cb(dev);
                     return;
                 }
             }
         }
-        else device_discovered_cb(dev);
+        else
+        {
+            if(!new_device) device_discovered_cb(dev);
+            else new_device_discovered_cb(dev);
+        }
     }
 }
 
@@ -798,6 +815,16 @@ void collector::device_rssi_read(device& dev, int rssi)
 void collector::device_services_invalidated(device& dev)
 {
     // TODO
+}
+
+void collector::new_device_discovered_cb(device& dev)
+{
+    _log("info: %s",dev.description().c_str());
+}
+
+void collector::device_discovered_cb(device& dev)
+{
+    _log("info: %s",dev.description().c_str());
 }
 
 /**

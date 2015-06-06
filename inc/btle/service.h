@@ -44,6 +44,7 @@ namespace btle {
         uint16_t start_handle_;
         uint16_t end_handle_;
         long int instance_id_;
+        // std::vector<service> included_services_;
     };
 
     typedef std::vector<service>::iterator service_iterator;
