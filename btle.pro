@@ -17,10 +17,12 @@ CONFIG += c++11
 HEADERS += \
     inc/btle/atomiclist.h \
     inc/btle/atomiclist.hpp \
-    inc/btle/gatt_services/btlelibservice.h
+    inc/btle/gatt_services/btlelibservice.h \
+    inc/btle/exceptions/plugin_start_failed.h
 
 SOURCES += \
-    src/btle/gatt_services/btlelibservice.cpp
+    src/btle/gatt_services/btlelibservice.cpp \
+    src/btle/exceptions/plugin_start_failed.cpp
 # end
 
 SOURCES += \
