@@ -5,6 +5,69 @@ using namespace btle;
 using namespace btle::peripheral;
 using namespace btle::peripheral::apple;
 
+@implementation corebluetoothperipheralpluginprivate
+
+-(id) init:(corebluetoothperipheralplugin*) plugin
+{
+    self = [super init];
+    if(self)
+    {
+        parent_ = plugin;
+        manager_ = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil];
+    }
+    return self;
+}
+
+-(void) dealloc
+{
+}
+
+- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
+{
+}
+
+- (void)peripheralManager:(CBPeripheralManager *)peripheral willRestoreState:(NSDictionary *)dict
+{
+
+}
+
+- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheral error:(NSError *)error
+{
+
+}
+
+- (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error
+{
+
+}
+
+- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic
+{
+
+}
+
+- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didUnsubscribeFromCharacteristic:(CBCharacteristic *)characteristic
+{
+
+}
+
+- (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request
+{
+
+}
+
+- (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveWriteRequests:(NSArray *)requests
+{
+
+}
+
+- (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral
+{
+
+}
+
+@end
+
 corebluetoothperipheralplugin::corebluetoothperipheralplugin()
 {
 }

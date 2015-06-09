@@ -9,11 +9,8 @@ INCLUDEPATH += inc inc/btle internal internal/btle internal/btle/central
 
 QMAKE_LIBDIR += "$$DESTDIR"
 
-#enable c++ 11 support, note only btlelibservice requires this for now
-#QMAKE_CXXFLAGS += -std=c++11
-CONFIG += c++11
-
 # c++ 11 required sources/headers
+CONFIG += c++11
 HEADERS += \
     inc/btle/atomiclist.h \
     inc/btle/atomiclist.hpp \

@@ -3,6 +3,20 @@
 
 #include "peripheral/peripheralplugininterface.h"
 
+#ifdef DESKTOP_BUILD
+#import <IOBluetooth/IOBluetooth.h>
+#else
+#import <CoreBluetooth/CoreBluetooth.h>
+#endif
+
+@interface corebluetoothperipheralpluginprivate : NSObject<CBPeripheralManagerDelegate>
+{
+@public
+    void* parent_;
+    CBPeripheralManager* manager_;
+}
+@end
+
 namespace btle {
     namespace peripheral {
         namespace apple {

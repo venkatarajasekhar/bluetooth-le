@@ -10,6 +10,8 @@
 		0D3B3E011B0BC739003D6DAD /* peripheral.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3B3DFE1B0BC739003D6DAD /* peripheral.cpp */; };
 		0D3B3E021B0BC739003D6DAD /* peripheralpluginfactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3B3DFF1B0BC739003D6DAD /* peripheralpluginfactory.cpp */; };
 		0D3B3E031B0BC739003D6DAD /* peripheralplugininterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3B3E001B0BC739003D6DAD /* peripheralplugininterface.cpp */; };
+		0D3DA2321B277869005F4248 /* statistics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2311B277869005F4248 /* statistics.cpp */; };
+		0D3DA2351B27788A005F4248 /* corebluetoothperipheralplugin.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2341B27788A005F4248 /* corebluetoothperipheralplugin.mm */; };
 		0DC7398F1ACDDEF7005F7BC0 /* libbtle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC739831ACDDEF7005F7BC0 /* libbtle.a */; };
 		0DC73A0A1ACDDF56005F7BC0 /* advertisementdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DC1ACDDF56005F7BC0 /* advertisementdata.cpp */; };
 		0DC73A0B1ACDDF56005F7BC0 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DD1ACDDF56005F7BC0 /* base.cpp */; };
@@ -93,6 +95,10 @@
 		0D3B3DFF1B0BC739003D6DAD /* peripheralpluginfactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = peripheralpluginfactory.cpp; sourceTree = "<group>"; };
 		0D3B3E001B0BC739003D6DAD /* peripheralplugininterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = peripheralplugininterface.cpp; sourceTree = "<group>"; };
 		0D3B3E051B0BC748003D6DAD /* peripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peripheral.h; sourceTree = "<group>"; };
+		0D3DA2301B277857005F4248 /* statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statistics.h; sourceTree = "<group>"; };
+		0D3DA2311B277869005F4248 /* statistics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = statistics.cpp; sourceTree = "<group>"; };
+		0D3DA2341B27788A005F4248 /* corebluetoothperipheralplugin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = corebluetoothperipheralplugin.mm; sourceTree = "<group>"; };
+		0D3DA2371B27789D005F4248 /* corebluetoothperipheralplugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = corebluetoothperipheralplugin.h; sourceTree = "<group>"; };
 		0D4F08491AE6D68700F4A1A4 /* timercallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timercallback.h; sourceTree = "<group>"; };
 		0DC739831ACDDEF7005F7BC0 /* libbtle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtle.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DC7398E1ACDDEF7005F7BC0 /* btleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = btleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,6 +236,7 @@
 		0D3B3DF71B0BC729003D6DAD /* peripheral */ = {
 			isa = PBXGroup;
 			children = (
+				0D3DA2361B27789D005F4248 /* apple */,
 				0D3B3DF81B0BC729003D6DAD /* peripheralpluginfactory.h */,
 				0D3B3DF91B0BC729003D6DAD /* peripheralplugininterface.h */,
 				0D3B3DFA1B0BC729003D6DAD /* peripheralpluginobserver.h */,
@@ -242,6 +249,7 @@
 		0D3B3DFD1B0BC739003D6DAD /* peripheral */ = {
 			isa = PBXGroup;
 			children = (
+				0D3DA2331B27788A005F4248 /* apple */,
 				0D3B3DFE1B0BC739003D6DAD /* peripheral.cpp */,
 				0D3B3DFF1B0BC739003D6DAD /* peripheralpluginfactory.cpp */,
 				0D3B3E001B0BC739003D6DAD /* peripheralplugininterface.cpp */,
@@ -255,6 +263,22 @@
 				0D3B3E051B0BC748003D6DAD /* peripheral.h */,
 			);
 			path = peripheral;
+			sourceTree = "<group>";
+		};
+		0D3DA2331B27788A005F4248 /* apple */ = {
+			isa = PBXGroup;
+			children = (
+				0D3DA2341B27788A005F4248 /* corebluetoothperipheralplugin.mm */,
+			);
+			path = apple;
+			sourceTree = "<group>";
+		};
+		0D3DA2361B27789D005F4248 /* apple */ = {
+			isa = PBXGroup;
+			children = (
+				0D3DA2371B27789D005F4248 /* corebluetoothperipheralplugin.h */,
+			);
+			path = apple;
 			sourceTree = "<group>";
 		};
 		0DC7397A1ACDDEF7005F7BC0 = {
@@ -311,6 +335,7 @@
 				0DC739B51ACDDF56005F7BC0 /* gatt_services */,
 				0DC7399F1ACDDF56005F7BC0 /* advertisementdata.h */,
 				0DC739A01ACDDF56005F7BC0 /* base.h */,
+				0D3DA2301B277857005F4248 /* statistics.h */,
 				0DC739A11ACDDF56005F7BC0 /* bda.h */,
 				0DC739A21ACDDF56005F7BC0 /* bdascanfilter.h */,
 				0DDE7EDF1AF2BA4C004D100C /* btlelibscanfilter.h */,
@@ -447,6 +472,7 @@
 				0DC739DE1ACDDF56005F7BC0 /* bda.cpp */,
 				0DC739DF1ACDDF56005F7BC0 /* bdascanfilter.cpp */,
 				0DC73A741AD9B6CE005F7BC0 /* rssiscanfilter.cpp */,
+				0D3DA2311B277869005F4248 /* statistics.cpp */,
 				0DDE7EE01AF2BA69004D100C /* btlelibscanfilter.cpp */,
 				0DC739E01ACDDF56005F7BC0 /* btle.cpp */,
 				0DC739EB1ACDDF56005F7BC0 /* characteristic.cpp */,
@@ -637,8 +663,10 @@
 				0DC73A1E1ACDDF56005F7BC0 /* attribute_not_writable.cpp in Sources */,
 				0DC73A721AD12FE4005F7BC0 /* advertisementfields.cpp in Sources */,
 				0DC73A181ACDDF56005F7BC0 /* descriptor.cpp in Sources */,
+				0D3DA2321B277869005F4248 /* statistics.cpp in Sources */,
 				0DC73A2D1ACDDF56005F7BC0 /* scanfilterbase.cpp in Sources */,
 				0D3B3E031B0BC739003D6DAD /* peripheralplugininterface.cpp in Sources */,
+				0D3DA2351B27788A005F4248 /* corebluetoothperipheralplugin.mm in Sources */,
 				0DC73A131ACDDF56005F7BC0 /* connectionhandler.cpp in Sources */,
 				0DC73A281ACDDF56005F7BC0 /* hrservice.cpp in Sources */,
 				0DC73A231ACDDF56005F7BC0 /* cscservice.cpp in Sources */,
