@@ -21,8 +21,8 @@ namespace btle {
         public: // plugin start/stop etc...
 
             const std::vector<std::string>& plugins_available() const;
-            int start(const std::string& plugin_name);
-            int auto_start();
+            void start(const std::string& plugin_name);
+            void auto_start();
             void stop();
 
         public: //

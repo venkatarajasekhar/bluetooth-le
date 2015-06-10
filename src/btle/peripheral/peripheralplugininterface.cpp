@@ -3,7 +3,8 @@
 
 using namespace btle::peripheral;
 
-peripheralplugininterface::peripheralplugininterface()
+peripheralplugininterface::peripheralplugininterface(peripheralpluginobserver& observer)
+: observer_(observer)
 {
 }
 

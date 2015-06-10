@@ -21,7 +21,7 @@ namespace btle {
 
         class peripheralplugininterface{
         public:
-            peripheralplugininterface();
+            peripheralplugininterface(peripheralpluginobserver& observer);
 
         public:
 
@@ -39,9 +39,12 @@ namespace btle {
 
             /**
              * @brief start
+             * @throws not_implemented
+             * @throws not_supported
+             * @throws plugin_start_failed
              * @return
              */
-            virtual int start() = 0;
+            virtual void start() = 0;
 
             /**
              * @brief stop
@@ -130,7 +133,9 @@ namespace btle {
              * @brief read_characteristic_value
              */
             virtual void read_characteristic_value(device& central, const service& srv, const characteristic& chr);
-
+        public:
+            
+            peripheralpluginobserver& observer_;
         };
     }
 }

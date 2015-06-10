@@ -23,13 +23,13 @@ namespace btle {
             class corebluetoothperipheralplugin: public peripheralplugininterface{
             public:
 
-                corebluetoothperipheralplugin();
+                corebluetoothperipheralplugin(peripheralpluginobserver& observer);
 
             public:
 
                 unsigned int features();
                 const std::string& name();
-                int start();
+                void start();
                 void stop();
                 peripheralplugininterface& operator << (const service& srv);
                 void start_advertising(int ms,const adv_fields& fields);
@@ -42,6 +42,8 @@ namespace btle {
                 void characteristic_notify_changed(device& central, characteristic& srv, bool notify);
 
             private:
+
+                corebluetoothperipheralpluginprivate* peripheral_;
             };
         }
     }
