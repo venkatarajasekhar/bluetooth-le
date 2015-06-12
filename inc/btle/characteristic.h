@@ -9,6 +9,9 @@
 
 namespace btle {
 
+    // forward declaration
+    class service;
+    
     /**
      * @brief The characteristic_properties enum, characteristic properties check
      * bluetooth spec for more details
@@ -29,17 +32,22 @@ namespace btle {
     public:
         characteristic();
         characteristic(const std::string& data,
-                       const btle::uuid& uid);
-        characteristic(const btle::uuid& uid);
+                       const btle::uuid& uid,
+                       btle::service* parent);
         characteristic(const btle::uuid& uid,
-                       uint8_t properties);
+                       btle::service* parent);
         characteristic(const btle::uuid& uid,
                        uint8_t properties,
-                       long int instance_id);
+                       btle::service* parent);
+        characteristic(const btle::uuid& uid,
+                       uint8_t properties,
+                       long int instance_id,
+                       btle::service* parent);
         characteristic(const btle::uuid& uid,
                        uint8_t properties,
                        uint16_t attribute_handle,
-                       uint16_t characteristic_value_handle);
+                       uint16_t characteristic_value_handle,
+                       btle::service* parent);
         characteristic(const characteristic& other);
 
     public:
@@ -48,10 +56,12 @@ namespace btle {
         const btle::uuid& uuid() const;
         uint8_t attribute_handle() const;
         long int instance_id() const;
+        btle::service* parent();
 
         // operators
         characteristic& operator << (const descriptor& desc);
         bool operator == (const characteristic& other) const;
+        bool operator == (const btle::uuid& uid) const;
         bool contains_descriptor_type(uint16_t type) const;
         descriptor* descriptor_by_type(uint16_t type);
         std::vector<descriptor>& descriptors();
@@ -69,6 +79,7 @@ namespace btle {
         uint8_t  characteristic_properties_;
         long int instance_id_;
         std::vector<descriptor> descriptors_;
+        btle::service* srv_;
     };
 
     typedef std::vector<characteristic>::iterator chr_iterator;

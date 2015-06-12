@@ -28,11 +28,40 @@ namespace {
         {
             btle::characteristic btle_chr((uuid(UUID_2_STRING(chr))),
                                      [chr properties],
-                                     (long int)chr);
+                                     (long int)chr,
+                                     &srv);
+            
+            if( btle_chr.properties() & GATT_NOTIFY ||
+                btle_chr.properties() & GATT_INDICATE ){
+                btle_chr << btle::descriptor(CLIENT_CHARACTERISTIC_CONFIGURATION,&btle_chr);
+            }
+            if( btle_chr.properties() & GATT_BROADCAST ){
+                btle_chr << btle::descriptor(SERVER_CHARACTERISTIC_CONFIGURATION,&btle_chr);
+            }
+            
             srv << btle_chr;
         }
         
         return srv;
+    }
+    
+    
+    inline btle::characteristic* btle_chr_to_cbcharacteristic(btle::service& srv,CBCharacteristic* chr){
+        btle::characteristic* chr_btle=NULL;
+        for(chr_iterator it = srv.characteristics().begin(); it != srv.characteristics().end(); ++it){
+            if( it->instance_id() == (long int)chr)
+            {
+                chr_btle = (btle::characteristic*)&(*it);
+                break;
+            }
+        }
+        return chr_btle;
+    }
+    
+    inline btle::descriptor* cbcharacteristic_to_desc(btle::characteristic* chr_btle, CBCharacteristic* chr){
+        btle::descriptor* ret=NULL;
+        //for()
+        return ret;
     }
 }
 
@@ -77,7 +106,11 @@ namespace {
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic
 {
-    
+//    [characteristic is]
+    btle::service srv = btle_service_from_cbservice(characteristic.service);
+    btle::characteristic* chr = btle_chr_to_cbcharacteristic(srv,characteristic);
+    btle::descriptor* desc = cbcharacteristic_to_desc(chr, characteristic);
+    ((corebluetoothperipheralplugin*)parent_)->observer_.descriptor_written(*((corebluetoothperipheralplugin*)parent_)->central_, srv, *chr,*desc);
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didUnsubscribeFromCharacteristic:(CBCharacteristic *)characteristic

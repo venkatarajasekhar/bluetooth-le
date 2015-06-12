@@ -491,7 +491,7 @@ void collector::set_characteristic_notify(device& dev, const uuid& uid, bool not
                 const service* srv = dev.db().fetch_service_by_chr_uuid(uid);
                 verify( srv );
                 // TODO fix descriptor
-                descriptor desc(CLIENT_CHARACTERISTIC_CONFIGURATION);
+                descriptor desc(CLIENT_CHARACTERISTIC_CONFIGURATION,NULL);
                 plugin_->write_descriptor(dev,*srv,*chr,desc,notify);
                 return;
             }

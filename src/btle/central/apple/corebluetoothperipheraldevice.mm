@@ -43,14 +43,15 @@ btle::service* corebluetoothperipheraldevice::process_characteristics_discovered
             {
                 btle::characteristic chr((uuid(UUID_2_STRING(characteristic))),
                                          [characteristic properties],
-                                         (long int)characteristic);
+                                         (long int)characteristic,
+                                         ret);
                 
                 if( chr.properties() & GATT_NOTIFY ||
                     chr.properties() & GATT_INDICATE ){
-                    chr << btle::descriptor(CLIENT_CHARACTERISTIC_CONFIGURATION);
+                    chr << btle::descriptor(CLIENT_CHARACTERISTIC_CONFIGURATION,&chr);
                 }
                 if( chr.properties() & GATT_BROADCAST ){
-                    chr << btle::descriptor(SERVER_CHARACTERISTIC_CONFIGURATION);
+                    chr << btle::descriptor(SERVER_CHARACTERISTIC_CONFIGURATION,&chr);
                 }
                 (*it_s) << chr;
             }

@@ -2,6 +2,7 @@
 #define COREBLUETOOTHPERIPHERALPLUGIN_H
 
 #include "peripheral/peripheralplugininterface.h"
+#include "btle/peripheral/apple/corebluetoothcentraldevice.h"
 
 #ifdef DESKTOP_BUILD
 #import <IOBluetooth/IOBluetooth.h>
@@ -41,9 +42,10 @@ namespace btle {
                 std::string descriptor_written(device& central, characteristic& chr, descriptor& desc);
                 void characteristic_notify_changed(device& central, characteristic& srv, bool notify);
 
-            private:
+            public:
 
                 corebluetoothperipheralpluginprivate* peripheral_;
+                corebluetoothcentraldevice* central_;
             };
         }
     }

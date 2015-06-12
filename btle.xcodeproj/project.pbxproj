@@ -12,6 +12,7 @@
 		0D3B3E031B0BC739003D6DAD /* peripheralplugininterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3B3E001B0BC739003D6DAD /* peripheralplugininterface.cpp */; };
 		0D3DA2321B277869005F4248 /* statistics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2311B277869005F4248 /* statistics.cpp */; };
 		0D3DA2351B27788A005F4248 /* corebluetoothperipheralplugin.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2341B27788A005F4248 /* corebluetoothperipheralplugin.mm */; };
+		0D3DA23A1B2B80F9005F4248 /* corebluetoothcentraldevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2391B2B80F9005F4248 /* corebluetoothcentraldevice.mm */; };
 		0DC7398F1ACDDEF7005F7BC0 /* libbtle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC739831ACDDEF7005F7BC0 /* libbtle.a */; };
 		0DC73A0A1ACDDF56005F7BC0 /* advertisementdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DC1ACDDF56005F7BC0 /* advertisementdata.cpp */; };
 		0DC73A0B1ACDDF56005F7BC0 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DD1ACDDF56005F7BC0 /* base.cpp */; };
@@ -99,6 +100,8 @@
 		0D3DA2311B277869005F4248 /* statistics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = statistics.cpp; sourceTree = "<group>"; };
 		0D3DA2341B27788A005F4248 /* corebluetoothperipheralplugin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = corebluetoothperipheralplugin.mm; sourceTree = "<group>"; };
 		0D3DA2371B27789D005F4248 /* corebluetoothperipheralplugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = corebluetoothperipheralplugin.h; sourceTree = "<group>"; };
+		0D3DA2381B2B80D2005F4248 /* corebluetoothcentraldevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = corebluetoothcentraldevice.h; sourceTree = "<group>"; };
+		0D3DA2391B2B80F9005F4248 /* corebluetoothcentraldevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = corebluetoothcentraldevice.mm; sourceTree = "<group>"; };
 		0D4F08491AE6D68700F4A1A4 /* timercallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timercallback.h; sourceTree = "<group>"; };
 		0DC739831ACDDEF7005F7BC0 /* libbtle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtle.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DC7398E1ACDDEF7005F7BC0 /* btleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = btleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				0D3DA2341B27788A005F4248 /* corebluetoothperipheralplugin.mm */,
+				0D3DA2391B2B80F9005F4248 /* corebluetoothcentraldevice.mm */,
 			);
 			path = apple;
 			sourceTree = "<group>";
@@ -277,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				0D3DA2371B27789D005F4248 /* corebluetoothperipheralplugin.h */,
+				0D3DA2381B2B80D2005F4248 /* corebluetoothcentraldevice.h */,
 			);
 			path = apple;
 			sourceTree = "<group>";
@@ -668,6 +673,7 @@
 				0D3B3E031B0BC739003D6DAD /* peripheralplugininterface.cpp in Sources */,
 				0D3DA2351B27788A005F4248 /* corebluetoothperipheralplugin.mm in Sources */,
 				0DC73A131ACDDF56005F7BC0 /* connectionhandler.cpp in Sources */,
+				0D3DA23A1B2B80F9005F4248 /* corebluetoothcentraldevice.mm in Sources */,
 				0DC73A281ACDDF56005F7BC0 /* hrservice.cpp in Sources */,
 				0DC73A231ACDDF56005F7BC0 /* cscservice.cpp in Sources */,
 				0DC73A171ACDDF56005F7BC0 /* connectionparameters.cpp in Sources */,

@@ -16,32 +16,37 @@ characteristic::characteristic()
 
 characteristic::characteristic(
     const std::string& data,
-    const btle::uuid& uid)
+    const btle::uuid& uid,
+    btle::service* parent)
 : base(data,"characteristic with data: " + data + " UUID: " + uid.to_string()),
   uuid_(uid),
   attribute_handle_(0),
   characteristic_value_handle_(0),
   characteristic_properties_(0),
   instance_id_(0),
-  descriptors_()
+  descriptors_(),
+  srv_(parent)
 {
 }
 
 characteristic::characteristic(
-    const btle::uuid& uid)
+    const btle::uuid& uid,
+    btle::service* parent)
 : base("","characteristic with UUID: " + uid.to_string()),
   uuid_(uid),
   attribute_handle_(0),
   characteristic_value_handle_(0),
   characteristic_properties_(0),
   instance_id_(0),
-  descriptors_()
+  descriptors_(),
+  srv_(parent)
 {
 }
 
 characteristic::characteristic(
     const btle::uuid& uid,
-    uint8_t properties)
+    uint8_t properties,
+    btle::service* parent)
 : base("","characteristic with UUID: " + uid.to_string() + " properties: " + utility::to_string(properties)),
   uuid_(uid),
   attribute_handle_(0),
@@ -55,14 +60,16 @@ characteristic::characteristic(
 characteristic::characteristic(
     const btle::uuid& uid,
     uint8_t properties,
-    long int instance_id)
+    long int instance_id,
+    btle::service* parent)
 : base("","characteristic with UUID: " + uid.to_string() + " properties: " + utility::to_string(properties)),
   uuid_(uid),
   attribute_handle_(0),
   characteristic_value_handle_(0),
   characteristic_properties_(properties),
   instance_id_(instance_id),
-  descriptors_()
+  descriptors_(),
+  srv_(parent)
 {
 }
 
@@ -70,14 +77,16 @@ characteristic::characteristic(
     const btle::uuid& uid,
     uint8_t properties,
     uint16_t attribute_handle,
-    uint16_t characteristic_value_handle)
+    uint16_t characteristic_value_handle,
+    btle::service* parent)
 : base("","characteristic with UUID: " + uid.to_string() + " properties: " + utility::to_string(properties)),
   uuid_(uid),
   attribute_handle_(attribute_handle),
   characteristic_value_handle_(characteristic_value_handle),
   characteristic_properties_(properties),
   instance_id_(0),
-  descriptors_()
+  descriptors_(),
+  srv_(parent)
 {
 }
 
@@ -88,7 +97,8 @@ characteristic::characteristic(const characteristic& other)
   characteristic_value_handle_(other.characteristic_value_handle_),
   characteristic_properties_(other.characteristic_properties_),
   instance_id_(other.instance_id_),
-  descriptors_(other.descriptors_)
+  descriptors_(other.descriptors_),
+  srv_(other.srv_)
 {
 }
 
@@ -112,6 +122,11 @@ long int characteristic::instance_id() const
     return instance_id_;
 }
 
+btle::service* characteristic::parent()
+{
+    return srv_;
+}
+
 characteristic& characteristic::operator << (const descriptor& desc)
 {
     // TODO add check for allready containing desc!
@@ -123,6 +138,11 @@ bool characteristic::operator == (const characteristic& other) const
 {
     return uuid_             == other.uuid() &&
            attribute_handle_ == other.attribute_handle();
+}
+
+bool characteristic::operator == (const btle::uuid& uid) const
+{
+    return uuid_ == uid;
 }
 
 bool characteristic::contains_descriptor_type(uint16_t type) const

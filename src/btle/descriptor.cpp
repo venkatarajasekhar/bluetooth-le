@@ -7,36 +7,43 @@ descriptor::descriptor()
 }
 
 descriptor::descriptor(
-    uint16_t type)
-: base(),
-  type_(type),
-  handle_(0)
-{
-}
-
-descriptor::descriptor(
     uint16_t type,
-    bool notifying)
+    btle::characteristic* parent)
 : base(),
   type_(type),
   handle_(0),
-  is_notifying_(notifying)
+  chr_(parent)
 {
 }
 
 descriptor::descriptor(
     uint16_t type,
-    uint16_t handle)
+    bool notifying,
+    btle::characteristic* parent)
 : base(),
   type_(type),
-  handle_(handle)
+  handle_(0),
+  is_notifying_(notifying),
+  chr_(parent)
+{
+}
+
+descriptor::descriptor(
+    uint16_t type,
+    uint16_t handle,
+    btle::characteristic* parent)
+: base(),
+  type_(type),
+  handle_(handle),
+  chr_(parent)
 {
 }
 
 descriptor::descriptor(const descriptor& other)
 : base(other),
   type_(other.type_),
-  handle_(other.handle_)
+  handle_(other.handle_),
+  chr_(other.chr_)
 {
 }
 
@@ -58,6 +65,11 @@ bool descriptor::is_notifying() const
 void descriptor::set_notifying( bool notifying )
 {
     is_notifying_ = notifying;
+}
+
+characteristic* descriptor::parent()
+{
+    return chr_;
 }
 
 bool descriptor::operator == (const descriptor& other) const

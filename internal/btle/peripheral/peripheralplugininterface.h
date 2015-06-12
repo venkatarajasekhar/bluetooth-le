@@ -61,7 +61,7 @@ namespace btle {
             /**
              * @brief start_advertising
              * @param ms interval in milliseconds, though this is just a wish
-             * @param fields
+             * @param fields, advertisement fields to be advertiset ready trimmed to be <= 31 bytes
              */
             virtual void start_advertising(int ms,const adv_fields& fields) = 0;
 
