@@ -117,3 +117,23 @@ void peripheral::central_disconnected(device& dev)
 
 }
 
+void peripheral::descriptor_written(device& central, service& srv, characteristic& chr, descriptor& desc)
+{
+    
+}
+
+btle::attributerequest peripheral::characteristic_read(device& central, service& srv, characteristic& chr)
+{
+    return attributerequest();
+}
+
+void peripheral::characteristic_write(device& central,service& srv,characteristic& chr,std::string& data)
+{
+    
+}
+
+void peripheral::notify_channel_free(device& central)
+{
+    
+}
+

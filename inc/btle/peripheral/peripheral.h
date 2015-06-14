@@ -5,6 +5,7 @@
 #include "btle/uuid.h"
 #include "btle/device.h"
 #include "btle/bda.h"
+#include "btle/attributerequest.h"
 #include "btle/peripheral/peripheralplugininterface.h"
 #include "btle/peripheral/peripheralpluginobserver.h"
 
@@ -36,6 +37,10 @@ namespace btle {
             void service_added(service& srv, error& err);
             void central_connected(device& dev);
             void central_disconnected(device& dev);
+            void descriptor_written(device& central, service& srv, characteristic& chr, descriptor& desc);
+            btle::attributerequest characteristic_read(device& central, service& srv, characteristic& chr);
+            void characteristic_write(device& central,service& srv,characteristic& chr,std::string& data);
+            void notify_channel_free(device& central);
 
         private:
             peripheralplugininterface* plugin_;

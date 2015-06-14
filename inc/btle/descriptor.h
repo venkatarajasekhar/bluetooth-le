@@ -50,6 +50,7 @@ namespace btle {
         uint16_t handle_;
         bool is_notifying_;
         characteristic* chr_;
+        long int instance_id_;
     };
     
     typedef std::vector<descriptor> descriptors;

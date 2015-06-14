@@ -13,6 +13,7 @@
 		0D3DA2321B277869005F4248 /* statistics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2311B277869005F4248 /* statistics.cpp */; };
 		0D3DA2351B27788A005F4248 /* corebluetoothperipheralplugin.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2341B27788A005F4248 /* corebluetoothperipheralplugin.mm */; };
 		0D3DA23A1B2B80F9005F4248 /* corebluetoothcentraldevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2391B2B80F9005F4248 /* corebluetoothcentraldevice.mm */; };
+		0D98A7781B2E08DD004CE40E /* attributerequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D98A7771B2E08DD004CE40E /* attributerequest.cpp */; };
 		0DC7398F1ACDDEF7005F7BC0 /* libbtle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC739831ACDDEF7005F7BC0 /* libbtle.a */; };
 		0DC73A0A1ACDDF56005F7BC0 /* advertisementdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DC1ACDDF56005F7BC0 /* advertisementdata.cpp */; };
 		0DC73A0B1ACDDF56005F7BC0 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DD1ACDDF56005F7BC0 /* base.cpp */; };
@@ -103,6 +104,8 @@
 		0D3DA2381B2B80D2005F4248 /* corebluetoothcentraldevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = corebluetoothcentraldevice.h; sourceTree = "<group>"; };
 		0D3DA2391B2B80F9005F4248 /* corebluetoothcentraldevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = corebluetoothcentraldevice.mm; sourceTree = "<group>"; };
 		0D4F08491AE6D68700F4A1A4 /* timercallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timercallback.h; sourceTree = "<group>"; };
+		0D98A7761B2E08BD004CE40E /* attributerequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = attributerequest.h; sourceTree = "<group>"; };
+		0D98A7771B2E08DD004CE40E /* attributerequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attributerequest.cpp; sourceTree = "<group>"; };
 		0DC739831ACDDEF7005F7BC0 /* libbtle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtle.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DC7398E1ACDDEF7005F7BC0 /* btleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = btleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DC7399F1ACDDF56005F7BC0 /* advertisementdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = advertisementdata.h; sourceTree = "<group>"; };
@@ -366,6 +369,7 @@
 				0DC739CA1ACDDF56005F7BC0 /* version.h */,
 				0DC73A701AD12FC5005F7BC0 /* advertisementfields.h */,
 				0DC73A791ADD6403005F7BC0 /* smpkeys.h */,
+				0D98A7761B2E08BD004CE40E /* attributerequest.h */,
 			);
 			path = btle;
 			sourceTree = "<group>";
@@ -497,6 +501,7 @@
 				0DC73A711AD12FE4005F7BC0 /* advertisementfields.cpp */,
 				0DC73A7A1ADD6421005F7BC0 /* smpkeys.cpp */,
 				0DC73A801AE68ED1005F7BC0 /* timer_darwin.mm */,
+				0D98A7771B2E08DD004CE40E /* attributerequest.cpp */,
 			);
 			path = btle;
 			sourceTree = "<group>";
@@ -644,6 +649,7 @@
 			files = (
 				0DC73A321ACDDF56005F7BC0 /* version.cpp in Sources */,
 				0DC73A2F1ACDDF56005F7BC0 /* utility.cpp in Sources */,
+				0D98A7781B2E08DD004CE40E /* attributerequest.cpp in Sources */,
 				0DC73A121ACDDF56005F7BC0 /* collector.cpp in Sources */,
 				0DC73A6F1AD12F1E005F7BC0 /* collectorobjc.mm in Sources */,
 				0DC73A0D1ACDDF56005F7BC0 /* bdascanfilter.cpp in Sources */,
