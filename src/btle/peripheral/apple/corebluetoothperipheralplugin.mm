@@ -93,6 +93,38 @@ namespace {
 
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
 {
+    corebluetoothperipheralplugin* parent = (corebluetoothperipheralplugin*)parent_;
+    switch ([peripheral state]) {
+        case CBPeripheralManagerStatePoweredOff:
+        {
+            break;
+        }
+        case CBPeripheralManagerStateUnknown:
+        {
+            break;
+        }
+        case CBPeripheralManagerStateResetting:
+        {
+            break;
+            
+        }
+        case CBPeripheralManagerStateUnsupported:
+        {
+            break;
+            
+        }
+        case CBPeripheralManagerStateUnauthorized:
+        {
+            
+            break;
+        }
+        case CBPeripheralManagerStatePoweredOn:
+        {
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral willRestoreState:(NSDictionary *)dict
@@ -155,13 +187,14 @@ namespace {
 
 - (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral
 {
-
+    ((corebluetoothperipheralplugin*)parent_)->observer_.notify_channel_free(*((corebluetoothperipheralplugin*)parent_)->central_);
 }
 
 @end
 
 corebluetoothperipheralplugin::corebluetoothperipheralplugin(peripheralpluginobserver& observer)
-: peripheralplugininterface(observer)
+: peripheralplugininterface(observer),
+  central_(NULL)
 {
 }
 

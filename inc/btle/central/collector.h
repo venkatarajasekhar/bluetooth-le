@@ -87,7 +87,7 @@ namespace btle {
 
         public: // device out stream operations
 
-            void write_file(btle::device& dev, std::ostream& stream, int id=0);
+            void write_file(btle::device& dev, std::ostream& stream, int identifier=0);
 
         private: // from connectionhandler
 
@@ -106,7 +106,7 @@ namespace btle {
             
         private: // from observer
 
-            void plugin_state_changed(central_plugin_state state);
+            void plugin_state_changed(plugin_state state);
             void new_device_discovered(device& dev,adv_fields& fields,int rssi);
             void device_discovered(device& dev, adv_fields& fields, int rssi);
 
@@ -168,7 +168,7 @@ namespace btle {
             virtual void device_gatt_service_discovered_cb(device& dev, const gatt_services::gattservicebase *srv);
             virtual void device_service_discovery_failed_cb(device& dev, const service_list& services, const error& err);
             virtual void device_characteristic_discovery_failed_cb(device& dev, const service& srv, const chr_list& chrs, const error& err);
-            virtual void plugin_state_changed_cb(central_plugin_state state);
+            virtual void plugin_state_changed_cb(plugin_state state);
             virtual void device_btle_ftp_in_progress(device& dev, double progress, int id);
             virtual void device_btle_ftp_out_progress(device& dev, double progress, int id);
             virtual void device_connection_parameters_updated(device& dev);
@@ -186,7 +186,7 @@ namespace btle {
             connectionhandler connectionhandler_;
             unsigned int flags_;
             scan_filters filters_;
-            central_plugin_state state_;
+            plugin_state state_;
             std::vector<std::string> plugins_available_;
         };
     }

@@ -34,15 +34,6 @@ namespace btle {
             PLUGIN_SCAN_PARAMTERS_CAPABILITY       = 0x10
         };
 
-        enum central_plugin_state
-        {
-            STATE_POWERED_ON,
-            STATE_POWERED_OFF,
-            STATE_POWERED_RESETTING,
-            STATE_POWERED_UNKNOWN,
-            STATE_POWERED_NON_SUPPORTED
-        };
-        
         enum central_scan_parameters
         {
             /**

@@ -29,9 +29,15 @@ namespace btle {
         public: //
 
             peripheral& operator << (const service& srv);
+            void advertise_btle_lib_service();
+
+        public: // ftp api
+            
+            void write_file(device& central, std::ostream& stream, int identifier=0);
 
         private: // from observer
 
+            void plugin_state_changed(plugin_state state);
             void advertising_started(error& err);
             void advertising_stopped();
             void service_added(service& srv, error& err);

@@ -112,19 +112,28 @@ namespace {
 - (void) centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)aPeripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
     corebluetoothperipheraldevice* dev = parent_->find_device(aPeripheral);
+    adv_fields fields;
+    process_advertisement_fields(advertisementData, fields);
     if( dev == NULL )
     {
         dev = new corebluetoothperipheraldevice(std::string([[[aPeripheral identifier] UUIDString] UTF8String]));
 #ifdef DESKTOP_BUILD
         [aPeripheral retain];
 #endif
+        dev->peripheral_ = aPeripheral;
+        [dev->peripheral_ setDelegate:self];
         parent_->devices().push_back(dev);
+        parent_->observer().new_device_discovered(*dev,fields,[RSSI intValue]);
     }
-    dev->peripheral_ = aPeripheral;
-    [dev->peripheral_ setDelegate:self];
-    adv_fields fields;
-    process_advertisement_fields(advertisementData, fields);
-    parent_->observer().device_discovered(*dev,fields,[RSSI intValue]);
+    else
+    {
+#ifdef DESKTOP_BUILD
+        [aPeripheral retain];
+#endif
+        dev->peripheral_ = aPeripheral;
+        [dev->peripheral_ setDelegate:self];
+        parent_->observer().device_discovered(*dev,fields,[RSSI intValue]);
+    }
 }
 
 - (void)centralManager:(CBCentralManager *)central didRetrievePeripherals:(NSArray *)peripherals
@@ -134,7 +143,7 @@ namespace {
 
 - (void)centralManager:(CBCentralManager *)central didRetrieveConnectedPeripherals:(NSArray *)peripherals
 {
-    // TODO
+    // TODO, allways when scanning starts fetch connected peripherals
 }
 
 - (void) centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)aPeripheral

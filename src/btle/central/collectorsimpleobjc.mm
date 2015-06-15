@@ -107,7 +107,7 @@ public:
     {
     }
     
-    void plugin_state_changed_cb(central_plugin_state state)
+    void plugin_state_changed_cb(plugin_state state)
     {
         [objc_->delegate_ plugin_state_changed:state];
     }

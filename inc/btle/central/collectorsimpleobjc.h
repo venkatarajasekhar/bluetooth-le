@@ -36,7 +36,7 @@ class collectorsimpleobjcimpl;
 
 @required
 
--(void) plugin_state_changed:(btle::central::central_plugin_state) state;
+-(void) plugin_state_changed:(btle::plugin_state) state;
 -(void) device_discovered:(NSString*) addr name: (NSString*) name state:(NSString*) state rssi: (int) rssi;
 -(void) device_service_value_updated:(NSString*) addr name: (NSString*) name srv: (NSString*) srv json:(NSString*) json;
 -(void) device_hr_value_updated:(NSString*) addr name: (NSString*) name hr: (int) hr contact: (bool) contact rrs: (NSMutableArray*) rrs energy: (int) energy;

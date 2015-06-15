@@ -70,7 +70,8 @@ SOURCES += \
     src/btle/peripheral/peripheralpluginfactory.cpp \
     src/btle/peripheral/peripheral.cpp \
     src/btle/exceptions/not_supported.cpp \
-    src/btle/statistics.cpp
+    src/btle/statistics.cpp \
+    src/btle/attributerequest.cpp
 
 HEADERS += \
     inc/btle/btle.h\
@@ -140,7 +141,8 @@ HEADERS += \
     inc/btle/peripheral/peripheral.h \
     inc/btle/exceptions/not_supported.h \
     inc/btle/statistics.h \
-    internal/btle/central/centralbtleftptransferinterface.h
+    internal/btle/central/centralbtleftptransferinterface.h \
+    inc/btle/attributerequest.h
 
 
 ios{
@@ -150,11 +152,13 @@ ios{
 
     OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h \
                          internal/btle/central/apple/corebluetoothperipheraldevice.h\
-                         internal/btle/peripheral/apple/corebluetoothperipheralplugin.h
+                         internal/btle/peripheral/apple/corebluetoothperipheralplugin.h\
+                         internal/btle/peripheral/apple/corebluetoothcentraldevice.h
     OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm \
                          src/btle/central/apple/corebluetoothperipheraldevice.mm \
                          src/btle/timer_darwin.mm \
-                         src/btle/peripheral/apple/corebluetoothperipheralplugin.mm
+                         src/btle/peripheral/apple/corebluetoothperipheralplugin.mm\
+                         src/btle/peripheral/apple/corebluetoothcentraldevice.mm
 }
 
 macx{
@@ -164,11 +168,13 @@ macx{
 
     OBJECTIVE_HEADERS += internal/btle/central/apple/corebluetoothcentralplugin.h \
                          internal/btle/central/apple/corebluetoothperipheraldevice.h\
-                         internal/btle/peripheral/apple/corebluetoothperipheralplugin.h
+                         internal/btle/peripheral/apple/corebluetoothperipheralplugin.h\
+                         internal/btle/peripheral/apple/corebluetoothcentraldevice.h
     OBJECTIVE_SOURCES += src/btle/central/apple/corebluetoothcentralplugin.mm \
                          src/btle/central/apple/corebluetoothperipheraldevice.mm \
                          src/btle/timer_darwin.mm \
-                         src/btle/peripheral/apple/corebluetoothperipheralplugin.mm
+                         src/btle/peripheral/apple/corebluetoothperipheralplugin.mm \
+                         src/btle/peripheral/apple/corebluetoothcentraldevice.mm
 }
 
 android{

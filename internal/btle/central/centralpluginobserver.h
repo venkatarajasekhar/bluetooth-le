@@ -2,13 +2,14 @@
 #define CENTRALPLUGINOBSERVER_H
 
 #include "btle/device.h"
+#include "btle/btle_global.h"
 #include "btle/error.h"
 
 namespace btle {
     namespace central {
         class centralpluginobserver{
         public:
-            virtual void plugin_state_changed(central_plugin_state state)=0;
+            virtual void plugin_state_changed(plugin_state state)=0;
             virtual void new_device_discovered(device& dev,adv_fields& fields,int rssi)=0;
             virtual void device_discovered(device& dev,adv_fields& fields,int rssi) = 0;
             virtual void device_connected(device& dev)=0;

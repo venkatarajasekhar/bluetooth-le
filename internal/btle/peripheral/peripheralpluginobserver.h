@@ -1,6 +1,8 @@
 #ifndef PERIPHERALPLUGINOBSERVER_H
 #define PERIPHERALPLUGINOBSERVER_H
 
+#include "btle/btle_global.h"
+
 namespace btle {
     class error;
     class service;
@@ -11,12 +13,13 @@ namespace btle {
     namespace peripheral {
         class peripheralpluginobserver{
         public:
+            virtual void plugin_state_changed(plugin_state state)=0;
             virtual void advertising_started(error& err)=0;
             virtual void advertising_stopped()=0;
             virtual void service_added(service& srv, error& err)=0;
             virtual void central_connected(device& central)=0;
             virtual void central_disconnected(device& central)=0;
-            virtual void descriptor_written(device& central, service& srv, characteristic& chr, descriptor& desc);
+            virtual void descriptor_written(device& central, service& srv, characteristic& chr, descriptor& desc)=0;
             virtual attributerequest characteristic_read(device& central, service& srv, characteristic& chr)=0;
             virtual void characteristic_write(device& central,service& srv,characteristic& chr,std::string& data)=0;
             virtual void notify_channel_free(device& central)=0;

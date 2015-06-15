@@ -555,16 +555,17 @@ void collector::update_connection_parameters(btle::device& dev, const connection
  * @param stream file or message etc..
  * @param id unique id of the file to be written, default 0, but it's a good practise to have some unique id, it's for stream cancelation etc...
  */
-void collector::write_file(btle::device& dev, std::ostream& stream, int id)
+void collector::write_file(btle::device& dev, std::ostream& stream, int identifier)
 {
     verify(plugin_)
     if( dev.state() == btle::DEVICE_CONNECTED )
     {
-        if( const service* srv = dev.db().fetch_service(uuid(BTLE_SERVICE)) )
+        if( dev.db().fetch_service(uuid(BTLE_SERVICE)) )
         {
-            if( const characteristic* chr = dev.db().fetch_characteristic(uuid(BTLE_MTU)) )
+            if( dev.db().fetch_characteristic(uuid(BTLE_MTU)) )
             {
-
+                btlelibservice* gattservice = (btlelibservice*)dev.gatt_service(uuid(BTLE_SERVICE));
+                gattservice->write_service_value(uuid(BTLE_MTU), identifier, "TODO", &dev, NULL);
                 return;
             }
             throw btle::exceptions::attribute_not_found("device does not contain btle characteristic mtu");
@@ -621,7 +622,7 @@ void collector::aquire_cancel_pending_connection(btle::device& dev)
 }
 
 
-void collector::plugin_state_changed(central_plugin_state state)
+void collector::plugin_state_changed(plugin_state state)
 {
     state_ = state;
     switch (state) {
@@ -864,7 +865,7 @@ void collector::device_characteristic_discovery_failed_cb(device& dev, const ser
     _log_warning("device service discovery failed, override this callback for further logic");
 }
 
-void collector::plugin_state_changed_cb(central_plugin_state state)
+void collector::plugin_state_changed_cb(plugin_state state)
 {
     _log_warning("plugin state: %i",state);
 }

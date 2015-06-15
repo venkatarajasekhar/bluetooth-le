@@ -92,6 +92,23 @@ peripheral& peripheral::operator << (const service& srv)
     return *this;
 }
 
+void peripheral::advertise_btle_lib_service()
+{
+    adv_fields fields;
+    fields[GAP_ADTYPE_128BIT_COMPLETE] = advertisementdata(std::string(BTLE_SERVICE,16));
+    plugin_->start_advertising(100, fields);
+}
+
+void peripheral::write_file(device& central, std::ostream& stream, int identifier)
+{
+    
+}
+
+void peripheral::plugin_state_changed(plugin_state state)
+{
+    
+}
+
 void peripheral::advertising_started(error& err)
 {
 

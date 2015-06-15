@@ -1,6 +1,18 @@
 #ifndef BTLE_GLOBAL_H
 #define BTLE_GLOBAL_H
 
+namespace btle {
+
+    enum plugin_state
+    {
+        STATE_POWERED_ON,
+        STATE_POWERED_OFF,
+        STATE_POWERED_RESETTING,
+        STATE_POWERED_UNKNOWN,
+        STATE_POWERED_NON_SUPPORTED
+    };
+}
+
 #ifdef _WIN32
 #ifdef __GNUC__
 #include <stdint-gcc.h>
