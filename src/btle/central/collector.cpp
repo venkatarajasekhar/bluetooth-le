@@ -876,9 +876,9 @@ void collector::plugin_state_changed_cb(plugin_state state)
  * @param progress in procentage 0-100%
  * @param id unique file identifier 0 = not specified
  */
-void collector::device_btle_ftp_in_progress(device& dev, double progress, int id)
+void collector::device_btle_ftp_in_progress(device& dev, double progress, const std::string& data, int identifier)
 {
-    _log("File progress procentage: %d file identifier: %i",progress,id);
+    _log("File progress procentage: %d file identifier: %i",progress,identifier);
 }
 
 /**
@@ -887,9 +887,9 @@ void collector::device_btle_ftp_in_progress(device& dev, double progress, int id
  * @param progress in procentage 0-100%
  * @param id unique file identifier 0 = not specified
  */
-void collector::device_btle_ftp_out_progress(device& dev, double progress, int id)
+void collector::device_btle_ftp_out_progress(device& dev, double progress, int identifier)
 {
-    _log("File progress procentage: %d file identifier: %i",progress,id);
+    _log("File progress procentage: %d file identifier: %i",progress,identifier);
 }
 
 void collector::device_connection_parameters_updated(device& dev)

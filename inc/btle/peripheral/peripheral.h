@@ -6,6 +6,7 @@
 #include "btle/device.h"
 #include "btle/bda.h"
 #include "btle/attributerequest.h"
+#include "btle/gatt_services/btlelibservice.h"
 #include "btle/peripheral/peripheralplugininterface.h"
 #include "btle/peripheral/peripheralpluginobserver.h"
 
@@ -48,12 +49,18 @@ namespace btle {
             void characteristic_write(device& central,service& srv,characteristic& chr,std::string& data);
             void notify_channel_free(device& central);
 
+        public: // callbacks
+            
+            virtual void btle_ftp_in_progress(device& dev, double progress, const std::string& data, int identifier);
+            virtual void btle_ftp_out_progress(device& dev, double progress, int identifier);
+            
         private:
             peripheralplugininterface* plugin_;
             std::vector<peripheralplugininterface*> plugins_;
             unsigned int flags_;
             std::vector<std::string> plugins_available_;
             gattdatabase db_;
+            gatt_services::btlelibservice btlelib_service_;
         };
     }
 }

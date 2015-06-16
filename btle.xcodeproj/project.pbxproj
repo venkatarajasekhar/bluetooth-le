@@ -106,6 +106,8 @@
 		0D4F08491AE6D68700F4A1A4 /* timercallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timercallback.h; sourceTree = "<group>"; };
 		0D98A7761B2E08BD004CE40E /* attributerequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = attributerequest.h; sourceTree = "<group>"; };
 		0D98A7771B2E08DD004CE40E /* attributerequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attributerequest.cpp; sourceTree = "<group>"; };
+		0D98A7791B30A745004CE40E /* atomiclist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atomiclist.h; sourceTree = "<group>"; };
+		0D98A77A1B30A745004CE40E /* atomiclist.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = atomiclist.hpp; sourceTree = "<group>"; };
 		0DC739831ACDDEF7005F7BC0 /* libbtle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtle.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DC7398E1ACDDEF7005F7BC0 /* btleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = btleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DC7399F1ACDDF56005F7BC0 /* advertisementdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = advertisementdata.h; sourceTree = "<group>"; };
@@ -344,6 +346,8 @@
 				0DC7399F1ACDDF56005F7BC0 /* advertisementdata.h */,
 				0DC739A01ACDDF56005F7BC0 /* base.h */,
 				0D3DA2301B277857005F4248 /* statistics.h */,
+				0D98A77A1B30A745004CE40E /* atomiclist.hpp */,
+				0D98A7791B30A745004CE40E /* atomiclist.h */,
 				0DC739A11ACDDF56005F7BC0 /* bda.h */,
 				0DC739A21ACDDF56005F7BC0 /* bdascanfilter.h */,
 				0DDE7EDF1AF2BA4C004D100C /* btlelibscanfilter.h */,

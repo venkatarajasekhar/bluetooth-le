@@ -37,10 +37,12 @@ class collectorsimpleobjcimpl;
 @required
 
 -(void) plugin_state_changed:(btle::plugin_state) state;
+-(void) new_device_discovered:(NSString*) addr name: (NSString*) name;
 -(void) device_discovered:(NSString*) addr name: (NSString*) name state:(NSString*) state rssi: (int) rssi;
 -(void) device_service_value_updated:(NSString*) addr name: (NSString*) name srv: (NSString*) srv json:(NSString*) json;
 -(void) device_hr_value_updated:(NSString*) addr name: (NSString*) name hr: (int) hr contact: (bool) contact rrs: (NSMutableArray*) rrs energy: (int) energy;
 -(void) device_rsc_value_updated:(NSString*) addr name: (NSString*) name speed: (double) speed walking: (bool) walking strideLength: (int) strideLength distance: (double) distance;
+-(void) device_csc_value_updated:(NSString*) addr name: (NSString*) name speed: (double) speed cadence:(int) cadence speed_present:(bool) speed_present cadence_present:(bool) cadence_present;
 -(void) device_characteristic_read:(NSString*) addr name: (NSString*) name srv: (NSString*) srv chr: (NSString*) chr data: (NSString*) data err: (int) err;
 -(void) device_state_changed:(NSString*) addr name: (NSString*) name state: (NSString*) state;
 

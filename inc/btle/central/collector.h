@@ -169,8 +169,8 @@ namespace btle {
             virtual void device_service_discovery_failed_cb(device& dev, const service_list& services, const error& err);
             virtual void device_characteristic_discovery_failed_cb(device& dev, const service& srv, const chr_list& chrs, const error& err);
             virtual void plugin_state_changed_cb(plugin_state state);
-            virtual void device_btle_ftp_in_progress(device& dev, double progress, int id);
-            virtual void device_btle_ftp_out_progress(device& dev, double progress, int id);
+            virtual void device_btle_ftp_in_progress(device& dev, double progress, const std::string& data, int identifier);
+            virtual void device_btle_ftp_out_progress(device& dev, double progress, int identifier);
             virtual void device_connection_parameters_updated(device& dev);
 
         private:

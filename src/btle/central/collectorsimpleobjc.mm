@@ -2,6 +2,7 @@
 #include "btle/central/collectorsimpleobjc.h"
 #include "btle/gatt_services/hrservice.h"
 #include "btle/gatt_services/rscservice.h"
+#include "btle/gatt_services/cscservice.h"
 
 using namespace btle::gatt_services;
 
@@ -21,6 +22,12 @@ public:
     collectorsimpleobjcimpl(collectorsimpleobjc* objc)
     : objc_(objc)
     {
+    }
+    
+    void new_device_discovered_cb(device& dev)
+    {
+        [objc_->delegate_ new_device_discovered:DEV_ADDR_TO_NSSTRING(dev)
+                                           name:DEV_NAME_TO_NSSTRING(dev)];
     }
     
     void device_discovered_cb(device& dev)
@@ -67,6 +74,17 @@ public:
                                                    walking:rsc->is_walking()
                                               strideLength:rsc->stride_length()
                                                   distance:rsc->distance()];
+                break;
+            }
+            case CSC_SERVICE:
+            {
+                const cscservice* csc = (const cscservice*)srv;
+                [objc_->delegate_ device_csc_value_updated:DEV_ADDR_TO_NSSTRING(dev)
+                                                      name:DEV_NAME_TO_NSSTRING(dev)
+                                                     speed:csc->speed()
+                                                   cadence:csc->cadence()
+                                             speed_present:csc->is_speed_present()
+                                           cadence_present:csc->is_cadence_present()];
                 break;
             }
             default:

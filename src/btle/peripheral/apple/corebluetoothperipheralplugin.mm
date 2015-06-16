@@ -5,6 +5,7 @@
 #include "btle/characteristic.h"
 #include "btle/service.h"
 #include "btle/attributerequest.h"
+#include "btle/log.h"
 
 
 using namespace btle;
@@ -97,29 +98,28 @@ namespace {
     switch ([peripheral state]) {
         case CBPeripheralManagerStatePoweredOff:
         {
+            parent->observer_.plugin_state_changed(btle::STATE_POWERED_OFF);
             break;
         }
         case CBPeripheralManagerStateUnknown:
         {
+            parent->observer_.plugin_state_changed(btle::STATE_POWERED_UNKNOWN);
             break;
         }
         case CBPeripheralManagerStateResetting:
         {
+            parent->observer_.plugin_state_changed(btle::STATE_POWERED_RESETTING);
             break;
-            
-        }
-        case CBPeripheralManagerStateUnsupported:
-        {
-            break;
-            
         }
         case CBPeripheralManagerStateUnauthorized:
+        case CBPeripheralManagerStateUnsupported:
         {
-            
+            parent->observer_.plugin_state_changed(btle::STATE_POWERED_NON_SUPPORTED);
             break;
         }
         case CBPeripheralManagerStatePoweredOn:
         {
+            parent->observer_.plugin_state_changed(btle::STATE_POWERED_ON);
             break;
         }
         default:
@@ -134,40 +134,55 @@ namespace {
 
 - (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheral error:(NSError *)error
 {
+    func_log
+    
+    corebluetoothperipheralplugin* parent = (corebluetoothperipheralplugin*)parent_;
     btle::error err = btle_error_from_nserror(error);
     ((corebluetoothperipheralplugin*)parent_)->observer_.advertising_started(err);
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error
 {
+    func_log
+    
+    corebluetoothperipheralplugin* parent = (corebluetoothperipheralplugin*)parent_;
     btle::error err = btle_error_from_nserror(error);
     btle::service srv = btle_service_from_cbservice(service);
-    ((corebluetoothperipheralplugin*)parent_)->observer_.service_added(srv, err);
+    parent->observer_.service_added(srv, err);
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic
 {
+    func_log
+    
+    corebluetoothperipheralplugin* parent = (corebluetoothperipheralplugin*)parent_;
     btle::service srv = btle_service_from_cbservice(characteristic.service);
     btle::characteristic* chr = btle_chr_to_cbcharacteristic(srv,characteristic);
     btle::descriptor* desc = cbcharacteristic_to_desc(chr, characteristic);
     desc->set_notifying(true);
-    ((corebluetoothperipheralplugin*)parent_)->observer_.descriptor_written(*((corebluetoothperipheralplugin*)parent_)->central_, srv, *chr,*desc);
+    parent->observer_.descriptor_written(*parent->central_, srv, *chr,*desc);
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didUnsubscribeFromCharacteristic:(CBCharacteristic *)characteristic
 {
+    func_log
+    
+    corebluetoothperipheralplugin* parent = (corebluetoothperipheralplugin*)parent_;
     btle::service srv = btle_service_from_cbservice(characteristic.service);
     btle::characteristic* chr = btle_chr_to_cbcharacteristic(srv,characteristic);
     btle::descriptor* desc = cbcharacteristic_to_desc(chr, characteristic);
     desc->set_notifying(true);
-    ((corebluetoothperipheralplugin*)parent_)->observer_.descriptor_written(*((corebluetoothperipheralplugin*)parent_)->central_, srv, *chr,*desc);
+    parent->observer_.descriptor_written(*parent->central_, srv, *chr,*desc);
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request
 {
+    func_log
+    
+    corebluetoothperipheralplugin* parent = (corebluetoothperipheralplugin*)parent_;
     btle::service srv = btle_service_from_cbservice(request.characteristic.service);
     btle::characteristic* chr = btle_chr_to_cbcharacteristic(srv,request.characteristic);
-    attributerequest req = ((corebluetoothperipheralplugin*)parent_)->observer_.characteristic_read(*((corebluetoothperipheralplugin*)parent_)->central_, srv, *chr);
+    attributerequest req = parent->observer_.characteristic_read(*parent->central_, srv, *chr);
     [request setValue:[NSData dataWithBytes:req.string_value().c_str() length:req.string_value().size()]];
     // TODO implement btle error to CB error translator
     [peripheral respondToRequest:request withResult:(CBATTError)req.err().code()];
@@ -175,6 +190,8 @@ namespace {
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveWriteRequests:(NSArray *)requests
 {
+    func_log
+    
     for( CBATTRequest* request in requests )
     {
         btle::service srv = btle_service_from_cbservice(request.characteristic.service);

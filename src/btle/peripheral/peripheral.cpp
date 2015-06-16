@@ -15,7 +15,8 @@ peripheral::peripheral()
   plugins_(),
   flags_(0),
   plugins_available_(),
-  db_()
+  db_(),
+  btlelib_service_()
 {
     peripheralpluginfactory::instance().populate(plugins_,*this);
     for( std::vector<peripheralplugininterface*>::const_iterator it = plugins_.begin(); it != plugins_.end(); ++it )
@@ -99,9 +100,9 @@ void peripheral::advertise_btle_lib_service()
     plugin_->start_advertising(100, fields);
 }
 
-void peripheral::write_file(device& central, std::ostream& stream, int identifier)
+void peripheral::write_file(btle::device& central, std::ostream& stream, int identifier)
 {
-    
+    btlelib_service_.write_service_value(uuid(BTLE_MTU), identifier, "TODO", &central, NULL);
 }
 
 void peripheral::plugin_state_changed(plugin_state state)
@@ -150,6 +151,16 @@ void peripheral::characteristic_write(device& central,service& srv,characteristi
 }
 
 void peripheral::notify_channel_free(device& central)
+{
+    
+}
+
+void peripheral::btle_ftp_in_progress(device& dev, double progress, const std::string& data, int identifier)
+{
+    
+}
+
+void peripheral::btle_ftp_out_progress(device& dev, double progress, int identifier)
 {
     
 }
