@@ -51,8 +51,17 @@ namespace btle {
 
         public: // callbacks
             
-            virtual void btle_ftp_in_progress(device& dev, double progress, const std::string& data, int identifier);
-            virtual void btle_ftp_out_progress(device& dev, double progress, int identifier);
+            virtual void btle_ftp_in_progress_cb(device& dev, double progress, const std::string& data, int identifier);
+            virtual void btle_ftp_out_progress_cb(device& dev, double progress, int identifier);
+            virtual void plugin_state_changed_cb(plugin_state state);
+            virtual void advertising_started_cb(error& err);
+            virtual void advertising_stopped_cb();
+            virtual void service_added_cb(service& srv, error& err);
+            virtual void central_connected_cb(device& dev);
+            virtual void central_disconnected_cb(device& dev);
+            virtual void descriptor_written_cb(device& central, service& srv, characteristic& chr, descriptor& desc);
+            virtual btle::attributerequest characteristic_read_cb(device& central, service& srv, characteristic& chr);
+            virtual void characteristic_write_cb(device& central,service& srv,characteristic& chr,std::string& data);
             
         private:
             peripheralplugininterface* plugin_;

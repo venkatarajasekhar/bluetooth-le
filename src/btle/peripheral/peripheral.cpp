@@ -2,6 +2,7 @@
 #include "btle/peripheral/peripheral.h"
 #include "btle/peripheral/peripheralpluginfactory.h"
 #include "btle/gatt_services/btlelibservice.h"
+#include "btle/log.h"
 
 #include <assert.h>
 
@@ -155,13 +156,63 @@ void peripheral::notify_channel_free(device& central)
     
 }
 
-void peripheral::btle_ftp_in_progress(device& dev, double progress, const std::string& data, int identifier)
+void peripheral::plugin_state_changed_cb(plugin_state state)
 {
     
 }
 
-void peripheral::btle_ftp_out_progress(device& dev, double progress, int identifier)
+void peripheral::advertising_started_cb(error& err)
 {
     
+}
+
+void peripheral::advertising_stopped_cb()
+{
+    
+}
+
+void peripheral::service_added_cb(service& srv, error& err)
+{
+    _log("service uuid: %s err: %s", srv.to_string().c_str(), err.to_string().c_str());
+}
+
+void peripheral::central_connected_cb(device& dev)
+{
+    _log("central bda: %s",dev.addr().to_string().c_str());
+}
+
+void peripheral::central_disconnected_cb(device& dev)
+{
+    _log("central bda: %s",dev.addr().to_string().c_str());
+}
+
+void peripheral::descriptor_written_cb(device& central, service& srv, characteristic& chr, descriptor& desc)
+{
+    
+}
+
+btle::attributerequest peripheral::characteristic_read_cb(device& central, service& srv, characteristic& chr)
+{
+    return btle::attributerequest();
+}
+
+void peripheral::characteristic_write_cb(device& central,service& srv,characteristic& chr,std::string& data)
+{
+    if(srv == uuid(BTLE_SERVICE))
+    {
+        btle::error err(0);
+        btlelib_service_.process_service_value_read(chr.uuid(), (const uint8_t*)data.c_str(), data.size(),
+                                                    err);
+    }
+}
+
+void peripheral::btle_ftp_in_progress_cb(device& dev, double progress, const std::string& data, int identifier)
+{
+    _log("file transfer progress procentage: %d id: %i", progress, identifier);
+}
+
+void peripheral::btle_ftp_out_progress_cb(device& dev, double progress, int identifier)
+{
+    _log("file transfer progress procentage: %d id: %i", progress, identifier);
 }
 
