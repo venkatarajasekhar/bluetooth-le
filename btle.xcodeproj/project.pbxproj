@@ -13,6 +13,8 @@
 		0D3DA2321B277869005F4248 /* statistics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2311B277869005F4248 /* statistics.cpp */; };
 		0D3DA2351B27788A005F4248 /* corebluetoothperipheralplugin.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2341B27788A005F4248 /* corebluetoothperipheralplugin.mm */; };
 		0D3DA23A1B2B80F9005F4248 /* corebluetoothcentraldevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D3DA2391B2B80F9005F4248 /* corebluetoothcentraldevice.mm */; };
+		0D466B261B38A4E40098DC4B /* peripheralobjc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D466B251B38A4E40098DC4B /* peripheralobjc.mm */; };
+		0D466B281B38A5040098DC4B /* peripheralsimpleobjc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D466B271B38A5040098DC4B /* peripheralsimpleobjc.mm */; };
 		0D98A7781B2E08DD004CE40E /* attributerequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D98A7771B2E08DD004CE40E /* attributerequest.cpp */; };
 		0DC7398F1ACDDEF7005F7BC0 /* libbtle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC739831ACDDEF7005F7BC0 /* libbtle.a */; };
 		0DC73A0A1ACDDF56005F7BC0 /* advertisementdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC739DC1ACDDF56005F7BC0 /* advertisementdata.cpp */; };
@@ -103,6 +105,10 @@
 		0D3DA2371B27789D005F4248 /* corebluetoothperipheralplugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = corebluetoothperipheralplugin.h; sourceTree = "<group>"; };
 		0D3DA2381B2B80D2005F4248 /* corebluetoothcentraldevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = corebluetoothcentraldevice.h; sourceTree = "<group>"; };
 		0D3DA2391B2B80F9005F4248 /* corebluetoothcentraldevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = corebluetoothcentraldevice.mm; sourceTree = "<group>"; };
+		0D466B231B38A4860098DC4B /* peripheralobjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = peripheralobjc.h; sourceTree = "<group>"; };
+		0D466B241B38A4B30098DC4B /* peripheralsimpleobjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = peripheralsimpleobjc.h; sourceTree = "<group>"; };
+		0D466B251B38A4E40098DC4B /* peripheralobjc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = peripheralobjc.mm; sourceTree = "<group>"; };
+		0D466B271B38A5040098DC4B /* peripheralsimpleobjc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = peripheralsimpleobjc.mm; path = apple/peripheralsimpleobjc.mm; sourceTree = "<group>"; };
 		0D4F08491AE6D68700F4A1A4 /* timercallback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timercallback.h; sourceTree = "<group>"; };
 		0D98A7761B2E08BD004CE40E /* attributerequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = attributerequest.h; sourceTree = "<group>"; };
 		0D98A7771B2E08DD004CE40E /* attributerequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attributerequest.cpp; sourceTree = "<group>"; };
@@ -259,6 +265,8 @@
 			children = (
 				0D3DA2331B27788A005F4248 /* apple */,
 				0D3B3DFE1B0BC739003D6DAD /* peripheral.cpp */,
+				0D466B251B38A4E40098DC4B /* peripheralobjc.mm */,
+				0D466B271B38A5040098DC4B /* peripheralsimpleobjc.mm */,
 				0D3B3DFF1B0BC739003D6DAD /* peripheralpluginfactory.cpp */,
 				0D3B3E001B0BC739003D6DAD /* peripheralplugininterface.cpp */,
 			);
@@ -269,6 +277,8 @@
 			isa = PBXGroup;
 			children = (
 				0D3B3E051B0BC748003D6DAD /* peripheral.h */,
+				0D466B231B38A4860098DC4B /* peripheralobjc.h */,
+				0D466B241B38A4B30098DC4B /* peripheralsimpleobjc.h */,
 			);
 			path = peripheral;
 			sourceTree = "<group>";
@@ -654,6 +664,7 @@
 				0DC73A321ACDDF56005F7BC0 /* version.cpp in Sources */,
 				0DC73A2F1ACDDF56005F7BC0 /* utility.cpp in Sources */,
 				0D98A7781B2E08DD004CE40E /* attributerequest.cpp in Sources */,
+				0D466B261B38A4E40098DC4B /* peripheralobjc.mm in Sources */,
 				0DC73A121ACDDF56005F7BC0 /* collector.cpp in Sources */,
 				0DC73A6F1AD12F1E005F7BC0 /* collectorobjc.mm in Sources */,
 				0DC73A0D1ACDDF56005F7BC0 /* bdascanfilter.cpp in Sources */,
@@ -701,6 +712,7 @@
 				0DC73A0A1ACDDF56005F7BC0 /* advertisementdata.cpp in Sources */,
 				0DC73A2E1ACDDF56005F7BC0 /* service.cpp in Sources */,
 				0DC73A1C1ACDDF56005F7BC0 /* attribute_not_notifyable.cpp in Sources */,
+				0D466B281B38A5040098DC4B /* peripheralsimpleobjc.mm in Sources */,
 				0DC73A101ACDDF56005F7BC0 /* centralpluginfactory.cpp in Sources */,
 				0DC73A311ACDDF56005F7BC0 /* uuidscanfilter.cpp in Sources */,
 				0DC73A811AE68ED1005F7BC0 /* timer_darwin.mm in Sources */,

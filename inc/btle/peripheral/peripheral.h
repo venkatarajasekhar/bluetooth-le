@@ -56,12 +56,12 @@ namespace btle {
             virtual void plugin_state_changed_cb(plugin_state state);
             virtual void advertising_started_cb(error& err);
             virtual void advertising_stopped_cb();
-            virtual void service_added_cb(service& srv, error& err);
+            virtual void service_added_cb(service& srv, const error& err);
             virtual void central_connected_cb(device& dev);
             virtual void central_disconnected_cb(device& dev);
-            virtual void descriptor_written_cb(device& central, service& srv, characteristic& chr, descriptor& desc);
-            virtual btle::attributerequest characteristic_read_cb(device& central, service& srv, characteristic& chr);
-            virtual void characteristic_write_cb(device& central,service& srv,characteristic& chr,std::string& data);
+            virtual void descriptor_written_cb(device& central, const service& srv, const characteristic& chr, const descriptor& desc);
+            virtual btle::attributerequest characteristic_read_cb(device& central, const service& srv, const characteristic& chr);
+            virtual void characteristic_write_cb(device& central, const service& srv,const characteristic& chr,const std::string& data);
             
         private:
             peripheralplugininterface* plugin_;

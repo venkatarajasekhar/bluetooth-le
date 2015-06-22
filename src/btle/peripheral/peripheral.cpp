@@ -171,7 +171,7 @@ void peripheral::advertising_stopped_cb()
     
 }
 
-void peripheral::service_added_cb(service& srv, error& err)
+void peripheral::service_added_cb(service& srv, const error& err)
 {
     _log("service uuid: %s err: %s", srv.to_string().c_str(), err.to_string().c_str());
 }
@@ -186,17 +186,17 @@ void peripheral::central_disconnected_cb(device& dev)
     _log("central bda: %s",dev.addr().to_string().c_str());
 }
 
-void peripheral::descriptor_written_cb(device& central, service& srv, characteristic& chr, descriptor& desc)
+void peripheral::descriptor_written_cb(device& central, const service& srv, const characteristic& chr, const descriptor& desc)
 {
-    
+    _log("central bda: %s",central.addr().to_string().c_str());
 }
 
-btle::attributerequest peripheral::characteristic_read_cb(device& central, service& srv, characteristic& chr)
+btle::attributerequest peripheral::characteristic_read_cb(device& central, const service& srv,const  characteristic& chr)
 {
     return btle::attributerequest();
 }
 
-void peripheral::characteristic_write_cb(device& central,service& srv,characteristic& chr,std::string& data)
+void peripheral::characteristic_write_cb(device& central,const service& srv,const characteristic& chr,const std::string& data)
 {
     if(srv == uuid(BTLE_SERVICE))
     {
