@@ -8,8 +8,8 @@ service::service()
   uuid_(),
   characteristics_(),
   start_handle_(0),
-  end_handle_(0)
-
+  end_handle_(0),
+  service_valid_(false)
 {
 }
 
@@ -18,7 +18,8 @@ service::service(const btle::uuid& uid)
   uuid_(uid),
   characteristics_(),
   start_handle_(0),
-  end_handle_(0)
+  end_handle_(0),
+  service_valid_(false)
 {
 }
 
@@ -30,7 +31,8 @@ service::service(
   characteristics_(),
   start_handle_(0),
   end_handle_(0),
-  instance_id_(instance_id)
+  instance_id_(instance_id),
+  service_valid_(false)
 {
 }
 
@@ -42,7 +44,8 @@ service::service(
   uuid_(uid),
   characteristics_(),
   start_handle_(start_handle),
-  end_handle_(end_handle)
+  end_handle_(end_handle),
+  service_valid_(false)
 {
 }
 
@@ -52,7 +55,8 @@ service::service(const service& other)
   characteristics_(other.characteristics_),
   start_handle_(other.start_handle_),
   end_handle_(other.end_handle_),
-  instance_id_(other.instance_id_)
+  instance_id_(other.instance_id_),
+  service_valid_(false)
 {
 }
 
@@ -123,6 +127,16 @@ long int service::instance_id() const
     return instance_id_;
 }
 
+bool service::service_valid() const
+{
+    return service_valid_;
+}
+
+void service::set_service_valid(bool valid)
+{
+    service_valid_ = valid;
+}
+
 std::string service::to_string() const
 {
     return uuid_.to_string();
@@ -133,4 +147,5 @@ void service::invalidate()
     characteristics_.clear();
     start_handle_ = 0;
     end_handle_ = 0;
+    service_valid_ = false;
 }

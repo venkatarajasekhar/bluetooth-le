@@ -70,6 +70,7 @@ namespace btle {
             std::vector<std::string> plugins_available_;
             gattdatabase db_;
             gatt_services::btlelibservice btlelib_service_;
+            std::vector<device*> centrals_;
         };
     }
 }

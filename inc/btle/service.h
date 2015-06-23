@@ -31,7 +31,9 @@ namespace btle {
         uint16_t start_handle() const;
         uint16_t end_handle() const;
         long int instance_id() const;
-
+        bool service_valid() const;
+        void set_service_valid(bool valid);
+        
     public:
         
         std::string to_string() const;
@@ -44,6 +46,7 @@ namespace btle {
         uint16_t start_handle_;
         uint16_t end_handle_;
         long int instance_id_;
+        bool service_valid_;
         // TODO add later std::vector<service> included_services_;
     };
 

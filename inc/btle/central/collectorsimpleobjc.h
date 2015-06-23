@@ -1,10 +1,3 @@
-//
-//  collectorsimpleobjc.h
-//  btle
-//
-//  Created by Erkki  on 11/04/15.
-//  Copyright (c) 2015 Erkki Silvola. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 #include "btle/central/collector.h"

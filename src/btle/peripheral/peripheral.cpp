@@ -17,7 +17,8 @@ peripheral::peripheral()
   flags_(0),
   plugins_available_(),
   db_(),
-  btlelib_service_()
+  btlelib_service_(),
+  centrals_()
 {
     peripheralpluginfactory::instance().populate(plugins_,*this);
     for( std::vector<peripheralplugininterface*>::const_iterator it = plugins_.begin(); it != plugins_.end(); ++it )
@@ -108,67 +109,88 @@ void peripheral::write_file(btle::device& central, std::ostream& stream, int ide
 
 void peripheral::plugin_state_changed(plugin_state state)
 {
-    
+    plugin_state_changed_cb(state);
 }
 
 void peripheral::advertising_started(error& err)
 {
-
+    advertising_started_cb(err);
 }
 
 void peripheral::advertising_stopped()
 {
-
+    advertising_stopped_cb();
 }
 
 void peripheral::service_added(service& srv, error& err)
 {
-
+    if(err.code()==0)
+    {
+        for( service_iterator it = db_.services().begin(); it != db_.services().end(); ++it )
+        {
+            if(it->uuid()==srv.uuid())
+            {
+                it->set_service_valid(true);
+                break;
+            }
+        }
+    }
+    service_added_cb(srv, err);
 }
 
 void peripheral::central_connected(device& dev)
 {
-
+    central_connected_cb(dev);
 }
 
 void peripheral::central_disconnected(device& dev)
 {
-
+    central_disconnected_cb(dev);
 }
 
 void peripheral::descriptor_written(device& central, service& srv, characteristic& chr, descriptor& desc)
 {
-    
+    descriptor_written_cb(central, srv, chr, desc);
 }
 
 btle::attributerequest peripheral::characteristic_read(device& central, service& srv, characteristic& chr)
 {
-    return attributerequest();
+    const characteristic* chr_stored = db_.fetch_characteristic(std::make_pair(srv.uuid(), chr.uuid()));
+    if(chr_stored)
+    {
+        if(chr_stored->string_value().size())
+        {
+            // constant string found return it
+            return btle::attributerequest(chr_stored->string_value(),btle::error(0));
+        }
+    }
+    // clients call if this is overridden
+    return characteristic_read_cb(central, srv, chr);
 }
 
 void peripheral::characteristic_write(device& central,service& srv,characteristic& chr,std::string& data)
 {
-    
+    characteristic_write_cb(central, srv, chr, data);
 }
 
 void peripheral::notify_channel_free(device& central)
 {
-    
+    // this for internal use only
 }
 
 void peripheral::plugin_state_changed_cb(plugin_state state)
 {
-    
+    _log("plugin state: %i",state);
 }
 
 void peripheral::advertising_started_cb(error& err)
 {
-    
+    _log("advertising started err: %s",err.description().c_str());
 }
 
 void peripheral::advertising_stopped_cb()
 {
-    
+    _log("advertising stopped");
 }
 
 void peripheral::service_added_cb(service& srv, const error& err)

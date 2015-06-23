@@ -1,5 +1,3 @@
-#ifndef btle_peripheralobjc_h
-#define btle_peripheralobjc_h
 
 #import <Foundation/Foundation.h>
 #include "btle/peripheral/peripheral.h"
@@ -41,4 +39,3 @@ class peripheralobjcimpl;
 
 @end
 
-#endif
