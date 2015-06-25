@@ -253,7 +253,6 @@ btle::device_list collector::devices_in_order(int rssi_limit,bool ascent) const
     return list;
 }
 
-
 /**
  * @brief collector::set_auto_read_values,
  *        setup characteristic uuids to be read if found,

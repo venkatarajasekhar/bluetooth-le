@@ -21,6 +21,7 @@ class collectorsimpleobjcimpl;
 - (void) connect_device:(NSString*) addr;
 - (void) disconnect_device:(NSString*) addr;
 - (void) scan_devices;
+- (void) read_characteristic:(NSString*) addr chrUuid: (NSString*) chrUuid;
 - (void) stop_scan_devices;
 
 @end
@@ -36,6 +37,7 @@ class collectorsimpleobjcimpl;
 -(void) device_hr_value_updated:(NSString*) addr name: (NSString*) name hr: (int) hr contact: (bool) contact rrs: (NSMutableArray*) rrs energy: (int) energy;
 -(void) device_rsc_value_updated:(NSString*) addr name: (NSString*) name speed: (double) speed walking: (bool) walking strideLength: (int) strideLength distance: (double) distance;
 -(void) device_csc_value_updated:(NSString*) addr name: (NSString*) name speed: (double) speed cadence:(int) cadence speed_present:(bool) speed_present cadence_present:(bool) cadence_present;
+-(void) device_cycling_power_updated:(NSString*) addr name: (NSString*) name power: (int) power speed: (double) speed cadence:(int) cadence speed_present:(bool) speed_present cadence_present:(bool) cadence_present;
 -(void) device_characteristic_read:(NSString*) addr name: (NSString*) name srv: (NSString*) srv chr: (NSString*) chr data: (NSString*) data err: (int) err;
 -(void) device_state_changed:(NSString*) addr name: (NSString*) name state: (NSString*) state;
 

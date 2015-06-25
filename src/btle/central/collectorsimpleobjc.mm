@@ -2,7 +2,9 @@
 #include "btle/central/collectorsimpleobjc.h"
 #include "btle/gatt_services/hrservice.h"
 #include "btle/gatt_services/rscservice.h"
-#include "btle/gatt_services/cscservice.h"
+#include "btle/gatt_services/cyclingpowerservice.h"
+//#include "btle/gatt_services/cscservice.h"
+#include "btle/log.h"
 
 using namespace btle::gatt_services;
 
@@ -87,6 +89,18 @@ public:
                                            cadence_present:csc->is_cadence_present()];
                 break;
             }
+            case CYCLING_POWER_SERVICE:
+            {
+                const cyclingpowerservice* power = (const cyclingpowerservice*)srv;
+                [objc_->delegate_ device_cycling_power_updated:DEV_ADDR_TO_NSSTRING(dev)
+                                                          name:DEV_NAME_TO_NSSTRING(dev)
+                                                         power:power->instantaneous_power()
+                                                         speed:power->speed()
+                                                       cadence:power->cadence()
+                                                 speed_present:power->is_speed_present()
+                                               cadence_present:power->is_cadence_present()];
+                break;
+            }
             default:
                 break;
         }
@@ -165,6 +179,18 @@ public:
 - (void) scan_devices
 {
     collector_->start_scan();
+}
+
+- (void) read_characteristic:(NSString*) addr chrUuid: (NSString*) chrUuid
+{
+    try {
+        if(btle::device* dev = collector_->fetch_device(bda([addr UTF8String])))
+        {
+            collector_->read_characteristic_value(*dev, btle::uuid(std::string([chrUuid UTF8String])));
+        }
+    } catch (std::runtime_error& ex) {
+        _log("Failed to read characteristic: %s",ex.what());
+    }
 }
 
 - (void) stop_scan_devices

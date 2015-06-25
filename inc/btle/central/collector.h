@@ -173,7 +173,7 @@ namespace btle {
             virtual void device_btle_ftp_out_progress(device& dev, double progress, int identifier);
             virtual void device_connection_parameters_updated(device& dev);
 
-        private:
+        public:
 
             device* fetch_device(const bda& addr);
 
