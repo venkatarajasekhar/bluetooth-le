@@ -26,6 +26,11 @@ bool gattservicebase::is_active() const
     return false;
 }
 
+std::string gattservicebase::json() const
+{
+    return "";
+}
+
 /**
  * @brief gattservicebase::json, optional (NOTE will not be supported in 1.x.x version)
  *                               to get e.g. Heart rate measurement in json

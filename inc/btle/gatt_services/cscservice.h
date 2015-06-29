@@ -53,7 +53,8 @@ namespace btle {
             void process_service_notify_data(const uuid& chr, const uint8_t* data, size_t size);
             void process_service_value_read(const uuid& chr, const uint8_t* data, size_t size, const error& err);
             void reset();
-
+            std::string json() const;
+            
         protected:
 
             int process_speed_measurement(const uint8_t *msg, int offset);

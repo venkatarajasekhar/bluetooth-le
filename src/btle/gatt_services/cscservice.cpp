@@ -5,6 +5,7 @@
 #include <cstring>
 #include <stdio.h>
 #include <string>
+#include <sstream>
 #include <time.h>
 
 using namespace btle::gatt_services;
@@ -97,6 +98,21 @@ void cscservice::reset()
     wheel_rounds_ = 0;
     wheel_event_  = 0;
     crank_event_  = 0;
+}
+
+std::string cscservice::json() const
+{
+    std::stringstream ss;
+    ss << "{\n \"speedValue\", ";
+    if( is_speed_present() ) ss << speed();
+    ss << ",\n \"excerciseDistance\", ";
+    if( is_speed_present() ) ss << distance();
+    ss << ",\n \"totalDistance\", ";
+    if( is_speed_present() ) ss << total_distance();
+    ss << ",\n \"cadenceValue\", ";
+    if( is_cadence_present() ) ss << cadence();
+    
+    return ss.str();
 }
 
 int cscservice::process_speed_measurement(const uint8_t* msg, int offset)

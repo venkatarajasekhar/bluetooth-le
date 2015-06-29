@@ -23,11 +23,12 @@ namespace btle {
         public:
             hrservice();
 
-        public:
+        public: // from base
 
             void process_service_notify_data(const uuid& chr, const uint8_t* data, size_t size);
             void process_service_value_read(const uuid& chr, const uint8_t* data, size_t size, const error& err);
             void reset();
+            std::string json() const;
 
         public: // api
 

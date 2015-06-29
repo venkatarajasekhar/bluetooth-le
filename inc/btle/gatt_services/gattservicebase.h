@@ -41,6 +41,7 @@ namespace btle {
             virtual int write_service_value(const uuid& chr, const std::string& data);
             virtual void set_active(const uuid& uid, bool notifying);
             virtual bool is_active() const;
+            virtual std::string json() const;
             virtual std::string json(const uuid& uid) const;
             virtual void attach_service_resource(const service& srv);
 

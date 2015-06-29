@@ -3,6 +3,7 @@
 #include "btle/gatt_services/gattserviceregisterer.h"
 
 #include <stdio.h>
+#include <sstream>
 #include <cstring>
 
 using namespace btle::gatt_services;
@@ -105,4 +106,19 @@ void hrservice::reset()
     rrs_.clear();
     energy_expended_ = 0;
     memset(&flags_,0,sizeof(flags_));
+}
+
+std::string hrservice::json() const
+{
+    std::stringstream ss;
+    ss << "{\n \"hrValue\", " << hr_value()
+       << ",\n \"energyExpended\", " << energy_expeneded()
+       << ",\n \"sensorContact\", " << sensor_contact()
+       << ",\n \"rrValues\", [";
+    
+    for( std::vector<int>::const_iterator it = rr_values().begin(); it != rr_values().end(); ++it )
+        ss << *it << ((it+1) != rr_values().end() ?  "," : "");
+    
+    ss << "]\n}";
+    return ss.str();
 }

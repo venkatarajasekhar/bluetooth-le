@@ -2,6 +2,7 @@
 #include "btle/gatt_services/rscservice.h"
 #include "btle/gatt_services/gattserviceregisterer.h"
 
+#include <sstream>
 #include <stdio.h>
 #include <cstring>
 
@@ -125,4 +126,18 @@ void rscservice::reset()
     sensor_location_ = 0;
 }
 
+std::string rscservice::json() const
+{
+    std::stringstream ss;
+    ss << "{\n \"speedValue\", " << speed()
+    << ",\n \"cadenceValue\", " << cadence()
+    << ",\n \"strideLength\", ";
+    if( flags_.stride_length_present_ )
+        ss << stride_length();
+    ss << ",\n \"distance\", ";
+    if( flags_.distance_present_ )
+        ss << distance();
+    ss << "\n}";
+    return ss.str();
+}
 
