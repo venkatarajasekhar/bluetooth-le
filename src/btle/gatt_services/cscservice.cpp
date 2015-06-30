@@ -102,18 +102,33 @@ void cscservice::reset()
 
 std::string cscservice::json() const
 {
-    std::stringstream ss;
-    ss << "{\n \"speedValue\", ";
-    if( is_speed_present() ) ss << speed();
-    ss << ",\n \"excerciseDistance\", ";
-    if( is_speed_present() ) ss << distance();
-    ss << ",\n \"totalDistance\", ";
-    if( is_speed_present() ) ss << total_distance();
-    ss << ",\n \"cadenceValue\", ";
-    if( is_cadence_present() ) ss << cadence();
-    
-    return ss.str();
+    return json(uuid(CSC_MEASUREMENT));
 }
+
+std::string cscservice::json(const uuid& uid) const
+{
+    switch (uid.uuid16bit())
+    {
+        case CSC_MEASUREMENT:
+        {
+            std::stringstream ss;
+            ss << "{\n \"speedValue\", ";
+            if( is_speed_present() ) ss << speed();
+            ss << ",\n \"excerciseDistance\", ";
+            if( is_speed_present() ) ss << distance();
+            ss << ",\n \"totalDistance\", ";
+            if( is_speed_present() ) ss << total_distance();
+            ss << ",\n \"cadenceValue\", ";
+            if( is_cadence_present() ) ss << cadence();
+            ss << "}";
+            return ss.str();
+        }
+        default:
+            break;
+    }
+    return "";
+}
+
 
 int cscservice::process_speed_measurement(const uint8_t* msg, int offset)
 {

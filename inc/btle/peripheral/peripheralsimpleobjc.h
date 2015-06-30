@@ -14,7 +14,6 @@ using namespace btle::peripheral;
 }
 
 -(instancetype) initWithDelegate:(id<peripheralsimpleobjc_delegate>) delegate;
-
 -(void) write_file:(NSString*) centralAddr data: (NSString*) data identifier:(int) identifier;
 
 @end

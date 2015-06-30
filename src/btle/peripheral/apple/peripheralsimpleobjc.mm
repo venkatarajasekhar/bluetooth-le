@@ -99,7 +99,6 @@ public:
 {
     try {
         //peripheral_->write_file(<#btle::device &central#>, <#std::ostream &stream#>)
-        // TODO
     } catch (std::runtime_error& err) {
         _log("Failed to write file due to error: %s",err.what());
     }

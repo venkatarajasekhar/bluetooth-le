@@ -128,16 +128,29 @@ void rscservice::reset()
 
 std::string rscservice::json() const
 {
-    std::stringstream ss;
-    ss << "{\n \"speedValue\", " << speed()
-    << ",\n \"cadenceValue\", " << cadence()
-    << ",\n \"strideLength\", ";
-    if( flags_.stride_length_present_ )
-        ss << stride_length();
-    ss << ",\n \"distance\", ";
-    if( flags_.distance_present_ )
-        ss << distance();
-    ss << "\n}";
-    return ss.str();
+    return json(uuid(RSC_MEASUREMENT));
 }
 
+std::string rscservice::json(const btle::uuid& uid) const
+{
+    switch (uid.uuid16bit())
+    {
+        case RSC_MEASUREMENT:
+        {
+            std::stringstream ss;
+            ss << "{\n \"speedValue\", " << speed()
+            << ",\n \"cadenceValue\", " << cadence()
+            << ",\n \"strideLength\", ";
+            if( flags_.stride_length_present_ )
+                ss << stride_length();
+            ss << ",\n \"distance\", ";
+            if( flags_.distance_present_ )
+                ss << distance();
+            ss << "\n}";
+            return ss.str();
+        }
+        default:
+            break;
+    }
+    return "";
+}

@@ -110,15 +110,29 @@ void hrservice::reset()
 
 std::string hrservice::json() const
 {
-    std::stringstream ss;
-    ss << "{\n \"hrValue\", " << hr_value()
-       << ",\n \"energyExpended\", " << energy_expeneded()
-       << ",\n \"sensorContact\", " << sensor_contact()
-       << ",\n \"rrValues\", [";
-    
-    for( std::vector<int>::const_iterator it = rr_values().begin(); it != rr_values().end(); ++it )
-        ss << *it << ((it+1) != rr_values().end() ?  "," : "");
-    
-    ss << "]\n}";
-    return ss.str();
+    return json(uuid(HEART_RATE_MEASUREMENT));
+}
+
+std::string hrservice::json(const uuid& uid) const
+{
+    switch (uid.uuid16bit())
+    {
+        case HEART_RATE_MEASUREMENT:
+        {
+            std::stringstream ss;
+            ss << "{\n \"hrValue\", " << hr_value()
+            << ",\n \"energyExpended\", " << energy_expeneded()
+            << ",\n \"sensorContact\", " << sensor_contact()
+            << ",\n \"rrValues\", [";
+            
+            for( std::vector<int>::const_iterator it = rr_values().begin(); it != rr_values().end(); ++it )
+                ss << *it << ((it+1) != rr_values().end() ?  "," : "");
+            
+            ss << "]\n}";
+            return ss.str();
+        }
+        default:
+            break;
+    }
+    return "";
 }

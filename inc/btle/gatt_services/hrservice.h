@@ -29,7 +29,8 @@ namespace btle {
             void process_service_value_read(const uuid& chr, const uint8_t* data, size_t size, const error& err);
             void reset();
             std::string json() const;
-
+            std::string json(const uuid& uid) const;
+            
         public: // api
 
             int hr_value() const;
