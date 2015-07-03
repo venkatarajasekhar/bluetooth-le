@@ -909,3 +909,4 @@ btle::device* collector::fetch_device(const bda& addr)
     return NULL;
 }
 
+

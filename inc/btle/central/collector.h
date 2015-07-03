@@ -22,7 +22,7 @@ namespace btle {
         /**
          * @brief The collector class, main interface class for lib central usage
          */
-        class BTLE_API collector: public centralpluginobserver,
+        class BTLE_API collector: public  centralpluginobserver,
                                   private connectionhandlerobserver,
                                   private connectionhandlerscanctrl,
                                   private connectionhandlerlinkctrl

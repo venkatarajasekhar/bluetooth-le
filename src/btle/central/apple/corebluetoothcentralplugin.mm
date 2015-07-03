@@ -376,6 +376,9 @@ int corebluetoothcentralplugin::start()
     func_log
 
     privateimpl_ = [[corebluetoothcentralpluginprivate alloc] init: this];
+#ifdef DESKTOP_BUILD
+    [privateimpl_ retain];
+#endif
     return 0;
 }
 
@@ -383,6 +386,9 @@ void corebluetoothcentralplugin::stop()
 {
     func_log
 
+#ifdef DESKTOP_BUILD
+    [privateimpl_ release];
+#endif
     privateimpl_= nil;
 }
 

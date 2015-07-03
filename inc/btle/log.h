@@ -35,7 +35,7 @@ namespace btle {
         std::ofstream ss_out_;
     };
 
-    class logfunc
+    class BTLE_API logfunc
     {
         public:
             logfunc( const char* func_name);
