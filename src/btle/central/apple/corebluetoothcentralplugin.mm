@@ -66,6 +66,9 @@ namespace {
     {
         parent_ = plugin;
         manager_ = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+#ifdef DESKTOP_BUILD
+        [manager_ retain];
+#endif
     }
     return self;
 }
