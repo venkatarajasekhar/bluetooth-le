@@ -140,4 +140,14 @@ void bluezcentralplugin::write_descriptor(device& dev, const service& srv, const
     }
 }
 
+void bluezcentralplugin::write_btle_ftp(device& dev, const std::string& buffer)
+{
+
+}
+
+int bluezcentralplugin::read_btle_ftp(device& dev, std::string& buffer, bool ack)
+{
+    return 0;
+}
+
 
