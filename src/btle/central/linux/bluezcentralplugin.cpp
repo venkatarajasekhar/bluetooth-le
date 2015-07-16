@@ -4,8 +4,20 @@
 #include "btle/central/centralpluginregisterer.h"
 #include "btle/log.h"
 
+#include <assert.h>
 #include <sys/ioctl.h>
 #include <stdio.h>
+
+#include <errno.h>
+#include <ctype.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <getopt.h>
+#include <sys/param.h>
+#include <sys/socket.h>
+#include <signal.h>
 
 #include <bluetooth/hci.h>
 #include <bluetooth/hci_lib.h>
@@ -17,13 +29,87 @@ using namespace btle;
 namespace {
     centralpluginregisterer<bluezcentralplugin> registration;
 
+    void routine(void* context)
+    {
+        bluezcentralplugin* parent(reinterpret_cast<bluezcentralplugin*>(context));
+        parent->scan_routine();
+    }
 }
 
 bluezcentralplugin::bluezcentralplugin(centralpluginobserver &observer)
 : centralplugininterface(observer),
-  base("","LINUX central plugin implementation")
+  base("","LINUX central plugin implementation"),
+  id_(0),
+  handle_(0),
+  main_(),
+  mutex_(),
+  started_()
 {
 
+}
+
+void bluezcentralplugin::scan_routine()
+{
+    _log("main routine started");
+    mutex_.lock();
+    started_.notify_all();
+    mutex_.unlock();
+
+    struct hci_filter nf, of;
+    unsigned char buf[HCI_MAX_EVENT_SIZE], *ptr;
+    //struct sigaction sa;
+    socklen_t olen;
+    int len;
+    olen = sizeof(of);
+
+    if (getsockopt(handle_, SOL_HCI, HCI_FILTER, &of, &olen) < 0) {
+        printf("Could not get socket options\n");
+        return;
+    }
+
+    hci_filter_clear(&nf);
+    hci_filter_set_ptype(HCI_EVENT_PKT, &nf);
+    hci_filter_set_event(EVT_LE_META_EVENT, &nf);
+
+    if (setsockopt(handle_, SOL_HCI, HCI_FILTER, &nf, sizeof(nf)) < 0) {
+        printf("Could not set socket options\n");
+        return;
+    }
+
+    //memset(&sa, 0, sizeof(sa));
+    //sa.sa_flags = SA_NOCLDSTOP;
+    //sa.sa_handler = sigint_handler;
+    //sigaction(SIGINT, &sa, NULL);
+    while (1) {
+        evt_le_meta_event *meta;
+        le_advertising_info *info;
+        char addr[18];
+        while ((len = read(handle_, buf, sizeof(buf))) < 0) {
+            if (errno == EINTR) {
+            len = 0;
+            goto done;
+            }
+            if (errno == EAGAIN || errno == EINTR)
+                continue;
+            goto done;
+        }
+        ptr = buf + (1 + HCI_EVENT_HDR_SIZE);
+        len -= (1 + HCI_EVENT_HDR_SIZE);
+        meta = (evt_le_meta_event *) ptr;
+        if (meta->subevent != 0x02)
+            goto done;
+        info = (le_advertising_info *) (meta->data + 1);
+        //if (check_report_filter(filter_type, info)) {
+            char name[30];
+            memset(name, 0, sizeof(name));
+            ba2str(&info->bdaddr, addr);
+            //eir_parse_name(info->data, info->length,
+            //name, sizeof(name) - 1);
+            printf("%s %s\n", addr, name);
+        //}
+    }
+    done:
+    setsockopt(handle_, SOL_HCI, HCI_FILTER, &of, sizeof(of));
 }
 
 const std::string& bluezcentralplugin::name()
@@ -45,15 +131,19 @@ int bluezcentralplugin::start()
 {
     id_ = hci_get_route(NULL);
     int on = 1;
-    if((handle_ = hci_open_dev(id_)) == 0)
+    if((handle_ = hci_open_dev(id_)) >= 0)
     {
-        if( ioctl(handle_, FIONBIO, (char *)&on) == 0)
+        //if( ioctl(handle_, FIONBIO, (char *)&on) == 0)
         {
+            main_ = std::thread(::routine,this);
+            std::unique_lock<std::mutex> lock(mutex_);
+            started_.wait(lock);
+            observer_.plugin_state_changed(btle::STATE_POWERED_ON);
             return 0;
         }
-        else return -1;
+        //else return -1;
     }
-    else return handle_;
+    return handle_;
 }
 
 void bluezcentralplugin::stop()
@@ -69,7 +159,7 @@ void bluezcentralplugin::start_scan(central_scan_parameters param, const uuid_li
     {
         if( (err = hci_le_set_scan_enable(handle_, 0x01, 1, 1000)) == 0)
         {
-
+            _log("le scanning...");
         }
         else _log_error(" err: %i",err);
     }

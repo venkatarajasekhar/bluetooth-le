@@ -198,6 +198,7 @@ win{
 
 linux{
     LIBS += -lbluetooth
+    # linux compilation requires gcc 4.9 or newer
     QMAKE_CXXFLAGS += -std=gnu++11
     SOURCES += \
         src/btle/timer_posix.cpp \

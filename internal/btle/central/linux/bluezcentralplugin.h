@@ -5,6 +5,8 @@
 
 #include <bluetooth/bluetooth.h>
 #include <thread>
+#include <mutex>
+#include <condition_variable>
 
 namespace btle {
     namespace central {
@@ -12,6 +14,10 @@ namespace btle {
             class bluezcentralplugin: public centralplugininterface, public base{
             public:
                 bluezcentralplugin(centralpluginobserver& observer);
+
+            public:
+
+               void scan_routine();
 
             public: // from base
 
@@ -39,6 +45,8 @@ namespace btle {
                 int id_;
                 int handle_;
                 std::thread main_;
+                std::mutex mutex_;
+                std::condition_variable started_;
             };
         }
     }
