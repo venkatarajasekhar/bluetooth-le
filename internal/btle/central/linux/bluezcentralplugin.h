@@ -1,6 +1,7 @@
 #ifndef BLUEZCENTRALPLUGIN_H
 #define BLUEZCENTRALPLUGIN_H
 
+#include "btle/central/linux/bluezperipheraldevice.h"
 #include "btle/central/centralplugininterface.h"
 
 #include <bluetooth/bluetooth.h>
@@ -39,6 +40,10 @@ namespace btle {
                 void write_descriptor(device& dev, const service& srv, const characteristic& chr, descriptor& desc, bool notify);
                 void write_btle_ftp(device& dev, const std::string& buffer);
                 int read_btle_ftp(device& dev, std::string& buffer, bool ack);
+
+            private:
+
+                bluezperipheraldevice* find_device(const bda& addr);
 
             private:
 

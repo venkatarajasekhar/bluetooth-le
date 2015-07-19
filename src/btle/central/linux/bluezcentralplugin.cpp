@@ -3,6 +3,8 @@
 #include "btle/central/linux/bluezcentralplugin.h"
 #include "btle/central/centralpluginregisterer.h"
 #include "btle/log.h"
+#include "btle_global.h"
+#include "btle/utility.h"
 
 #include <assert.h>
 #include <sys/ioctl.h>
@@ -34,6 +36,17 @@ namespace {
         bluezcentralplugin* parent(reinterpret_cast<bluezcentralplugin*>(context));
         parent->scan_routine();
     }
+
+    void process_adv_data(adv_fields& fields, const unsigned char* data, size_t length)
+    {
+        int offset(0);
+        while(offset < length)
+        {
+            btle::advertisement_data_type type = (advertisement_data_type)*(data+offset+1);
+            fields[type] = btle::advertisementdata(std::string((const char*)(data+offset+2),*(data) - 1));
+            offset += *(data+offset) + 1;
+        }
+    }
 }
 
 bluezcentralplugin::bluezcentralplugin(centralpluginobserver &observer)
@@ -47,6 +60,8 @@ bluezcentralplugin::bluezcentralplugin(centralpluginobserver &observer)
 {
 
 }
+
+#include <QDebug>
 
 void bluezcentralplugin::scan_routine()
 {
@@ -99,6 +114,26 @@ void bluezcentralplugin::scan_routine()
         if (meta->subevent != 0x02)
             goto done;
         info = (le_advertising_info *) (meta->data + 1);
+
+        //_log("adv data: %s",utility::to_hex_string(info->data,info->length).c_str());
+
+        qDebug() << QString::fromStdString(utility::to_hex_string(info->data,info->length));
+
+        adv_fields fields;
+        process_adv_data(fields,info->data,info->length);
+        bluezperipheraldevice* dev(find_device(btle::bda((const char*)info->bdaddr.b,(address_type)info->bdaddr_type)));
+
+        if(dev == NULL)
+        {
+            dev = new bluezperipheraldevice(btle::bda((const char*)info->bdaddr.b,(address_type)info->bdaddr_type));
+            devices_.push_back(dev);
+            observer_.new_device_discovered(*dev,fields,-100);
+        }
+        else
+        {
+            observer_.device_discovered(*dev,fields,-100);
+        }
+
         //if (check_report_filter(filter_type, info)) {
             char name[30];
             memset(name, 0, sizeof(name));
@@ -240,4 +275,15 @@ int bluezcentralplugin::read_btle_ftp(device& dev, std::string& buffer, bool ack
     return 0;
 }
 
+bluezperipheraldevice* bluezcentralplugin::find_device(const bda& addr)
+{
+    for( device_list::iterator it = devices_.begin(); it != devices_.end(); ++it )
+    {
+        if( (*it)->addr() == addr )
+        {
+            return (bluezperipheraldevice*)(*it);
+        }
+    }
+    return NULL;
+}
 
