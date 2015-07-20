@@ -62,6 +62,7 @@ bluezcentralplugin::bluezcentralplugin(centralpluginobserver &observer)
 }
 
 #include <QDebug>
+#include <QThread>
 
 void bluezcentralplugin::scan_routine()
 {
@@ -77,74 +78,88 @@ void bluezcentralplugin::scan_routine()
     int len;
     olen = sizeof(of);
 
-    if (getsockopt(handle_, SOL_HCI, HCI_FILTER, &of, &olen) < 0) {
-        printf("Could not get socket options\n");
-        return;
-    }
+    if (getsockopt(handle_, SOL_HCI, HCI_FILTER, &of, &olen) == 0)
+    {
+        hci_filter_clear(&nf);
+        hci_filter_set_ptype(HCI_EVENT_PKT, &nf);
+        hci_filter_set_event(EVT_LE_META_EVENT, &nf);
 
-    hci_filter_clear(&nf);
-    hci_filter_set_ptype(HCI_EVENT_PKT, &nf);
-    hci_filter_set_event(EVT_LE_META_EVENT, &nf);
-
-    if (setsockopt(handle_, SOL_HCI, HCI_FILTER, &nf, sizeof(nf)) < 0) {
-        printf("Could not set socket options\n");
-        return;
-    }
-
-    //memset(&sa, 0, sizeof(sa));
-    //sa.sa_flags = SA_NOCLDSTOP;
-    //sa.sa_handler = sigint_handler;
-    //sigaction(SIGINT, &sa, NULL);
-    while (1) {
-        evt_le_meta_event *meta;
-        le_advertising_info *info;
-        char addr[18];
-        while ((len = read(handle_, buf, sizeof(buf))) < 0) {
-            if (errno == EINTR) {
-            len = 0;
-            goto done;
-            }
-            if (errno == EAGAIN || errno == EINTR)
-                continue;
-            goto done;
-        }
-        ptr = buf + (1 + HCI_EVENT_HDR_SIZE);
-        len -= (1 + HCI_EVENT_HDR_SIZE);
-        meta = (evt_le_meta_event *) ptr;
-        if (meta->subevent != 0x02)
-            goto done;
-        info = (le_advertising_info *) (meta->data + 1);
-
-        //_log("adv data: %s",utility::to_hex_string(info->data,info->length).c_str());
-
-        qDebug() << QString::fromStdString(utility::to_hex_string(info->data,info->length));
-
-        adv_fields fields;
-        process_adv_data(fields,info->data,info->length);
-        bluezperipheraldevice* dev(find_device(btle::bda((const char*)info->bdaddr.b,(address_type)info->bdaddr_type)));
-
-        if(dev == NULL)
+        if (setsockopt(handle_, SOL_HCI, HCI_FILTER, &nf, sizeof(nf)) == 0)
         {
-            dev = new bluezperipheraldevice(btle::bda((const char*)info->bdaddr.b,(address_type)info->bdaddr_type));
-            devices_.push_back(dev);
-            observer_.new_device_discovered(*dev,fields,-100);
+            while (1) {
+                evt_le_meta_event *meta;
+                le_advertising_info *info;
+                char addr[18];
+                while ((len = read(handle_, buf, sizeof(buf))) < 0) {
+                    if (errno == EINTR)
+                    {
+                        len = 0;
+                        return;
+                    }
+                    if (errno == EAGAIN || errno == EINTR)
+                        continue;
+                    return;
+                }
+                ptr = buf + (1 + HCI_EVENT_HDR_SIZE);
+                len -= (1 + HCI_EVENT_HDR_SIZE);
+                meta = (evt_le_meta_event *) ptr;
+                switch(meta->subevent)
+                {
+                    case 0x02:
+                    {
+                        info = (le_advertising_info *) (meta->data + 1);
+                        qDebug() << QString::fromStdString(utility::to_hex_string(info->data,info->length));
+                        qDebug() << "thread id: " << QThread::currentThreadId();
+
+                        adv_fields fields;
+                        process_adv_data(fields,info->data,info->length);
+                        bluezperipheraldevice* dev(find_device(btle::bda((const char*)info->bdaddr.b,(address_type)info->bdaddr_type)));
+
+                        if(dev == NULL)
+                        {
+                            dev = new bluezperipheraldevice(btle::bda((const char*)info->bdaddr.b,(address_type)info->bdaddr_type));
+                            devices_.push_back(dev);
+                            observer_.new_device_discovered(*dev,fields,-100);
+                        }
+                        else
+                        {
+                            observer_.device_discovered(*dev,fields,-100);
+                        }
+
+                        char name[30];
+                        memset(name, 0, sizeof(name));
+                        ba2str(&info->bdaddr, addr);
+                        printf("%s %s\n", addr, name);
+                        break;
+                    }
+                    case 0x03: // connection update comlete
+                    {
+
+                    }
+                    case 0x04: // LE Read Remote Used Features Complete event
+                    {
+
+                    }
+                    case 0x05: // LE long term key request event
+                    {
+
+                    }
+                    default:
+                        return;
+                }
+            }
         }
         else
         {
-            observer_.device_discovered(*dev,fields,-100);
+            printf("Could not set socket options\n");
+            return;
         }
-
-        //if (check_report_filter(filter_type, info)) {
-            char name[30];
-            memset(name, 0, sizeof(name));
-            ba2str(&info->bdaddr, addr);
-            //eir_parse_name(info->data, info->length,
-            //name, sizeof(name) - 1);
-            printf("%s %s\n", addr, name);
-        //}
     }
-    done:
-    setsockopt(handle_, SOL_HCI, HCI_FILTER, &of, sizeof(of));
+    else
+    {
+        printf("Could not get socket options\n");
+        return;
+    }
 }
 
 const std::string& bluezcentralplugin::name()

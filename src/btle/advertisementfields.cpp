@@ -4,7 +4,7 @@
 using namespace btle;
 
 advertisementfields::advertisementfields()
-: base("","Advertisement data processor class"),
+: base(),
   fields_(),
   name_(),
   advertiset_services_()

@@ -64,9 +64,9 @@ std::string bda::to_string() const
     if( value_.size() == BDA_BIN_LENGTH )
     {
         std::stringstream ss_hex;
-        for( int i=0; i < BDA_BIN_LENGTH; ++i )
+        for( int i=5; i >= 0; --i )
         {
-            ss_hex << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (unsigned int)(unsigned char)value_[i] << (i < 5 ? ":" : "");
+            ss_hex << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (unsigned int)(unsigned char)value_[i] << (i != 0 ? ":" : "");
         }
         return ss_hex.str();
     }

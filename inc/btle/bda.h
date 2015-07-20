@@ -46,7 +46,7 @@ namespace btle {
 
     public: // override from base
 
-        std::string to_string() const;
+        std::string to_string() const override;
 
         // operators
         bool operator == (const bda& other) const;
