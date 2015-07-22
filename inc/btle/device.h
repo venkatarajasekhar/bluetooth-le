@@ -65,10 +65,13 @@ namespace btle {
 
         void clear_device_data(bool verbose=false);
         
+        uint16_t connection_handle();
+        void set_connection_handle(uint16_t handle);
+
     public: // from base
 
-        std::string description() const;
-        void invalidate();
+        std::string description() const override;
+        void invalidate() override;
 
     public:
 
@@ -88,6 +91,7 @@ namespace btle {
         connectionparameters parameters_;
         btle::advertisement_type advertisement_type_;
         statistics statistics_;
+        uint16_t connection_handle_;
     };
 
     typedef std::vector<device*> device_list;

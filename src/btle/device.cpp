@@ -137,6 +137,16 @@ void device::clear_device_data(bool verbose)
     }
 }
 
+uint16_t device::connection_handle()
+{
+
+}
+
+void device::set_connection_handle(uint16_t handle)
+{
+
+}
+
 std::string device::description() const
 {
     std::stringstream ss;
