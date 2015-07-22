@@ -2,6 +2,7 @@
 
 #include "btle/central/linux/bluezcentralplugin.h"
 #include "btle/central/centralpluginregisterer.h"
+#include "btle/central/linux/hciconnectdevicemessage.h"
 #include "btle/log.h"
 #include "btle_global.h"
 #include "btle/utility.h"
@@ -223,44 +224,8 @@ void bluezcentralplugin::stop_scan()
 
 void bluezcentralplugin::connect_device(device& dev)
 {
-    int err;
-    bdaddr_t bdaddr;
-    uint16_t interval, latency, max_ce_length, max_interval, min_ce_length;
-    uint16_t min_interval, supervision_timeout, window;
-    uint8_t initiator_filter, own_bdaddr_type, peer_bdaddr_type;
-    peer_bdaddr_type = (uint8_t)dev.addr().type();
-    initiator_filter = 0;
-
-    memset(&bdaddr, 0, sizeof(bdaddr_t));
-    memcpy(&bdaddr,dev.addr().string_value().c_str(),6);
-    interval = htobs(0x0004);
-    window = htobs(0x0004);
-    own_bdaddr_type = 0x00;
-    min_interval = htobs(0x000F);
-    max_interval = htobs(0x000F);
-    latency = htobs(0x0000);
-    supervision_timeout = htobs(0x0C80);
-    min_ce_length = htobs(0x0001);
-    max_ce_length = htobs(0x0001);
-
-    std::thread worker([=](){
-        uint16_t handle(0);
-        int err = hci_le_create_conn(handle_, interval, window, initiator_filter,
-        peer_bdaddr_type, bdaddr, own_bdaddr_type, min_interval,
-        max_interval, latency, supervision_timeout,
-        min_ce_length, max_ce_length, &handle, 25000);
-        // fix concurrency
-        if( err == 0 )
-        {
-            //observer_.device_connected(dev);
-        }
-        else
-        {
-            //observer_.device_disconnected(dev);
-        }
-    });
-
-    worker.detach();
+    bluezperipheraldevice* bdev = reinterpret_cast<bluezperipheraldevice*>(&dev);
+    bdev->push(new hciconnectdevicemessage(handle_,&observer_));
 }
 
 void bluezcentralplugin::disconnect_device(device& dev)

@@ -73,6 +73,10 @@ namespace btle {
         std::string description() const override;
         void invalidate() override;
 
+    public: // mutex
+
+       // std::mutex& mutex();
+
     public:
 
         void set_state(connection_state state);
@@ -92,6 +96,7 @@ namespace btle {
         btle::advertisement_type advertisement_type_;
         statistics statistics_;
         uint16_t connection_handle_;
+       // std::mutex mutex_;
     };
 
     typedef std::vector<device*> device_list;

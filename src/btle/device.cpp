@@ -139,12 +139,12 @@ void device::clear_device_data(bool verbose)
 
 uint16_t device::connection_handle()
 {
-
+    return connection_handle_;
 }
 
 void device::set_connection_handle(uint16_t handle)
 {
-
+    connection_handle_ = handle;
 }
 
 std::string device::description() const
@@ -167,4 +167,19 @@ void device::invalidate()
     advertisement_fields_.invalidate();
     db_.invalidate();
 }
+
+/**
+ * @brief device::mutex, shall allways be used when accessing
+ * device content e.g.
+ *
+ * dev.mutex().lock()
+ * int rssi = dev.rssi_filter().current();
+ * dev.mutex().unlock();
+ *
+ * @return
+ */
+/*std::mutex& device::mutex()
+{
+    return mutex_;
+}*/
 

@@ -2,6 +2,10 @@
 #define BLUEZPERIPHERALDEVICE_H
 
 #include "btle/device.h"
+#include "btle/central/linux/messagebase.h"
+
+#include <mutex>
+#include <condition_variable>
 
 namespace btle {
     namespace central {
@@ -10,6 +14,20 @@ namespace btle {
             {
             public:
                 bluezperipheraldevice(const btle::bda& addr);
+
+            public: // message push
+
+                void push(messagebase* message);
+
+            private:
+
+                void message_thread();
+
+            private:
+
+                messages queue_;
+                std::mutex q_mutex_;
+                std::condition_variable q_condition_;
             };
         }
     }

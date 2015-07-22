@@ -10,7 +10,7 @@ namespace btle {
         rssiscanfilter(const rssiscanfilter& other);
 
     public:// from base
-        bool process(device &dev,adv_fields& fields,int rssi);
+        bool process(device &dev,adv_fields& fields,int rssi) override;
 
     private:
         int rssi_limit_;

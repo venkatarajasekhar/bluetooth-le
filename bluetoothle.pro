@@ -15,10 +15,13 @@ QMAKE_LIBDIR += "$$DESTDIR"
 HEADERS += \
     inc/btle/atomiclist.h \
     inc/btle/atomiclist.hpp \
-    inc/btle/gatt_services/btlelibservice.h
+    inc/btle/gatt_services/btlelibservice.h \
+    internal/btle/central/linux/messagebase.h \
+    internal/btle/central/linux/hciconnectdevicemessage.h
 
 SOURCES += \
-    src/btle/gatt_services/btlelibservice.cpp
+    src/btle/gatt_services/btlelibservice.cpp \
+    src/btle/central/linux/hciconnectdevicemessage.cpp
 # end
 
 SOURCES += \
