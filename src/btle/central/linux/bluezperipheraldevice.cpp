@@ -12,18 +12,21 @@ bluezperipheraldevice::bluezperipheraldevice(const bda &addr)
 
 void bluezperipheraldevice::push(messagebase* message)
 {
-    q_mutex_.lock();
+    std::unique_lock<std::mutex> lock(q_mutex_);
     queue_.push_back(message);
-    q_mutex_.unlock();
+    q_condition_.notify_all();
 }
 
 void bluezperipheraldevice::message_thread()
 {
     do{
-        q_mutex_.lock();
-        messagebase* msg = queue_.front();
-        queue_.pop_front();
-        q_mutex_.unlock();
+        messagebase* msg(NULL);
+        {
+            std::unique_lock<std::mutex> lock(q_mutex_);
+            q_condition_.wait(lock);
+            queue_.front();
+            queue_.pop_front();
+        }
         msg->process(this);
     }while(true);
 }

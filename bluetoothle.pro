@@ -17,11 +17,13 @@ HEADERS += \
     inc/btle/atomiclist.hpp \
     inc/btle/gatt_services/btlelibservice.h \
     internal/btle/central/linux/messagebase.h \
-    internal/btle/central/linux/hciconnectdevicemessage.h
+    internal/btle/central/linux/hciconnectdevicemessage.h \
+    internal/btle/central/linux/attclient.h
 
 SOURCES += \
     src/btle/gatt_services/btlelibservice.cpp \
-    src/btle/central/linux/hciconnectdevicemessage.cpp
+    src/btle/central/linux/hciconnectdevicemessage.cpp \
+    src/btle/central/linux/attclient.cpp
 # end
 
 SOURCES += \
