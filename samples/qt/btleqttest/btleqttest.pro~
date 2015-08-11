@@ -1,5 +1,6 @@
 
 QT       += core
+
 QT       -= gui
 
 TARGET = btleqttest
@@ -13,12 +14,9 @@ INCLUDEPATH += ../bluetoothle/inc ../bluetoothle/inc/btle ../bluetoothle/interna
 TEMPLATE = app
 
 QMAKE_LIBDIR += "$$DESTDIR"
-INCLUDEPATH += "$$DESTDIR"
-DEPENDPATH += "$$DESTDIR"
 
-linux{
-    #LD_LIBRARY_PATH += "$$DESTDIR"
-     LIBS += -L$$DESTDIR/ -lbluetoothle
+win{
+
 }
 macx{
     LIBS += "$$DESTDIR"/libbluetoothle.1.0.0.dylib
