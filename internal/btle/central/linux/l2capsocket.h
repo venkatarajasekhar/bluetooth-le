@@ -3,6 +3,8 @@
 
 #include "btle/bda.h"
 
+#include <thread>
+
 namespace btle {
     namespace central {
         namespace linux_platform {

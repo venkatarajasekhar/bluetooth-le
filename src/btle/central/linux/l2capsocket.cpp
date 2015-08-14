@@ -1,5 +1,6 @@
 
 #include "btle/central/linux/l2capsocket.h"
+#include "btle/log.h"
 
 #include <unistd.h>
 #include <errno.h>
@@ -10,6 +11,13 @@
 using namespace btle;
 using namespace btle::central;
 using namespace btle::central::linux_platform;
+
+namespace {
+    void routine(void* context)
+    {
+        l2capsocket* self = reinterpret_cast<l2capsocket*>(context);
+    }
+}
 
 l2capsocket::l2capsocket()
 : fd_(0)
@@ -50,10 +58,24 @@ void l2capsocket::connect(const bda &addr, unsigned int channel_id)
 
 void l2capsocket::disconnect()
 {
-
+    ::close(fd_);
 }
 
 void l2capsocket::write(const std::string &packet)
 {
-
+    switch(int err = ::write(fd_,packet.data(),packet.size()))
+    {
+        case 0:
+            break;
+        case -1:
+        {
+            // TODO handle error
+            break;
+        }
+        default:
+        {
+            _log("bytes written: %i",err);
+            break;
+        }
+    }
 }
