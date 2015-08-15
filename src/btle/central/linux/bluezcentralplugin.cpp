@@ -282,6 +282,11 @@ void bluezcentralplugin::write_descriptor(device& dev, const service& srv, const
     }
 }
 
+void bluezcentralplugin::update_parameters(device& dev, const connectionparameters& params)
+{
+
+}
+
 void bluezcentralplugin::write_btle_ftp(device& dev, const std::string& buffer)
 {
 

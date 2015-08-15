@@ -19,13 +19,15 @@ HEADERS += \
     internal/btle/central/linux/messagebase.h \
     internal/btle/central/linux/hciconnectdevicemessage.h \
     internal/btle/central/linux/attclient.h \
-    internal/btle/central/linux/l2capsocket.h
+    internal/btle/central/linux/l2capsocket.h \
+    internal/btle/central/linux/hciupdateconnmessage.h
 
 SOURCES += \
     src/btle/gatt_services/btlelibservice.cpp \
     src/btle/central/linux/hciconnectdevicemessage.cpp \
     src/btle/central/linux/attclient.cpp \
-    src/btle/central/linux/l2capsocket.cpp
+    src/btle/central/linux/l2capsocket.cpp \
+    src/btle/central/linux/hciupdateconnmessage.cpp
 # end
 
 SOURCES += \

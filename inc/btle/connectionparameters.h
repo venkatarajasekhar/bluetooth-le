@@ -17,6 +17,10 @@ namespace btle {
                               uint16_t connection_latency,
                               uint16_t connection_timeout );
 
+    public: //
+
+        uint16_t interval() const;
+
     public: // from base
 
         void invalidate();

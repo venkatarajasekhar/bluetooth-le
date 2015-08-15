@@ -30,6 +30,11 @@ connectionparameters::connectionparameters(
 {
 }
 
+uint16_t connectionparameters::interval() const
+{
+    return connection_interval_;
+}
+
 void connectionparameters::invalidate()
 {
     connection_interval_=0;
