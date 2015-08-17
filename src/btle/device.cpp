@@ -6,8 +6,7 @@
 
 using namespace btle;
 using namespace btle::gatt_services;
-
-namespace{
+namespace BtleConnection{
     const char* state2string(connection_state state)
     {
         switch(state){
@@ -72,7 +71,7 @@ connection_state device::state() const
 
 std::string device::state_string() const
 {
-    return state2string(state_);
+    return BtleConnection::state2string(state_);
 }
 
 const bda& device::addr() const
