@@ -7,11 +7,23 @@
 namespace btle {
 
     #define CHARACTERISTIC_EXTENDED_PROPERTIES   0x2900
+    const unsigned int CHARACTERISTIC_EXTENDED_PROPERTIES = 0x2900;
+    #undef CHARACTERISTIC_EXTENDED_PROPERTIES
     #define CHARACTERISTIC_USER_DESCRIPTION      0x2901
+    const unsigned int CHARACTERISTIC_USER_DESCRIPTION = 0x2901;
+    #undef CHARACTERISTIC_USER_DESCRIPTION
     #define CLIENT_CHARACTERISTIC_CONFIGURATION  0x2902
+    const unsigned int CLIENT_CHARACTERISTIC_CONFIGURATION = 0x2902;
+    #undef CLIENT_CHARACTERISTIC_CONFIGURATION
     #define SERVER_CHARACTERISTIC_CONFIGURATION  0x2903
+    const unsigned int SERVER_CHARACTERISTIC_CONFIGURATION = 0x2903;
+    #undef SERVER_CHARACTERISTIC_CONFIGURATION
     #define CHARACTERISTIC_FORMAT                0x2904
+    const unsigned int CHARACTERISTIC_FORMAT = 0x2904;
+    #undef CHARACTERISTIC_FORMAT
     #define CHARACTERISTIC_AGGREGATE_FORMAT      0x2905
+    const unsigned int CHARACTERISTIC_AGGREGATE_FORMAT = 0x2905;
+    #undef CHARACTERISTIC_AGGREGATE_FORMAT
 
     class BTLE_API descriptor: public base
     {
@@ -23,8 +35,6 @@ namespace btle {
         descriptor(uint16_t type,
                    uint16_t handle);
         descriptor(const descriptor& other);
-
-    public: // api
 
         uint16_t type() const;
         uint16_t handle() const;
