@@ -1,4 +1,5 @@
 
+#include <stdio.h>
 #include <cstdio>
 #include <cstdarg>
 #include <cstring>
@@ -9,8 +10,10 @@
 
 using namespace btle;
 
-namespace {
+namespace Logger{
     #define LOG_BUFFER_SIZE 1000
+    const unsigned int LOG_BUFFER_SIZE = 1000;
+    #undef LOG_BUFFER_SIZE
     static void default_adapter( const std::string& str )
     {
         std::printf("%s\n",str.c_str());
@@ -49,9 +52,9 @@ void log::trace(const char* tag,const char* method, const char* format, ...)
     {
         std::va_list ap;
         std::stringstream ss;
-        std::string buf(LOG_BUFFER_SIZE, 0);
+        std::string buf(Logger::LOG_BUFFER_SIZE, 0);
         va_start(ap, format);
-        vsnprintf(const_cast<char*>(buf.data()),LOG_BUFFER_SIZE,format,ap);
+        vsnprintf(const_cast<char*>(buf.data()),Logger::LOG_BUFFER_SIZE,format,ap);
         va_end(ap);
         ss << '[' << tag << ']' << '[' << method << "] " << buf;
         if( options_ & LOG_PRINT )
@@ -62,7 +65,7 @@ void log::trace(const char* tag,const char* method, const char* format, ...)
 }
 
 log::log()
-: adapter_(&::default_adapter),
+: adapter_(Logger::default_adapter),
   options_(0)
 {
 }
