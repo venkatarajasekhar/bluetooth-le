@@ -39,7 +39,6 @@ namespace btle {
         device(const bda& addr);
         ~device();
 
-    public: //
         // advertisement data related
         const std::string& name();
         const advertisementdata* advertisement_data_for_key(btle::advertisement_type key) const;
@@ -66,11 +65,9 @@ namespace btle {
 
         void clear(bool verbose=false);
         
-    public: // from base
+   // from base
 
         std::string description() const;
-
-    public:
 
         void set_state(connection_state state);
         friend class connectionhandler;
@@ -93,6 +90,16 @@ namespace btle {
     typedef std::vector<device*>::iterator device_iterator;
     typedef std::vector<device*>::const_iterator device_iterator_const;
 }
+
+
+
+
+
+
+
+
+
+
 
 #endif // DEVICE_H
 
