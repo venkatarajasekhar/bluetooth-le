@@ -12,9 +12,13 @@
 #include "btle/base.h"
 
 namespace btle {
-
+    
     #define SMP_LRANDOM_LEN 8
+    const unsigned int SMP_LRANDOM_LEN = 8;
+    #undef SMP_LRANDOM_LEN
     #define SMP_LTK_LEN 16
+    const unsigned int SMP_LTK_LEN = 16;
+    #undef SMP_LTK_LEN
 
     class smpkeys: public base
     {
