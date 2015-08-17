@@ -58,7 +58,7 @@ service::service(const service& other)
 
 service& service::operator << (const characteristic& chr)
 {
-    for( chr_iterator it = characteristics_.begin(); it != characteristics_.end(); ++it )
+    for( chr_iterator_const it = characteristics_.begin(); it != characteristics_.end(); ++it )
     {
         if( (*it) == chr )
         {
@@ -83,9 +83,9 @@ bool service::operator == (const btle::uuid& uid) const
 
 bool service::operator == (const service& other) const
 {
-    return uuid_         == other.uuid() &&
-           start_handle_ == other.start_handle() &&
-           end_handle_   == other.end_handle();
+    return ((uuid_         == other.uuid() )&&
+           (start_handle_ == other.start_handle()) &&
+           (end_handle_   == other.end_handle()));
 }
 
 const characteristic& service::operator [](int index) const
