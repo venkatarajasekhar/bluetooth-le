@@ -8,8 +8,12 @@
 namespace btle {
 
     #define UUID_128_BIN_LENGTH 16
+    const unsigned int UUID_128_BIN_LENGTH = 16;
+    #undef  UUID_128_BIN_LENGTH
     #define UUID_16_BIN_LENGTH  2
-
+    const unsigned int UUID_16_BIN_LENGTH = 2;
+    #undef UUID_16_BIN_LENGTH
+    
     class BTLE_API uuid: public base
     {
     public:
@@ -37,7 +41,7 @@ namespace btle {
         bool operator != (const uint8_t uuid128[UUID_128_BIN_LENGTH]) const;
         bool operator != (const std::string& uuid_str) const;
 
-    public: // from base
+    // from base
 
         std::string to_string() const;
 
