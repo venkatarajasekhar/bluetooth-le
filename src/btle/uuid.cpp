@@ -44,8 +44,8 @@ uuid::uuid(const string& uuid_str)
     {
         case 2:
         {
-            uuid16_  = (uint8_t)*uuid_str.c_str() << 8;
-            uuid16_ |= (uint8_t)*(uuid_str.c_str()+1);
+            uuid16_  = (uint8_t)((*uuid_str.c_str() )<< 8);
+            uuid16_ |= (uint8_t)(*(uuid_str.c_str()+1));
             //value_ = "";
             break;
         }
