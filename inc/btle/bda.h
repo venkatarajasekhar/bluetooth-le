@@ -40,11 +40,11 @@ namespace btle {
         bda(const bda& other);
         ~bda();
 
-    public: //
+    
 
         address_type type() const;
 
-    public: // override from base
+  // override from base
 
         std::string to_string() const;
 
