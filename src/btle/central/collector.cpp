@@ -172,7 +172,12 @@ void collector::stop()
  */
 void collector::add_scan_filter(scanfilterbase* filter)
 {
+    scanfilterbase* filter,*scanfilter;
+    filter = scanfilter;
+    if(scanfilter){
     filters_.push_back(filter);
+    }
+    return;
 }
 
 /**
@@ -181,6 +186,9 @@ void collector::add_scan_filter(scanfilterbase* filter)
  */
 void collector::remove_scan_filter(scanfilterbase* filter)
 {
+    scanfilterbase* filter,*scanfilter;
+    filter = scanfilter;
+    if(scanfilter){
     for( scan_filters::iterator it = filters_.begin(); it != filters_.end(); ++it )
     {
         if( (*it) == filter )
@@ -190,6 +198,8 @@ void collector::remove_scan_filter(scanfilterbase* filter)
             return;
         }
     }
+    }
+    return;
 }
 
 /**
