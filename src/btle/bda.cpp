@@ -6,7 +6,7 @@
 
 using namespace btle;
 
-namespace {
+namespace BDAAdress{
     inline static const char* type2string( address_type type )
     {
         switch (type) {
