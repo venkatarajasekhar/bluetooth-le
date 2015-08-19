@@ -20,6 +20,8 @@ namespace BtleConnection{
         }
     }
 }
+device::device()
+: base(){}
 
 device::device(const bda &addr)
 : base(),
