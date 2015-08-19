@@ -15,7 +15,7 @@
 #include "btle/bdascanfilter.h"
 #include "btle/uuidscanfilter.h"
 
-namespace {
+namespace BtleCollector{
     enum collector_flags{
         CLIENT_SCAN   = 0x01,
         INTERNAL_SCAN = 0x02,
@@ -256,7 +256,7 @@ btle::device_list collector::devices_in_order(int rssi_limit,bool ascent) const
         if( (*it)->rssi_filter().mean_median() >= rssi_limit  )
             list.push_back(*it);
     }
-    std::sort(list.begin(), list.end(), ascent ? ::compare_ascent : ::compare_descent);
+    std::sort(list.begin(), list.end(), (ascent ? (BtleCollector::compare_ascent) : (BtleCollector::compare_descent));
     return list;
 }
 
