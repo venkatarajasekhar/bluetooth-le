@@ -36,6 +36,7 @@ namespace btle {
     class BTLE_API device: public base
     {
     public:
+        device();
         device(const bda& addr);
         ~device();
 
